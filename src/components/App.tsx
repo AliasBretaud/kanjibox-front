@@ -30,6 +30,9 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: theme.spacing(2),
       color: "white",
     },
+    buttonLink: {
+      textDecoration: "none",
+    },
   })
 );
 
@@ -45,13 +48,13 @@ function App() {
             <Link className={classes.homeLink} to={"/"}>
               Floの漢字箱
             </Link>
-            <Link to={"/kanji-list"}>
+            <Link to={"/kanji-list"} className={classes.buttonLink}>
               <Button className={classes.navButton}>Kanjis</Button>
             </Link>
-            <Link to={"/word-list"}>
+            <Link to={"/word-list"} className={classes.buttonLink}>
               <Button className={classes.navButton}>Mots</Button>
             </Link>
-            <Link to={"/quiz"}>
+            <Link to={"/quiz"} className={classes.buttonLink}>
               <Button className={classes.navButton}>Quiz</Button>
             </Link>
           </Toolbar>

@@ -36,6 +36,9 @@ const useStyles = makeStyles((theme: Theme) =>
         cursor: "pointer",
       },
     },
+    kanjiDisplay: {
+      wordBreak: "break-word",
+    },
   })
 );
 
@@ -77,23 +80,25 @@ function SingleWordDisplay({ word }: { word: Word }) {
         <CardContent>
           <div className={`${classes.wordDisplay} ${classes.japCharacters}`}>
             <ruby>
-              {word.value.split("").map((char, idx) => {
-                if (isKanji(char)) {
-                  return (
-                    <span
-                      key={idx}
-                      className={classes.wordValue}
-                      onClick={() => {
-                        displayKanjiDetails(char);
-                      }}
-                    >
-                      {char}
-                    </span>
-                  );
-                } else {
-                  return <span key={idx}>{char}</span>;
-                }
-              })}
+              <div className={classes.kanjiDisplay}>
+                {word.value.split("").map((char, idx) => {
+                  if (isKanji(char)) {
+                    return (
+                      <span
+                        key={idx}
+                        className={classes.wordValue}
+                        onClick={() => {
+                          displayKanjiDetails(char);
+                        }}
+                      >
+                        {char}
+                      </span>
+                    );
+                  } else {
+                    return <span key={idx}>{char}</span>;
+                  }
+                })}
+              </div>
               <rp>(</rp>
               <rt className={classes.furigana}>{word.furiganaValue}</rt>
               <rp>)</rp>

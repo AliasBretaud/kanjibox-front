@@ -9,16 +9,17 @@ import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import isEmpty from "lodash.isempty";
+import SerieSelect from "./SerieSelect";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       backgroundColor: "#f8fbff",
-      marginTop: "40px",
+      margin: "40px 0 40px 0",
       borderRadius: "20px",
       fontFamily:
         "'Hiragino Kaku Gothic Pro', 'ヒラギノ角ゴ Pro W3', Meiryo, 'メイリオ', Osaka, 'MS PGothic', arial, helvetica, sans-serif",
-      padding: "40px 20px 20px",
+      padding: "0 20px 20px",
     },
   })
 );
@@ -36,8 +37,11 @@ function WordsQuiz() {
   };
 
   const classes = useStyles();
-  const wordsUrl: string = "http://localhost:8080/words";
-  const [words] = useGetData<Word>(wordsUrl);
+  const series = [10, 20, 30, 50];
+  const [serie, setSerie] = useState<number>(series[0]);
+  const wordsUrl: string = `http://localhost:8080/words?limit=${serie}`;
+  const [wordsData] = useGetData<Word>(wordsUrl);
+  const [words, setWords] = useState<Word[]>([]);
   const [correctCounter, setCorrectCounter] = useState(0);
   const [incorrectCounter, setIncorrectCounter] = useState(0);
   const [currentWord, setCurrentWord] = useState<Word>({
@@ -53,16 +57,29 @@ function WordsQuiz() {
   const [validate, setValidate] = useState<boolean>(false);
 
   useEffect(() => {
-    if (!isEmpty(words)) {
-      const word: Word = getRandomWord();
+    if (!isEmpty(wordsData)) {
+      setWords(wordsData);
+      const word: Word = getRandomWord(wordsData);
       setCurrentWord(word);
+      setWordsOkList([]);
+      setWordsKoList([]);
+      setValidate(false);
+      setCorrectCounter(0);
+      setIncorrectCounter(0);
+      setFieldsError(cleanError);
+      setInputReading("");
+      setInputTranslation("");
     }
     // eslint-disable-next-line
-  }, [words]);
+  }, [wordsData]);
 
-  const getRandomWord = (): Word => {
-    const randIndex = Math.floor(Math.random() * words.length);
-    return words[randIndex];
+  const changeSerie = (serie: number) => {
+    setSerie(serie);
+  };
+
+  const getRandomWord = (wordsList: Word[]): Word => {
+    const randIndex = Math.floor(Math.random() * wordsList.length);
+    return wordsList[randIndex];
   };
 
   const responsesError = (err: any) => {
@@ -97,7 +114,7 @@ function WordsQuiz() {
     let found: boolean = false;
 
     while (!found) {
-      const randWord: Word = getRandomWord();
+      const randWord: Word = getRandomWord(words);
 
       if (
         randWord.id !== currentWord.id &&
@@ -117,6 +134,12 @@ function WordsQuiz() {
   return (
     <Container maxWidth="md">
       <div className={classes.root}>
+        <SerieSelect
+          label={"Série"}
+          values={[10, 20, 30, 40, 50]}
+          onChange={changeSerie}
+        />
+
         <Grid container spacing={8}>
           <Grid
             item

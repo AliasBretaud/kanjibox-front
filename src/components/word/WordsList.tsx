@@ -30,7 +30,15 @@ function WordsList({ words }: { words: Word[] }) {
     <div className={classes.japCharacters}>
       <Grid container spacing={4} className={classes.root}>
         {words.map((value: Word, i: number) => (
-          <Grid key={i} item xs={12} md={3} sm={6} className={classes.word}>
+          <Grid
+            key={i}
+            item
+            xs={12}
+            sm={6}
+            md={4}
+            lg={3}
+            className={classes.word}
+          >
             <SingleWordDisplay word={value} />
           </Grid>
         ))}
