@@ -5,13 +5,14 @@ import Word from "../model/Word";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
 import WordsList from "../components/word/WordsList";
+import { properties } from "../properties";
 
 function Alert(props: AlertProps) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
 function WordsPage() {
-  const wordsUrl: string = "http://localhost:8080/words";
+  const wordsUrl: string = `${properties.kanjiApi.url}/words`;
   const [words] = useGetData<Word>(wordsUrl);
   const [toastOpen, setToastOpen] = useState(false);
 

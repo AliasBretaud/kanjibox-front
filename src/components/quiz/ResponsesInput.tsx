@@ -50,10 +50,14 @@ function ResponsesInput({
   }, [word]);
 
   const convertAndSetReading = (value: string) => {
+    const convert: string = !(value.endsWith("n") || value.endsWith("ny"))
+      ? toKana(value).trim()
+      : value.trim();
+
     setInputReading(
-      !(value.endsWith("n") || value.endsWith("ny"))
-        ? toKana(value).trim()
-        : value.trim()
+      convert.endsWith("nn")
+        ? toKana(convert.substr(0, convert.length - 1))
+        : convert
     );
   };
 

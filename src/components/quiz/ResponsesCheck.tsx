@@ -79,13 +79,15 @@ function ResponsesCheck({
   const timer = React.useRef<number>();
 
   useEffect(() => {
-    setSuccess(false);
-    setError(false);
-    setCheckButtonLabel("Vérifier");
+    reset();
   }, [word]);
 
   useEffect(() => {
-    if (autoValid) verify();
+    if (autoValid) {
+      verify();
+    } else {
+      reset();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [autoValid]);
 

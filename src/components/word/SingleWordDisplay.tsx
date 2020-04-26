@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     kanjiDisplay: {
+      display: "table",
       wordBreak: "break-word",
     },
   })

@@ -2,9 +2,10 @@ import { useCallback } from "react";
 import axios from "axios";
 import Kanji from "../model/Kanji";
 import isEmpty from "lodash.isempty";
+import { properties } from "../properties";
 
 function useAddKanji(autoDetectReadings: boolean) {
-  const url: string = `http://localhost:8080/kanjis?autoDetectReadings=${autoDetectReadings}`;
+  const url: string = `${properties.kanjiApi.url}/kanjis?autoDetectReadings=${autoDetectReadings}`;
 
   const callAPI = useCallback(
     (kanji: Kanji, onAdded: Function, onError?: Function) => {

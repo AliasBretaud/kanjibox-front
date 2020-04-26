@@ -2,9 +2,10 @@ import { useCallback, useState } from "react";
 import axios from "axios";
 import Word from "../model/Word";
 import isEmpty from "lodash.isempty";
+import { properties } from "../properties";
 
 function useAddWord() {
-  const url: string = "http://localhost:8080/words";
+  const url: string = `${properties.kanjiApi.url}/words`;
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 

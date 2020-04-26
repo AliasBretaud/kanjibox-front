@@ -3,9 +3,10 @@ import KanjiAddForm from "../components/kanji/KanjiAddForm";
 import useGetData from "../hooks/useGetData";
 import KanjiList from "../components/kanji/KanjisList";
 import Kanji from "../model/Kanji";
+import { properties } from "../properties";
 
 function KanjisPage() {
-  const kanjisUrl = "http://localhost:8080/kanjis/recents";
+  const kanjisUrl = `${properties.kanjiApi.url}/kanjis`;
   const [kanjis] = useGetData<Kanji>(kanjisUrl);
 
   const [value, setValue] = useState(kanjis);
