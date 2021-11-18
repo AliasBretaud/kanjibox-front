@@ -72,11 +72,11 @@ function WordAddForm({ onWordAdd }: { onWordAdd: Function }) {
   };
 
   const addWord = () => {
-    const word: Word = {
+    const word: Word = new Word({
       value: wordValue,
       translation: wordTranslation,
       furiganaValue: wordFuriganaValue,
-    };
+    });
 
     handleClose();
     callAPI(word, (wordAdded: Word) => {

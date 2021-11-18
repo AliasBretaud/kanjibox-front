@@ -74,9 +74,9 @@ function SingleKanjiDisplay({ kanji, onClick }: KanjiDisplayProps) {
 
       <table className={`kanjirighttb ${classes.japCharacters}`}>
         <tbody>
-          {displayRow("音読み", kanji.onYomi)}
-          {displayRow("訓読み", kanji.kunYomi)}
-          {displayRow("意味", kanji.translations)}
+          {displayRow("音読み", kanji.onYomi || [])}
+          {displayRow("訓読み", kanji.kunYomi || [])}
+          {displayRow("意味", kanji.translations || [])}
         </tbody>
       </table>
     </Paper>

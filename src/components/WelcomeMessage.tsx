@@ -43,7 +43,7 @@ function WelcomeMessage() {
           sur les boutons ci-dessous.
         </Typography>
         <div className={classes.heroButtons}>
-          <Grid container spacing={2} justify="center">
+          <Grid container spacing={2} justifyContent="center">
             <Grid item>
               <Link to={"/kanji-list"}>
                 <Button variant="contained" color="primary">

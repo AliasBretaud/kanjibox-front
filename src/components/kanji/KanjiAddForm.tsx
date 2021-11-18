@@ -75,12 +75,12 @@ function KanjiAddForm({ onKanjiAdd }: { onKanjiAdd: Function }) {
       ? []
       : kanjiTranslations.split(";");
 
-    const kanji: Kanji = {
+    const kanji: Kanji = new Kanji({
       value: kanjiValue,
       onYomi: onYomi,
       kunYomi: kunYomi,
       translations: translations,
-    };
+    });
 
     addKanjiApiCall(kanji, (kanjiAdded: Kanji) => {
       handleClose();
@@ -146,7 +146,7 @@ function KanjiAddForm({ onKanjiAdd }: { onKanjiAdd: Function }) {
                   id="standard-multiline-flexible-1"
                   label="On Yomi"
                   multiline
-                  rowsMax={4}
+                  maxRows={4}
                   value={kanjiOnYomi}
                   onChange={(evt) => {
                     setKanjiOnYomi(toKatakana(evt.target.value));
@@ -160,7 +160,7 @@ function KanjiAddForm({ onKanjiAdd }: { onKanjiAdd: Function }) {
                   id="standard-multiline-flexible-2"
                   label="Kun Yomi"
                   multiline
-                  rowsMax={4}
+                  maxRows={4}
                   value={kanjiKunYomi}
                   onChange={(evt) => {
                     setKanjiKunYomi(toHiragana(evt.target.value));
