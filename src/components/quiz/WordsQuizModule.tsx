@@ -48,8 +48,8 @@ function WordsQuizModule({
   const [fieldsErrors, setFieldsError] = useState(cleanError);
   const [inputReading, setInputReading] = useState("");
   const [inputTranslation, setInputTranslation] = useState("");
-  const [wordsOkList, setWordsOkList] = useState<Word[]>([]);
-  const [wordsKoList, setWordsKoList] = useState<Word[]>([]);
+  const wordsOkList: Word[] = [];
+  const wordsKoList: Word[] = [];
   const [validate, setValidate] = useState<boolean>(false);
 
   useEffect(() => {
@@ -57,8 +57,6 @@ function WordsQuizModule({
       setWords(wordsData);
       const word: Word = getRandomWord(wordsData);
       setCurrentWord(word);
-      setWordsOkList([]);
-      setWordsKoList([]);
       setValidate(false);
       setCorrectCounter(0);
       setIncorrectCounter(0);
@@ -90,7 +88,6 @@ function WordsQuizModule({
       })
     ) {
       wordsKoList.push({ ...currentWord });
-      setWordsKoList(wordsKoList);
       setIncorrectCounter(incorrectCounter + 1);
     }
   };
@@ -99,7 +96,6 @@ function WordsQuizModule({
     setValidate(true);
     setCorrectCounter(correctCounter + 1);
     wordsOkList.push({ ...currentWord });
-    setWordsOkList(wordsOkList);
 
     setTimeout(() => {
       if (wordsOkList.length === words.length) {
