@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-function useGetData<T>(url: string) {
-  const [data, setData] = useState<T[]>([]);
+function useGetData<T>(url: string, initValue: T) {
+  const [data, setData] = useState<T>(initValue);
   const [error, setError] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
