@@ -13,7 +13,7 @@ function Alert(props: AlertProps) {
 
 function WordsPage() {
   const wordsUrl: string = `${properties.kanjiApi.url}/words`;
-  const [words] = useGetData<Word>(wordsUrl);
+  const [words] = useGetData<Word[]>(wordsUrl, []);
   const [toastOpen, setToastOpen] = useState(false);
 
   const [value, setValue] = useState(words);

@@ -36,7 +36,7 @@ function WordsQuizModule({
   const series = [1, 10, 20, 30, 50];
   const [serie, setSerie] = useState<number>(series[0]);
   const wordsUrl: string = `${properties.kanjiApi.url}/words?limit=${serie}`;
-  const [wordsData] = useGetData<Word>(wordsUrl);
+  const [wordsData] = useGetData<Word[]>(wordsUrl, []);
   const [words, setWords] = useState<Word[]>([]);
   const [correctCounter, setCorrectCounter] = useState(0);
   const [incorrectCounter, setIncorrectCounter] = useState(0);
