@@ -6,6 +6,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
 import WordsList from "../components/word/WordsList";
 import { properties } from "../properties";
+import Page from "../utils/page";
 
 function Alert(props: AlertProps) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -13,12 +14,12 @@ function Alert(props: AlertProps) {
 
 function WordsPage() {
   const wordsUrl: string = `${properties.kanjiApi.url}/words`;
-  const [words] = useGetData<Word[]>(wordsUrl, []);
+  const [words] = useGetData<Page<Word>>(wordsUrl, new Page<Word>({}));
   const [toastOpen, setToastOpen] = useState(false);
 
-  const [value, setValue] = useState(words);
+  const [value, setValue] = useState(words.content);
   useEffect(() => {
-    setValue(words);
+    setValue(words.content);
   }, [words]);
 
   const handleClose = (event?: React.SyntheticEvent, reason?: string) => {

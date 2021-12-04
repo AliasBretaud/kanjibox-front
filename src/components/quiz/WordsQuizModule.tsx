@@ -9,6 +9,7 @@ import Grid from "@material-ui/core/Grid";
 import isEmpty from "lodash.isempty";
 import SerieSelect from "./SerieSelect";
 import { properties } from "../../properties";
+import Page from "../../utils/page";
 
 export interface QuizResults {
   nbOk: number;
@@ -35,8 +36,8 @@ function WordsQuizModule({
 
   const series = [1, 10, 20, 30, 50];
   const [serie, setSerie] = useState<number>(series[0]);
-  const wordsUrl: string = `${properties.kanjiApi.url}/words?limit=${serie}`;
-  const [wordsData] = useGetData<Word[]>(wordsUrl, []);
+  const wordsUrl: string = `${properties.kanjiApi.url}/words?size=${serie}`;
+  const [wordsData] = useGetData<Page<Word>>(wordsUrl, new Page<Word>({}));
   const [words, setWords] = useState<Word[]>([]);
   const [correctCounter, setCorrectCounter] = useState(0);
   const [incorrectCounter, setIncorrectCounter] = useState(0);
@@ -53,9 +54,9 @@ function WordsQuizModule({
   const [validate, setValidate] = useState<boolean>(false);
 
   useEffect(() => {
-    if (!isEmpty(wordsData)) {
-      setWords(wordsData);
-      const word: Word = getRandomWord(wordsData);
+    if (!isEmpty(wordsData.content)) {
+      setWords(wordsData.content);
+      const word: Word = getRandomWord(wordsData.content);
       setCurrentWord(word);
       setValidate(false);
       setCorrectCounter(0);

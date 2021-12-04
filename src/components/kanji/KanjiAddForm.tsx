@@ -10,10 +10,16 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import Grid from "@material-ui/core/Grid";
-import isEmpty from "lodash.isempty";
 import Kanji from "../../model/Kanji";
 import useAddKanji from "../../hooks/useAddKanji";
-import { toHiragana, toKatakana } from "wanakana";
+import {
+  isHiragana,
+  isKanji,
+  isKatakana,
+  toHiragana,
+  toKatakana,
+} from "wanakana";
+import { isEmpty } from "../../utils/StringUtils";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -56,16 +62,30 @@ function KanjiAddForm({ onKanjiAdd }: { onKanjiAdd: Function }) {
   };
 
   const saveEnabled = () => {
-    return (
-      (autoDetectReadings === false &&
-        !isEmpty(kanjiValue) &&
-        !(
-          isEmpty(kanjiKunYomi) ||
-          isEmpty(kanjiOnYomi) ||
-          isEmpty(kanjiTranslations)
-        )) ||
-      (autoDetectReadings === true && !isEmpty(kanjiValue))
-    );
+    let valid = false;
+
+    if (!isEmpty(kanjiValue) && isKanji(kanjiValue)) {
+      if (autoDetectReadings) {
+        valid = true;
+      } else {
+        if (
+          !isEmpty(kanjiTranslations) &&
+          !(isEmpty(kanjiKunYomi) && isEmpty(kanjiOnYomi))
+        ) {
+          const kunYomis = kanjiKunYomi.split(";");
+          const onYomis = kanjiOnYomi.split(";");
+          if (
+            (kunYomis.length === 0 ||
+              kunYomis.every((val) => isHiragana(val))) &&
+            (onYomis.length === 0 || onYomis.every((val) => isKatakana(val)))
+          ) {
+            valid = true;
+          }
+        }
+      }
+    }
+
+    return valid;
   };
 
   const addKanji = () => {
