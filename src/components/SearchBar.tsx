@@ -12,9 +12,13 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-function SearchBar() {
+function SearchBar({ onSearch }: { onSearch: Function }) {
   const classes = useStyles();
-  const [search, setSearch] = useState("");
+  const [searchInput, setSearchInput] = useState("");
+
+  const search = () => {
+    onSearch(searchInput);
+  };
 
   return (
     <Grid container spacing={0}>
@@ -28,7 +32,7 @@ function SearchBar() {
               acceptCharset="utf-8"
               onSubmit={(evt) => {
                 evt.preventDefault();
-                console.log("Bla");
+                search();
               }}
             >
               <input
@@ -37,10 +41,10 @@ function SearchBar() {
                 name="value"
                 placeholder="キーワードを入力"
                 className={`input_search ${classes.japCharacters}`}
-                value={search}
-                onChange={(evt) => setSearch(evt.target.value)}
+                value={searchInput}
+                onChange={(evt) => setSearchInput(evt.target.value)}
               />
-              <Button id="head_submit" className="search_btn">
+              <Button id="head_submit" className="search_btn" onClick={search}>
                 {" "}
               </Button>
             </form>
