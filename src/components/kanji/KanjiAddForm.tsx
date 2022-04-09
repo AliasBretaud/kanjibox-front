@@ -72,8 +72,10 @@ function KanjiAddForm({ onKanjiAdd }: { onKanjiAdd: Function }) {
           !isEmpty(kanjiTranslations) &&
           !(isEmpty(kanjiKunYomi) && isEmpty(kanjiOnYomi))
         ) {
-          const kunYomis = kanjiKunYomi.split(";");
-          const onYomis = kanjiOnYomi.split(";");
+          const kunYomis = !isEmpty(kanjiKunYomi)
+            ? kanjiKunYomi.split(";")
+            : [];
+          const onYomis = !isEmpty(kanjiOnYomi) ? kanjiOnYomi.split(";") : [];
           if (
             (kunYomis.length === 0 ||
               kunYomis.every((val) => isHiragana(val))) &&
@@ -89,8 +91,12 @@ function KanjiAddForm({ onKanjiAdd }: { onKanjiAdd: Function }) {
   };
 
   const addKanji = () => {
-    const onYomi: string[] = autoDetectReadings ? [] : kanjiOnYomi.split(";");
-    const kunYomi: string[] = autoDetectReadings ? [] : kanjiKunYomi.split(";");
+    const onYomi: string[] =
+      autoDetectReadings || isEmpty(kanjiOnYomi) ? [] : kanjiOnYomi.split(";");
+    const kunYomi: string[] =
+      autoDetectReadings || isEmpty(kanjiKunYomi)
+        ? []
+        : kanjiKunYomi.split(";");
     const translations: string[] = autoDetectReadings
       ? []
       : kanjiTranslations.split(";");

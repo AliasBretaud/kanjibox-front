@@ -59,6 +59,10 @@ function SingleKanjiDisplay({ kanji, onClick }: KanjiDisplayProps) {
     );
   };
 
+  const getList = (list: any) => {
+    return list != null && list.length > 0 ? list : ["-"];
+  };
+
   return (
     <Paper
       className={classes.paper}
@@ -74,8 +78,8 @@ function SingleKanjiDisplay({ kanji, onClick }: KanjiDisplayProps) {
 
       <table className={`kanjirighttb ${classes.japCharacters}`}>
         <tbody>
-          {displayRow("音読み", kanji.onYomi || [])}
-          {displayRow("訓読み", kanji.kunYomi || [])}
+          {displayRow("音読み", getList(kanji.onYomi))}
+          {displayRow("訓読み", getList(kanji.kunYomi))}
           {displayRow("意味", kanji.translations || [])}
         </tbody>
       </table>
