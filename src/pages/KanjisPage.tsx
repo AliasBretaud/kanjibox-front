@@ -25,7 +25,7 @@ const useStyles = makeStyles(() => ({
 function KanjisPage() {
   const classes = useStyles();
   const [pageNumber, setPageNumber] = useState<number>(0);
-  const kanjisUrl = `${properties.kanjiApi.url}/kanjis?size=5&page=${pageNumber}`;
+  const kanjisUrl = `${properties.kanjiApi.url}/kanjis?size=8&page=${pageNumber}`;
 
   const [kanjis] = useGetData<Page<Kanji>>(kanjisUrl, new Page<Kanji>({}));
   const [kanjisList, setKanjisList] = useState(kanjis.content);
