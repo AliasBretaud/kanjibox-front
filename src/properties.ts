@@ -1,6 +1,6 @@
 export const properties = {
   kanjiApi: {
-    //url: "https://kanjibox.appspot.com",
-    url: "http://localhost:8080/kanjibox",
+    url: "https://kanjibox-api-1d5274f00f7b.herokuapp.com",
+    //url: "http://localhost:8080/kanjibox",
   },
 };
