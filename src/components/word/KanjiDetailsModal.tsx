@@ -10,7 +10,7 @@ const KanjiDetailsModal = () => {
   const kanji = modalOptions.kanji as $Kanji;
 
   return (
-    <BaseModal<MKanji> name="kanjiDetails">
+    <BaseModal<MKanji> name="kanji-details">
       <KanjiCard {...kanji} />
     </BaseModal>
   );

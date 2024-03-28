@@ -64,6 +64,6 @@ export type FormState = Partial<{
   isSuccess: boolean;
 }> | null;
 
-export type MKanji = "addKanji" | "kanjiDetails";
+export type MKanji = "add-kanji" | "kanji-details";
 
-export type MWord = "addWord";
+export type MWord = "add-word";

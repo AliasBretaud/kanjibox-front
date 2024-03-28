@@ -8,7 +8,7 @@ const AddWordButton = () => {
   const { openModal } = useModal();
 
   const handleClickOpen = () => {
-    openModal<MWord>("addWord");
+    openModal<MWord>("add-word");
   };
 
   return <AddButton onClick={handleClickOpen}>Ajouter un mot</AddButton>;

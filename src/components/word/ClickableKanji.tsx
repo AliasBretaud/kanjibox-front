@@ -7,7 +7,7 @@ import { Typography } from "@mui/material";
 export const ClickableKanji = (kanji: $Kanji) => {
   const { openModal } = useModal();
 
-  const showKanjiDetails = () => openModal<MKanji>("kanjiDetails", { kanji });
+  const showKanjiDetails = () => openModal<MKanji>("kanji-details", { kanji });
 
   return (
     <Typography

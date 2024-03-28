@@ -105,7 +105,7 @@ const AddKanjiForm = () => {
     <BaseModal<MKanji>
       onClose={handleClose}
       aria-labelledby="form-dialog-title"
-      name="addKanji"
+      name="add-kanji"
     >
       <form autoComplete="off" action={formAction}>
         <DialogTitle id="form-dialog-title">Ajouter Kanji</DialogTitle>

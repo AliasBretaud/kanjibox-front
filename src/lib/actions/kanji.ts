@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 
-import { getKanjiFormDataField } from "@/lib/utils";
+import { getFormDataField } from "@/lib/utils";
 import type { $Kanji, FormState, Page } from "@/types";
 import { get, post } from "./api";
 
@@ -37,13 +37,15 @@ export const addKanji = async (
   _: FormState,
   data: FormData,
 ): Promise<FormState> => {
-  const kanji: $Kanji = { value: getKanjiFormDataField(data, "value") };
+  const kanji: $Kanji = { value: getFormDataField<$Kanji>(data, "value") };
   const autoDetectReadings = data.get("autoDetectReadings") === "on";
 
   if (!autoDetectReadings) {
-    kanji.kunYomi = getKanjiFormDataField(data, "kunYomi").split(";");
-    kanji.onYomi = getKanjiFormDataField(data, "onYomi").split(";");
-    kanji.translations = getKanjiFormDataField(data, "translations").split(";");
+    kanji.kunYomi = getFormDataField<$Kanji>(data, "kunYomi").split(";");
+    kanji.onYomi = getFormDataField<$Kanji>(data, "onYomi").split(";");
+    kanji.translations = getFormDataField<$Kanji>(data, "translations").split(
+      ";",
+    );
   }
 
   try {

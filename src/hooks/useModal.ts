@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 
 import type { ModalOptions } from "@/context/modalContext";
 import { ModalContext } from "@/context/modalContext";
@@ -9,13 +9,16 @@ const useModal = () => {
     throw new Error("useModal must be used within a ModalProvider");
   }
   const { setShownModal, shownModal, modalOptions, setModalOptions } = context;
-  const hideModal = () => setShownModal("");
-  const openModal = <T extends string>(name: T, modalOpts?: ModalOptions) => {
-    setShownModal(name);
-    if (modalOpts) {
-      setModalOptions(modalOpts);
-    }
-  };
+  const hideModal = useCallback(() => setShownModal(""), [setShownModal]);
+  const openModal = useCallback(
+    <T extends string>(name: T, modalOpts?: ModalOptions) => {
+      setShownModal(name);
+      if (modalOpts) {
+        setModalOptions(modalOpts);
+      }
+    },
+    [setModalOptions, setShownModal],
+  );
 
   return { openModal, shownModal, hideModal, modalOptions };
 };

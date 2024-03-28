@@ -10,6 +10,7 @@ import type { PageParams } from "@/types";
 import AddWordButton from "@/components/word/AddWordButton";
 import SnackBarProvider from "@/components/ui/SnackBarProvider";
 import KanjiDetailsModal from "@/components/word/KanjiDetailsModal";
+import AddWordForm from "@/components/word/AddWordForm";
 
 const WordsContainer = async ({ page }: { page: number }) => {
   const words = await getWords(12, page);
@@ -17,6 +18,7 @@ const WordsContainer = async ({ page }: { page: number }) => {
     <div className="flex flex-col items-center">
       <Pagination pagesCount={words.totalPages} sx={{ paddingTop: "40px" }} />
       <AddWordButton />
+      <AddWordForm />
       <WordList data={words.content} />
       <KanjiDetailsModal />
       <SnackBarProvider />
