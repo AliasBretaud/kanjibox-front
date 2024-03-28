@@ -1,8 +1,7 @@
 "use client";
 
-import type { PropsWithChildren } from "react";
 import { useCallback, useEffect, useState } from "react";
-import { useFormState, useFormStatus } from "react-dom";
+import { useFormState } from "react-dom";
 import {
   Button,
   DialogActions,
@@ -22,14 +21,14 @@ import {
   toHiragana,
   toKatakana,
 } from "wanakana";
-import { LoadingButton } from "@mui/lab";
-import { enqueueSnackbar } from "notistack";
 
 import { addKanji } from "@/lib/actions/kanji";
 import { isEmpty } from "@/lib/utils";
 import type { FKanji, FormState, MKanji } from "@/types";
 import BaseModal from "@/components/ui/BaseModal";
 import useModal from "@/hooks/useModal";
+import useNotification from "@/hooks/useNotification";
+import { SaveButton } from "@/components/ui/SaveButton";
 
 const validate = (input: string, checkFcn: (s: string) => boolean) =>
   input.split(";").every((k) => !isEmpty(k) && checkFcn(k));
@@ -51,23 +50,6 @@ const canSave = (
   );
 };
 
-const SaveButton = ({
-  children,
-  disabled,
-}: PropsWithChildren<{ disabled: boolean }>) => {
-  const { pending } = useFormStatus();
-  return (
-    <LoadingButton
-      type="submit"
-      color="primary"
-      disabled={disabled}
-      loading={pending}
-    >
-      <span>{children}</span>
-    </LoadingButton>
-  );
-};
-
 const AddKanjiForm = () => {
   const [formState, formAction] = useFormState<FormState, FormData>(
     addKanji,
@@ -79,6 +61,7 @@ const AddKanjiForm = () => {
   const [translations, setTranslations] = useState<string>("");
   const [autoDetectReadings, setAutoDetectReadings] = useState<boolean>(false);
   const { hideModal } = useModal();
+  const { showFormActionNotif } = useNotification();
 
   const handleClose = useCallback(() => {
     setValue("");
@@ -91,15 +74,10 @@ const AddKanjiForm = () => {
 
   useEffect(() => {
     if (formState) {
-      const { isSuccess, isError } = formState;
-      if (isSuccess) {
-        enqueueSnackbar("Kanji added", { variant: "success" });
-      } else if (isError) {
-        enqueueSnackbar("Error", { variant: "error" });
-      }
+      showFormActionNotif(formState, "Kanji added");
       handleClose();
     }
-  }, [formState, handleClose]);
+  }, [formState, handleClose, showFormActionNotif]);
 
   return (
     <BaseModal<MKanji>
