@@ -43,9 +43,10 @@ export const addKanji = async (
   if (!autoDetectReadings) {
     kanji.kunYomi = getFormDataField<$Kanji>(data, "kunYomi").split(";");
     kanji.onYomi = getFormDataField<$Kanji>(data, "onYomi").split(";");
-    kanji.translations = getFormDataField<$Kanji>(data, "translations").split(
+    const translations = getFormDataField<$Kanji>(data, "translations").split(
       ";",
     );
+    kanji.translations = { en: translations };
   }
 
   try {

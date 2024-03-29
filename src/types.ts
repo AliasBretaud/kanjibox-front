@@ -1,9 +1,15 @@
+export type Language = "en" | "ja" | "fr";
+
+type MappedValue<T extends string, D> = {
+  [key in T]?: D;
+};
+
 export type $Kanji = {
   id?: number;
   value: string;
   kunYomi?: string[];
   onYomi?: string[];
-  translations?: string[];
+  translations?: MappedValue<Language, string[]>;
 };
 
 export type FKanji = Pick<$Kanji, "value"> & {
@@ -17,7 +23,7 @@ export type $Word = {
   value: string;
   furiganaValue: string;
   kanjis?: $Kanji[];
-  translation: string;
+  translations: MappedValue<Language, string[]>;
 };
 
 type Sorted = {

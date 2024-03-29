@@ -99,7 +99,7 @@ const AddWordForm = () => {
               <TextField
                 id="wordTranslation"
                 label="Traduction"
-                name="translation"
+                name="translations"
                 fullWidth
                 type="text"
                 value={wordTranslation}

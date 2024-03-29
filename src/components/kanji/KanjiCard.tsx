@@ -14,7 +14,7 @@ const KanjiCard = ({ kunYomi, onYomi, translations, value }: $Kanji) => (
     <Table>
       <Row title="音読み" data={onYomi} />
       <Row title="訓読み" data={kunYomi} />
-      <Row title="意味" data={translations} />
+      <Row title="意味" data={translations?.en} />
     </Table>
   </Paper>
 );

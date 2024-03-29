@@ -33,8 +33,10 @@ export const addWord = async (
 ): Promise<FormState> => {
   const value = getFormDataField<$Word>(data, "value");
   const furiganaValue = getFormDataField<$Word>(data, "furiganaValue");
-  const translation = getFormDataField<$Word>(data, "translation");
-  const word: $Word = { value, furiganaValue, translation };
+  const translations = {
+    en: getFormDataField<$Word>(data, "translations").split(";"),
+  };
+  const word: $Word = { value, furiganaValue, translations };
 
   try {
     const response = await post(WORD_ENDPOINT, word);

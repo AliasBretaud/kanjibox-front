@@ -1,10 +1,10 @@
-import React, { useCallback } from "react";
+import { useCallback, useContext } from "react";
 
 import type { ModalOptions } from "@/context/modalContext";
 import { ModalContext } from "@/context/modalContext";
 
 const useModal = () => {
-  const context = React.useContext(ModalContext);
+  const context = useContext(ModalContext);
   if (context === undefined) {
     throw new Error("useModal must be used within a ModalProvider");
   }

@@ -43,7 +43,7 @@ const WordCard = (word: $Word) => (
         </ruby>
       </Box>
       <Table>
-        <Row title="翻訳" data={[word.translation]} />
+        <Row title="翻訳" data={word.translations.en} />
       </Table>
     </CardContent>
   </Card>
