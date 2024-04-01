@@ -1,6 +1,19 @@
+import { CircularProgress, Container } from "@mui/material";
+
 export const LoadingState = ({ text }: { text: string }) => (
-  <div className="w-full flex flex-col items-center p-6 gap-2">
-    <p>{text}</p>
-    <div className="border-gray-300 h-20 w-20 animate-spin rounded-full border-8 border-t-blue-600" />
-  </div>
+  <Container
+    maxWidth={false}
+    sx={{
+      height: "calc(100vh - 64px)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      paddingBottom: "100px",
+    }}
+  >
+    <div className="flex flex-col items-center gap-4">
+      <p>{text}</p>
+      <CircularProgress size={80} />
+    </div>
+  </Container>
 );
