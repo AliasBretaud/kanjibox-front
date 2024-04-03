@@ -103,7 +103,7 @@ const AddWordForm = () => {
             <Grid item xs={12}>
               <TextField
                 id="wordTranslation"
-                label={t("addWord.translations")}
+                label={t("addWord.translations.label")}
                 name="translations"
                 fullWidth
                 type="text"
@@ -111,6 +111,7 @@ const AddWordForm = () => {
                 onChange={(evt) => {
                   setWordTranslation(evt.target.value);
                 }}
+                helperText={t("addWord.translations.description")}
                 required
               />
             </Grid>

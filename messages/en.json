@@ -47,7 +47,10 @@
       "description": "To add a word, please provide its value, its furigana transcription, and its translation.",
       "value": "Word Value",
       "furigana": "Furigana Transcription",
-      "translations": "Translations",
+      "translations": {
+        "label": "Translations",
+        "description": "Separate by ';'"
+      },
       "notifications": {
         "success": "Word added !",
         "error": "Error"

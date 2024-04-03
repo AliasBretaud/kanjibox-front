@@ -47,7 +47,10 @@
       "description": "単語を追加するには、その値、フリガナの表記、および英訳を提供してください。",
       "value": "単語の値",
       "furigana": "フリガナの表記",
-      "translations": "英訳",
+      "translations": {
+        "label": "英訳",
+        "description": "';'で区切る"
+      },
       "notifications": {
         "success": "単語が追加されました！",
         "error": "エラー"

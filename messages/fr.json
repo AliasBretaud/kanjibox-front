@@ -47,7 +47,10 @@
       "description": "Pour ajouter un mot, veuillez renseigner sa valeur, sa transcription furigana et sa traduction.",
       "value": "Valeur du mot",
       "furigana": "Transcription furigana",
-      "translations": "Traductions",
+      "translations": {
+        "label": "Traductions",
+        "description": "Séparer par des ';'"
+      },
       "notifications": {
         "success": "Mot ajouté !",
         "error": "Erreur"

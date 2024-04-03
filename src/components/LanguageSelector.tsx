@@ -55,6 +55,7 @@ const LanguageSelector = () => {
       <Menu
         id="basic-menu"
         anchorEl={anchorEl}
+        disableScrollLock
         open={open}
         onClose={handleClose}
         MenuListProps={{

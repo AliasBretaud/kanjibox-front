@@ -5,6 +5,7 @@ import { get, post } from "./api";
 import getFormDataField from "@/lib/utils/getFormDataField";
 import { revalidateTag } from "next/cache";
 import formatInputList from "@/lib/utils/formatInputList";
+import { cookies } from "next/headers";
 
 const WORD_ENDPOINT = `${process.env.BACKEND_API_URL}/words`;
 
@@ -32,10 +33,13 @@ export const addWord = async (
   _: FormState,
   data: FormData,
 ): Promise<FormState> => {
+  const cookiesLocale = cookies().get("NEXT_LOCALE")?.value || "en";
+  const locale = cookiesLocale === "ja" ? "en" : cookiesLocale;
+
   const value = getFormDataField<$Word>(data, "value");
   const furiganaValue = getFormDataField<$Word>(data, "furiganaValue");
   const translations = {
-    en: formatInputList(getFormDataField<$Word>(data, "translations")),
+    [locale]: formatInputList(getFormDataField<$Word>(data, "translations")),
   };
   const word: $Word = { value, furiganaValue, translations };
 
