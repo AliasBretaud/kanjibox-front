@@ -1,10 +1,11 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidateTag } from "next/cache";
 
 import getFormDataField from "@/lib/utils/getFormDataField";
 import type { $Kanji, FormState, Page } from "@/types";
 import { get, post } from "./api";
+import { cookies } from "next/headers";
 
 const KANJI_ENDPOINT = `${process.env.BACKEND_API_URL}/kanjis`;
 
@@ -23,7 +24,7 @@ export const getKanjis = async (
   if (search) {
     params.append("search", search);
   }
-  const res = await get(KANJI_ENDPOINT, params);
+  const res = await get(KANJI_ENDPOINT, params, ["kanjis"]);
 
   return (await res.json()) as Page<$Kanji>;
 };
@@ -39,6 +40,7 @@ export const addKanji = async (
 ): Promise<FormState> => {
   const kanji: $Kanji = { value: getFormDataField<$Kanji>(data, "value") };
   const autoDetectReadings = data.get("autoDetectReadings") === "on";
+  const locale = cookies().get("NEXT_LOCALE")?.value || "en";
 
   if (!autoDetectReadings) {
     kanji.kunYomi = getFormDataField<$Kanji>(data, "kunYomi").split(";");
@@ -46,7 +48,7 @@ export const addKanji = async (
     const translations = getFormDataField<$Kanji>(data, "translations").split(
       ";",
     );
-    kanji.translations = { en: translations };
+    kanji.translations = { [locale]: translations };
   }
 
   try {
@@ -55,8 +57,7 @@ export const addKanji = async (
     });
     const response = await post(KANJI_ENDPOINT, kanji, params);
     if (response.ok) {
-      revalidatePath("/kanjis");
-      revalidatePath("/");
+      revalidateTag("kanjis");
       return { isSuccess: true };
     }
     throw new Error("API request error", { cause: await response.json() });

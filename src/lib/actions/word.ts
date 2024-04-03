@@ -3,7 +3,7 @@
 import type { $Word, FormState, Page } from "@/types";
 import { get, post } from "./api";
 import getFormDataField from "@/lib/utils/getFormDataField";
-import { revalidatePath } from "next/cache";
+import { revalidateTag } from "next/cache";
 
 const WORD_ENDPOINT = `${process.env.BACKEND_API_URL}/words`;
 
@@ -22,7 +22,7 @@ export const getWords = async (
   if (search) {
     params.append("search", search);
   }
-  const res = await get(WORD_ENDPOINT, params);
+  const res = await get(WORD_ENDPOINT, params, ["words"]);
 
   return (await res.json()) as Page<$Word>;
 };
@@ -42,9 +42,9 @@ export const addWord = async (
     const response = await post(WORD_ENDPOINT, word);
     if (response.ok) {
       const createdWord: $Word = await response.json();
-      revalidatePath("/words");
+      revalidateTag("words");
       if (createdWord.kanjis?.length) {
-        revalidatePath("/kanjis");
+        revalidateTag("kanjis");
       }
       return { isSuccess: true };
     }

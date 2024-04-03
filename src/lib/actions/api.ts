@@ -6,9 +6,13 @@ const buildUrl = (baseUrl: string, params?: URLSearchParams) => {
   return url;
 };
 
-export async function get(url: string, params?: URLSearchParams) {
+export async function get(
+  url: string,
+  params?: URLSearchParams,
+  tags?: string[],
+) {
   const urlWithParams = buildUrl(url, params);
-  return await fetch(urlWithParams);
+  return await fetch(urlWithParams, { next: { tags } });
 }
 
 export async function post(
