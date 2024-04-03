@@ -19,11 +19,13 @@ import { addWord } from "@/lib/actions/word";
 import { useFormState } from "react-dom";
 import useNotification from "@/hooks/useNotification";
 import { SaveButton } from "@/components/ui/SaveButton";
+import { useTranslations } from "next-intl";
 
 const canSave = (value: string, furiganaValue: string, translation: string) =>
   isJapanese(value) && isKana(furiganaValue) && !isEmpty(translation);
 
 const AddWordForm = () => {
+  const t = useTranslations("modals");
   const [formState, formAction] = useFormState<FormState, FormData>(
     addWord,
     null,
@@ -51,19 +53,22 @@ const AddWordForm = () => {
 
   useEffect(() => {
     if (formState) {
-      showFormActionNotif(formState, "Word added");
+      showFormActionNotif(
+        formState,
+        t("addWord.notifications.success"),
+        t("addWord.notifications.error"),
+      );
       handleClose();
     }
-  }, [formState, handleClose, showFormActionNotif]);
+  }, [formState, handleClose, showFormActionNotif, t]);
 
   return (
     <BaseModal<MWord> name="add-word">
       <form autoComplete="off" action={formAction}>
-        <DialogTitle id="form-dialog-title">Ajouter un mot</DialogTitle>
+        <DialogTitle id="form-dialog-title">{t("addWord.header")}</DialogTitle>
         <DialogContent>
           <DialogContentText marginBottom={2}>
-            Pour ajouter un mot, veuillez renseigner sa valeur, sa transcription
-            furigana et sa traduction.
+            {t("addWord.description")}
           </DialogContentText>
           <Grid container alignItems="flex-start" spacing={2}>
             <Grid item xs={12}>
@@ -71,7 +76,7 @@ const AddWordForm = () => {
                 autoFocus
                 id="wordValue"
                 name="value"
-                label="Valeur du mot"
+                label={t("addWord.value")}
                 fullWidth
                 type="text"
                 value={wordValue}
@@ -84,7 +89,7 @@ const AddWordForm = () => {
             <Grid item xs={12}>
               <TextField
                 id="wordFuriganaValue"
-                label="Transcription furigana"
+                label={t("addWord.furigana")}
                 name="furiganaValue"
                 fullWidth
                 type="text"
@@ -98,7 +103,7 @@ const AddWordForm = () => {
             <Grid item xs={12}>
               <TextField
                 id="wordTranslation"
-                label="Traduction"
+                label={t("addWord.translations")}
                 name="translations"
                 fullWidth
                 type="text"
@@ -113,12 +118,12 @@ const AddWordForm = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="error">
-            Annuler
+            {t("buttons.cancel")}
           </Button>
           <SaveButton
             disabled={!canSave(wordValue, wordFuriganaValue, wordTranslation)}
           >
-            Ajouter
+            {t("buttons.add")}
           </SaveButton>
         </DialogActions>
       </form>

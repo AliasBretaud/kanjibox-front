@@ -29,9 +29,10 @@ import BaseModal from "@/components/ui/BaseModal";
 import useModal from "@/hooks/useModal";
 import useNotification from "@/hooks/useNotification";
 import { SaveButton } from "@/components/ui/SaveButton";
+import { useTranslations } from "next-intl";
 
 const validate = (input: string, checkFcn: (s: string) => boolean) =>
-  input.split(";").every((k) => !isEmpty(k) && checkFcn(k));
+  input.split("addKanji.;").every((k) => !isEmpty(k) && checkFcn(k));
 
 const canSave = (
   { value, kunYomi, onYomi, translations }: FKanji,
@@ -51,6 +52,7 @@ const canSave = (
 };
 
 const AddKanjiForm = () => {
+  const t = useTranslations("modals");
   const [formState, formAction] = useFormState<FormState, FormData>(
     addKanji,
     null,
@@ -74,10 +76,14 @@ const AddKanjiForm = () => {
 
   useEffect(() => {
     if (formState) {
-      showFormActionNotif(formState, "Kanji added");
+      showFormActionNotif(
+        formState,
+        t("addKanji.notifications.success"),
+        t("addKanji.notifications.error"),
+      );
       handleClose();
     }
-  }, [formState, handleClose, showFormActionNotif]);
+  }, [formState, handleClose, showFormActionNotif, t]);
 
   return (
     <BaseModal<MKanji>
@@ -86,12 +92,10 @@ const AddKanjiForm = () => {
       name="add-kanji"
     >
       <form autoComplete="off" action={formAction}>
-        <DialogTitle id="form-dialog-title">Ajouter Kanji</DialogTitle>
+        <DialogTitle id="form-dialog-title">{t("addKanji.header")}</DialogTitle>
         <DialogContent>
           <DialogContentText marginBottom={2}>
-            Pour ajouter un kanji, veuillez renseigner sa valeur. Vous pouvez,
-            si vous le souhaitez, laisser l&apos;appli se charger de la
-            détection des différentes lectures et traductions (en anglais).
+            {t("addKanji.description")}
           </DialogContentText>
           <Grid container alignItems="flex-start" spacing={2}>
             <Grid item xs={12}>
@@ -99,7 +103,7 @@ const AddKanjiForm = () => {
                 autoFocus
                 id="kanjiValue"
                 name="value"
-                label="Valeur du Kanji"
+                label={t("addKanji.value")}
                 fullWidth
                 type="text"
                 value={value}
@@ -119,14 +123,14 @@ const AddKanjiForm = () => {
                     }}
                   />
                 }
-                label="Détection automatique des lectures/traductions"
+                label={t("addKanji.autoDetectReadings")}
                 name="autoDetectReadings"
               />
             </Grid>
             <Grid item xs={6}>
               <TextField
                 id="standard-multiline-flexible-1"
-                label="On Yomi"
+                label={t("addKanji.onYomi.label")}
                 name="onYomi"
                 multiline
                 maxRows={4}
@@ -134,14 +138,14 @@ const AddKanjiForm = () => {
                 onChange={(evt) => {
                   setOnYomi(toKatakana(evt.target.value));
                 }}
-                helperText="Séparer par des ';'"
+                helperText={t("addKanji.onYomi.description")}
                 disabled={autoDetectReadings}
               />
             </Grid>
             <Grid item xs={6}>
               <TextField
                 id="standard-multiline-flexible-2"
-                label="Kun Yomi"
+                label={t("addKanji.kunYomi.label")}
                 name="kunYomi"
                 multiline
                 maxRows={4}
@@ -149,14 +153,14 @@ const AddKanjiForm = () => {
                 onChange={(evt) => {
                   setKunYomi(toHiragana(evt.target.value));
                 }}
-                helperText="Séparer par des ';'"
+                helperText={t("addKanji.kunYomi.description")}
                 disabled={autoDetectReadings}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
                 id="translation"
-                label="Traductions"
+                label={t("addKanji.translations.label")}
                 name="translations"
                 fullWidth
                 type="text"
@@ -164,7 +168,7 @@ const AddKanjiForm = () => {
                 onChange={(evt) => {
                   setTranslations(evt.target.value);
                 }}
-                helperText="Séparer par des ';'"
+                helperText={t("addKanji.translations.description")}
                 disabled={autoDetectReadings}
               />
             </Grid>
@@ -172,7 +176,7 @@ const AddKanjiForm = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="error">
-            Annuler
+            {t("buttons.cancel")}
           </Button>
           <SaveButton
             disabled={
@@ -182,7 +186,7 @@ const AddKanjiForm = () => {
               )
             }
           >
-            Ajouter
+            {t("buttons.add")}
           </SaveButton>
         </DialogActions>
       </form>

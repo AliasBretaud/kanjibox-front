@@ -53,9 +53,9 @@ export type Page<T> = {
   sort: Sorted;
 };
 
-export type PageParams<T> = {
+export type PageParams<T, D = unknown> = {
   params: T;
-  searchParams: T;
+  searchParams: D;
 };
 
 export type ResponseError = {

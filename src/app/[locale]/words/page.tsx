@@ -1,6 +1,5 @@
 import { Suspense } from "react";
 
-//import AddWordForm from "@/components/word/AddWordForm";
 import WordList from "@/components/word/WordList";
 import { LoadingState } from "@/components/ui/LoadingState";
 import Pagination from "@/components/ui/Pagination";
@@ -11,14 +10,29 @@ import AddWordButton from "@/components/word/AddWordButton";
 import SnackBarProvider from "@/components/ui/SnackBarProvider";
 import KanjiDetailsModal from "@/components/word/KanjiDetailsModal";
 import AddWordForm from "@/components/word/AddWordForm";
+import { unstable_setRequestLocale } from "next-intl/server";
+import {
+  type AbstractIntlMessages,
+  NextIntlClientProvider,
+  useMessages,
+} from "next-intl";
+import pick from "lodash.pick";
 
-const WordsContainer = async ({ page }: { page: number }) => {
+const WordsContainer = async ({
+  page,
+  messages,
+}: {
+  page: number;
+  messages: AbstractIntlMessages;
+}) => {
   const words = await getWords(12, page);
   return (
     <div className="flex flex-col items-center">
       <Pagination pagesCount={words.totalPages} sx={{ paddingTop: "40px" }} />
-      <AddWordButton />
-      <AddWordForm />
+      <NextIntlClientProvider messages={messages}>
+        <AddWordButton />
+        <AddWordForm />
+      </NextIntlClientProvider>
       <WordList data={words.content} />
       <KanjiDetailsModal />
       <SnackBarProvider />
@@ -27,12 +41,20 @@ const WordsContainer = async ({ page }: { page: number }) => {
 };
 
 export default function WordsPage({
+  params: { locale },
   searchParams,
-}: PageParams<{ page?: number }>) {
+}: PageParams<{ locale: string }, { page?: number }>) {
+  // Enable static rendering
+  unstable_setRequestLocale(locale);
+
+  const messages = useMessages();
   const page = searchParams?.page || 1;
   return (
     <Suspense key={page} fallback={<LoadingState text="Loading Words..." />}>
-      <WordsContainer page={page} />
+      <WordsContainer
+        page={page}
+        messages={pick(messages, ["modals", "buttons"])}
+      />
     </Suspense>
   );
 }

@@ -6,6 +6,7 @@ import SearchBar from "@/components/home/SearchBar";
 import WelcomeMessage from "@/components/home/WelcomeMessage";
 
 import { getKanjis } from "@/lib/actions/kanji";
+import { unstable_setRequestLocale } from "next-intl/server";
 import type { PageParams } from "@/types";
 
 const KanjiContainer = async ({ search }: { search: string }) => {
@@ -13,7 +14,13 @@ const KanjiContainer = async ({ search }: { search: string }) => {
   return <KanjiList data={kanjis.content} />;
 };
 
-export default function Home({ searchParams }: PageParams<{ query?: string }>) {
+export default function Home({
+  params: { locale },
+  searchParams,
+}: PageParams<{ locale: string }, { query?: string }>) {
+  // Enable static rendering
+  unstable_setRequestLocale(locale);
+
   const query = searchParams?.query || "";
   return (
     <main>
