@@ -23,7 +23,7 @@ import {
 } from "wanakana";
 
 import { addKanji } from "@/lib/actions/kanji";
-import { isEmpty } from "@/lib/utils";
+import isEmpty from "@/lib/utils/isEmpty";
 import type { FKanji, FormState, MKanji } from "@/types";
 import BaseModal from "@/components/ui/BaseModal";
 import useModal from "@/hooks/useModal";

@@ -4,6 +4,7 @@ import type { GridProps } from "@mui/material";
 import type { $Kanji } from "@/types";
 
 import KanjiCard from "./KanjiCard";
+import { useLocale } from "next-intl";
 
 const getGridProps = (nbElements: number): GridProps => {
   switch (nbElements) {
@@ -20,6 +21,7 @@ const getGridProps = (nbElements: number): GridProps => {
 
 const KanjiList = ({ data: kanjis = [] }: { data: $Kanji[] }) => {
   const gridProps = getGridProps(kanjis.length);
+  const locale = useLocale();
   return (
     <Grid container justifyContent="center" spacing={4} flexGrow={1} p={4}>
       {kanjis.map((value, i) => (
@@ -30,7 +32,7 @@ const KanjiList = ({ data: kanjis = [] }: { data: $Kanji[] }) => {
           display="flex"
           {...gridProps}
         >
-          <KanjiCard {...value} />
+          <KanjiCard locale={locale} {...value} />
         </Grid>
       ))}
     </Grid>

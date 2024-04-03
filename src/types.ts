@@ -1,6 +1,4 @@
-export type Language = "en" | "ja" | "fr";
-
-type MappedValue<T extends string, D> = {
+export type MappedValue<T extends string, D> = {
   [key in T]?: D;
 };
 
@@ -9,7 +7,7 @@ export type $Kanji = {
   value: string;
   kunYomi?: string[];
   onYomi?: string[];
-  translations?: MappedValue<Language, string[]>;
+  translations?: MappedValue<string, string[]>;
 };
 
 export type FKanji = Pick<$Kanji, "value"> & {
@@ -23,7 +21,7 @@ export type $Word = {
   value: string;
   furiganaValue: string;
   kanjis?: $Kanji[];
-  translations: MappedValue<Language, string[]>;
+  translations: MappedValue<string, string[]>;
 };
 
 type Sorted = {
@@ -73,3 +71,5 @@ export type FormState = Partial<{
 export type MKanji = "add-kanji" | "kanji-details";
 
 export type MWord = "add-word";
+
+export type PropsWithLocalization<T> = T & { locale: string };

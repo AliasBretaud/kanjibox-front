@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 
-import { getFormDataField } from "@/lib/utils";
+import getFormDataField from "@/lib/utils/getFormDataField";
 import type { $Kanji, FormState, Page } from "@/types";
 import { get, post } from "./api";
 

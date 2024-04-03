@@ -2,7 +2,7 @@
 
 import type { $Word, FormState, Page } from "@/types";
 import { get, post } from "./api";
-import { getFormDataField } from "@/lib/utils";
+import getFormDataField from "@/lib/utils/getFormDataField";
 import { revalidatePath } from "next/cache";
 
 const WORD_ENDPOINT = `${process.env.BACKEND_API_URL}/words`;
@@ -41,7 +41,11 @@ export const addWord = async (
   try {
     const response = await post(WORD_ENDPOINT, word);
     if (response.ok) {
+      const createdWord: $Word = await response.json();
       revalidatePath("/words");
+      if (createdWord.kanjis?.length) {
+        revalidatePath("/kanjis");
+      }
       return { isSuccess: true };
     }
     throw new Error("API request error", { cause: await response.json() });

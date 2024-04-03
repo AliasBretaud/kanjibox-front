@@ -14,7 +14,7 @@ import {
 import { useCallback, useEffect, useState } from "react";
 import { isJapanese, isKana, toKana } from "wanakana";
 import useModal from "@/hooks/useModal";
-import { isEmpty } from "@/lib/utils";
+import isEmpty from "@/lib/utils/isEmpty";
 import { addWord } from "@/lib/actions/word";
 import { useFormState } from "react-dom";
 import useNotification from "@/hooks/useNotification";
