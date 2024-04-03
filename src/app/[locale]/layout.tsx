@@ -8,7 +8,7 @@ import theme from "@/lib/theme";
 import "@/app/globals.css";
 import { ModalProvider } from "@/context/modalContext";
 import type { PropsWithChildren } from "react";
-import { locales } from "@/config";
+import { locales } from "@/locale-config";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 
 type Props = PropsWithChildren<{

@@ -2,7 +2,7 @@
 
 import clsx from "clsx";
 import type { ComponentProps } from "react";
-import type { AppPathnames } from "@/config";
+import type { AppPathnames } from "@/locale-config";
 import { Link } from "@/navigation";
 import dynamic from "next/dynamic";
 

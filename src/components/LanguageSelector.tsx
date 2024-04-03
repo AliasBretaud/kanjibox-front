@@ -1,6 +1,6 @@
 "use client";
 
-import { locales } from "@/config";
+import { locales } from "@/locale-config";
 import { usePathname, useRouter } from "@/navigation";
 import { KeyboardArrowDown, Translate } from "@mui/icons-material";
 import { Button, Menu, MenuItem } from "@mui/material";
