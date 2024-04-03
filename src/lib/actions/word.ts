@@ -4,6 +4,7 @@ import type { $Word, FormState, Page } from "@/types";
 import { get, post } from "./api";
 import getFormDataField from "@/lib/utils/getFormDataField";
 import { revalidateTag } from "next/cache";
+import formatInputList from "@/lib/utils/formatInputList";
 
 const WORD_ENDPOINT = `${process.env.BACKEND_API_URL}/words`;
 
@@ -34,7 +35,7 @@ export const addWord = async (
   const value = getFormDataField<$Word>(data, "value");
   const furiganaValue = getFormDataField<$Word>(data, "furiganaValue");
   const translations = {
-    en: getFormDataField<$Word>(data, "translations").split(";"),
+    en: formatInputList(getFormDataField<$Word>(data, "translations")),
   };
   const word: $Word = { value, furiganaValue, translations };
 

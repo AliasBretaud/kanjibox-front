@@ -32,7 +32,7 @@ import { SaveButton } from "@/components/ui/SaveButton";
 import { useTranslations } from "next-intl";
 
 const validate = (input: string, checkFcn: (s: string) => boolean) =>
-  input.split("addKanji.;").every((k) => !isEmpty(k) && checkFcn(k));
+  input.split(";").every((k) => !isEmpty(k) && checkFcn(k));
 
 const canSave = (
   { value, kunYomi, onYomi, translations }: FKanji,
@@ -43,10 +43,15 @@ const canSave = (
     return validValue;
   }
 
+  const validKunYomi = isEmpty(kunYomi) || validate(kunYomi, isHiragana);
+  const validOnYomi = isEmpty(onYomi) || validate(onYomi, isKatakana);
+
+  const validReadings =
+    !(isEmpty(kunYomi) && isEmpty(onYomi)) && validKunYomi && validOnYomi;
+
   return (
     validValue &&
-    validate(kunYomi, isHiragana) &&
-    validate(onYomi, isKatakana) &&
+    validReadings &&
     validate(translations, (input) => !isJapanese(input))
   );
 };

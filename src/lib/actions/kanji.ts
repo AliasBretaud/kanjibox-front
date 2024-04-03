@@ -6,6 +6,7 @@ import getFormDataField from "@/lib/utils/getFormDataField";
 import type { $Kanji, FormState, Page } from "@/types";
 import { get, post } from "./api";
 import { cookies } from "next/headers";
+import formatInputList from "@/lib/utils/formatInputList";
 
 const KANJI_ENDPOINT = `${process.env.BACKEND_API_URL}/kanjis`;
 
@@ -43,10 +44,10 @@ export const addKanji = async (
   const locale = cookies().get("NEXT_LOCALE")?.value || "en";
 
   if (!autoDetectReadings) {
-    kanji.kunYomi = getFormDataField<$Kanji>(data, "kunYomi").split(";");
-    kanji.onYomi = getFormDataField<$Kanji>(data, "onYomi").split(";");
-    const translations = getFormDataField<$Kanji>(data, "translations").split(
-      ";",
+    kanji.kunYomi = formatInputList(getFormDataField<$Kanji>(data, "kunYomi"));
+    kanji.onYomi = formatInputList(getFormDataField<$Kanji>(data, "onYomi"));
+    const translations = formatInputList(
+      getFormDataField<$Kanji>(data, "translations"),
     );
     kanji.translations = { [locale]: translations };
   }
