@@ -41,7 +41,8 @@ export const addKanji = async (
 ): Promise<FormState> => {
   const kanji: $Kanji = { value: getFormDataField<$Kanji>(data, "value") };
   const autoDetectReadings = data.get("autoDetectReadings") === "on";
-  const locale = cookies().get("NEXT_LOCALE")?.value || "en";
+  const cookiesLocale = cookies().get("NEXT_LOCALE")?.value || "en";
+  const locale = cookiesLocale === "ja" ? "en" : cookiesLocale;
 
   if (!autoDetectReadings) {
     kanji.kunYomi = formatInputList(getFormDataField<$Kanji>(data, "kunYomi"));

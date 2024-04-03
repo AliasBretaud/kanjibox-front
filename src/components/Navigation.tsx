@@ -14,7 +14,7 @@ const Navigation = () => {
         flex={1}
       >
         <Stack alignItems="center" direction="row" gap={4}>
-          <NavigationLink className="text-xl font-kanji" href="/">
+          <NavigationLink big className="font-kanji" href="/">
             Floの漢字箱
           </NavigationLink>
           <Stack direction="row" gap={2}>
