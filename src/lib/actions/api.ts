@@ -1,10 +1,6 @@
-const buildUrl = (baseUrl: string, params?: URLSearchParams) => {
-  const url = new URL(baseUrl);
-  if (params) {
-    params.forEach((v, k) => url.searchParams.append(k, v));
-  }
-  return url;
-};
+"use server";
+
+import { buildUrl } from "@/lib/utils/buildUrl";
 
 export async function get(
   url: string,

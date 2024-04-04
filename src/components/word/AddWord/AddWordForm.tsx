@@ -2,14 +2,11 @@
 
 import BaseModal from "@/components/ui/BaseModal";
 import {
-  Alert,
-  Button,
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
   Grid,
-  TextField,
 } from "@mui/material";
 import type { ChangeEvent } from "react";
 import { useCallback, useEffect, useState } from "react";
@@ -17,15 +14,19 @@ import useModal from "@/hooks/useModal";
 import { addWord } from "@/lib/actions/word";
 import { useFormState } from "react-dom";
 import useNotification from "@/hooks/useNotification";
-import { SaveButton } from "@/components/ui/SaveButton";
 import { useTranslations } from "next-intl";
 import type { WordFormType } from "@/lib/validation/schemas/word";
 import { convertInputToHiragana } from "@/lib/utils/convertInputToJapanese";
 import type { MWord } from "@/types/modals";
 import type { FormState } from "@/types/form";
+import ValueInput from "./ValueInput";
+import FuriganaValueInput from "./FuriganaValueInput";
+import TranslationsInput from "./TranslationsInput";
+import ValidationErrors from "@/components/form/ValidationErrors";
+import ButtonsBlock from "@/components/form/ButtonsBlock";
 
 const AddWordForm = () => {
-  const t = useTranslations("modals");
+  const t = useTranslations("modals.addWord");
   const [formState, formAction] = useFormState<
     FormState<WordFormType>,
     FormData
@@ -34,6 +35,8 @@ const AddWordForm = () => {
   const [wordFuriganaValue, setWordFuriganaValue] = useState<string>("");
   const { hideModal } = useModal();
   const { showSuccessNotif, showErrorNotif } = useNotification();
+
+  const formProps = { errors };
 
   const handleClose = useCallback(() => {
     setWordFuriganaValue("");
@@ -55,9 +58,9 @@ const AddWordForm = () => {
     if (formState?.apiResponse) {
       const { isSuccess, isError } = formState.apiResponse;
       if (isSuccess) {
-        showSuccessNotif(t("addWord.notifications.success"));
+        showSuccessNotif(t("notifications.success"));
       } else if (isError) {
-        showErrorNotif(t("addWord.notifications.error"));
+        showErrorNotif(t("notifications.error"));
       }
       handleClose();
     }
@@ -72,63 +75,35 @@ const AddWordForm = () => {
   return (
     <BaseModal<MWord> name="add-word">
       <form autoComplete="off" action={formAction}>
-        <DialogTitle id="form-dialog-title">{t("addWord.header")}</DialogTitle>
+        <DialogTitle id="form-dialog-title">{t("header")}</DialogTitle>
         <DialogContent>
           <DialogContentText marginBottom={2}>
-            {t("addWord.description")}
+            {t("description")}
           </DialogContentText>
           <Grid container alignItems="flex-start" spacing={2}>
             <Grid item xs={12}>
-              <TextField
-                autoFocus
-                id="wordValue"
-                name="value"
-                label={t("addWord.value")}
-                fullWidth
-                type="text"
-                required
-                error={!!errors?.value}
-              />
+              <ValueInput {...formProps} />
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                id="wordFuriganaValue"
-                label={t("addWord.furigana")}
-                name="furiganaValue"
-                fullWidth
-                type="text"
+              <FuriganaValueInput
                 value={wordFuriganaValue}
                 onChange={formatFurigana}
-                required
-                error={!!errors?.furiganaValue}
+                {...formProps}
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                id="wordTranslation"
-                label={t("addWord.translations.label")}
-                name="translations"
-                fullWidth
-                type="text"
-                helperText={t("addWord.translations.description")}
-                required
-                error={!!errors?.translations}
-              />
+              <TranslationsInput {...formProps} />
             </Grid>
           </Grid>
           {errors && (
-            <Alert severity="error" sx={{ mt: 2 }}>
-              {Object.values(errors).map((k) => (
-                <div key={k}>{t(`addWord.validations.${k}`)}</div>
-              ))}
-            </Alert>
+            <ValidationErrors<WordFormType>
+              errors={errors}
+              tKey="modals.addWord.validations"
+            />
           )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="error">
-            {t("buttons.cancel")}
-          </Button>
-          <SaveButton>{t("buttons.add")}</SaveButton>
+          <ButtonsBlock onClose={handleClose} />
         </DialogActions>
       </form>
     </BaseModal>

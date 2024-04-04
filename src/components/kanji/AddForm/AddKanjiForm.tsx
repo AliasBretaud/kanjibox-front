@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useFormState } from "react-dom";
 import {
-  Button,
   DialogActions,
   DialogContent,
   DialogContentText,
@@ -15,7 +14,6 @@ import { addKanji } from "@/lib/actions/kanji";
 import BaseModal from "@/components/ui/BaseModal";
 import useModal from "@/hooks/useModal";
 import useNotification from "@/hooks/useNotification";
-import { SaveButton } from "@/components/ui/SaveButton";
 import { useTranslations } from "next-intl";
 import {
   convertInputToHiragana,
@@ -29,12 +27,11 @@ import AutoDetectReadingsSwitch from "./AutoDetectReadingsSwitch";
 import OnYomiInput from "./OnYomiInput";
 import KunYomiInput from "./KunYomiInput";
 import TranslationsInput from "./TranslationsInput";
-import dynamic from "next/dynamic";
-
-const ValidationErrors = dynamic(() => import("./ValidationErrors"));
+import ValidationErrors from "@/components/form/ValidationErrors";
+import ButtonsBlock from "@/components/form/ButtonsBlock";
 
 const AddKanjiForm = () => {
-  const t = useTranslations("modals");
+  const t = useTranslations("modals.addKanji");
   const [formState, formAction] = useFormState<
     FormState<KanjiFormType>,
     FormData
@@ -65,9 +62,9 @@ const AddKanjiForm = () => {
     if (formState?.apiResponse) {
       const { isSuccess, isError } = formState.apiResponse;
       if (isSuccess) {
-        showSuccessNotif(t("addKanji.notifications.success"));
+        showSuccessNotif(t("notifications.success"));
       } else if (isError) {
-        showErrorNotif(t("addKanji.notifications.error"));
+        showErrorNotif(t("notifications.error"));
       }
       handleClose();
     }
@@ -86,10 +83,10 @@ const AddKanjiForm = () => {
       name="add-kanji"
     >
       <form autoComplete="off" action={formAction}>
-        <DialogTitle id="form-dialog-title">{t("addKanji.header")}</DialogTitle>
+        <DialogTitle id="form-dialog-title">{t("header")}</DialogTitle>
         <DialogContent>
           <DialogContentText marginBottom={2}>
-            {t("addKanji.description")}
+            {t("description")}
           </DialogContentText>
           <Grid container alignItems="flex-start" spacing={2}>
             <Grid item xs={12}>
@@ -125,13 +122,15 @@ const AddKanjiForm = () => {
               <TranslationsInput {...formProps} disabled={autoDetectReadings} />
             </Grid>
           </Grid>
-          {errors && <ValidationErrors errors={errors} />}
+          {errors && (
+            <ValidationErrors<KanjiFormType>
+              errors={errors}
+              tKey="modals.addKanji.validations"
+            />
+          )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="error">
-            {t("buttons.cancel")}
-          </Button>
-          <SaveButton>{t("buttons.add")}</SaveButton>
+          <ButtonsBlock onClose={handleClose} />
         </DialogActions>
       </form>
     </BaseModal>

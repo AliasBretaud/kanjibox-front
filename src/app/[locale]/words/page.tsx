@@ -9,7 +9,7 @@ import type { PageParams } from "@/types/utils";
 import AddWordButton from "@/components/word/AddWordButton";
 import SnackBarProvider from "@/components/ui/SnackBarProvider";
 import KanjiDetailsModal from "@/components/word/KanjiDetailsModal";
-import AddWordForm from "@/components/word/AddWordForm";
+import AddWordForm from "@/components/word/AddWord/AddWordForm";
 import { unstable_setRequestLocale } from "next-intl/server";
 import {
   type AbstractIntlMessages,
