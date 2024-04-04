@@ -1,0 +1,79 @@
+{
+  "metadata": {
+    "title": "かんじボックス",
+    "description": "日本語学習のためのシンプルなアプリ"
+  },
+  "navigation": {
+    "kanjis": "漢字",
+    "words": "単語"
+  },
+  "loading": {
+    "kanjis": "読み込み中",
+    "words": "読み込み中"
+  },
+  "welcome": {
+    "header": "漢字ボックス",
+    "description": "漢字ボックスのホームページです。以下には最近記録された漢字が表示されます。漢字や単語の表示/編集は、下のボタンをクリックしてください。",
+    "cta": {
+      "kanjis": "漢字（単位）",
+      "words": "単語"
+    }
+  },
+  "buttons": {
+    "addKanji": "漢字を追加",
+    "addWord": "単語を追加"
+  },
+  "modals": {
+    "addKanji": {
+      "header": "漢字を追加",
+      "description": "漢字を追加するには、その値を提供してください。オプションでアプリによる様々な読みや英訳（英語）の検出を行うこともできます。",
+      "value": "漢字の値",
+      "autoDetectReadings": "読み/英訳の自動検出",
+      "onYomi": {
+        "label": "音読み",
+        "description": "';'で区切る"
+      },
+      "kunYomi": {
+        "label": "訓読み",
+        "description": "';'で区切る"
+      },
+      "translations": {
+        "label": "英訳",
+        "description": "';'で区切る"
+      },
+      "notifications": {
+        "success": "漢字が追加されました！",
+        "error": "エラー"
+      },
+      "validations": {
+        "value": "漢字の値の形式が必要です",
+        "onYomi": "音読みが必要です（カタカナ）",
+        "kunYomi": "訓読みが必要です（ひらがな）",
+        "translations": "翻訳が必要です"
+      }
+    },
+    "addWord": {
+      "header": "単語を追加",
+      "description": "単語を追加するには、その値、フリガナの表記、および英訳を提供してください。",
+      "value": "単語の値",
+      "furigana": "フリガナの表記",
+      "translations": {
+        "label": "英訳",
+        "description": "';'で区切る"
+      },
+      "notifications": {
+        "success": "単語が追加されました！",
+        "error": "エラー"
+      },
+      "validations": {
+        "value": "単語の値の形式が必要です",
+        "furiganaValue": "フリガナの転写が必要です（ひらがな）",
+        "translations": "翻訳が必要です"
+      }
+    },
+    "buttons": {
+      "add": "追加",
+      "cancel": "キャンセル"
+    }
+  }
+}

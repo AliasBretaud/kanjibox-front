@@ -22,7 +22,12 @@ const BaseModal = <T extends string>({
     }
   };
   return (
-    <Dialog {...p} open={shownModal === name} onClose={onClose}>
+    <Dialog
+      {...p}
+      open={shownModal === name}
+      onClose={onClose}
+      disableRestoreFocus
+    >
       {children}
     </Dialog>
   );

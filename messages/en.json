@@ -1,0 +1,79 @@
+{
+  "metadata": {
+    "title": "Kanjibox",
+    "description": "Une appli simple d'apprentissage du Japonais"
+  },
+  "navigation": {
+    "kanjis": "Kanjis",
+    "words": "Words"
+  },
+  "loading": {
+    "kanjis": "Loading Kanjis...",
+    "words": "Loading Words..."
+  },
+  "welcome": {
+    "header": "Kanji Box",
+    "description": "Home page of Kanji Box, below are the recently recorded kanji. To view/edit kanji or words, click on the buttons below.",
+    "cta": {
+      "kanjis": "Kanjis (unit)",
+      "words": "Words"
+    }
+  },
+  "buttons": {
+    "addKanji": "Add Kanji",
+    "addWord": "Add Word"
+  },
+  "modals": {
+    "addKanji": {
+      "header": "Add Kanji",
+      "description": "To add a kanji, please provide its value. You can optionally let the app handle the detection of various readings and translations (in English).",
+      "value": "Kanji Value",
+      "autoDetectReadings": "Automatic detection of readings/translations",
+      "onYomi": {
+        "label": "On Yomi",
+        "description": "Separate by ';'"
+      },
+      "kunYomi": {
+        "label": "Kun Yomi",
+        "description": "Separate by ';'"
+      },
+      "translations": {
+        "label": "Translations",
+        "description": "Separate by ';'"
+      },
+      "notifications": {
+        "success": "Kanji added !",
+        "error": "Error"
+      },
+      "validations": {
+        "value": "Kanji value format required (Japanese)",
+        "onYomi": "ON reading(s) required (katakana)",
+        "kunYomi": "KUN reading(s) required (hiragana)",
+        "translations": "Translation(s) required"
+      }
+    },
+    "addWord": {
+      "header": "Add a Word",
+      "description": "To add a word, please provide its value, its furigana transcription, and its translation.",
+      "value": "Word Value",
+      "furigana": "Furigana Transcription",
+      "translations": {
+        "label": "Translations",
+        "description": "Separate by ';'"
+      },
+      "notifications": {
+        "success": "Word added !",
+        "error": "Error"
+      },
+      "validations": {
+        "value": "Word value required (Japanese)",
+        "furiganaValue": "Furigana transcription required (hiragana)",
+        "translations": "Translation(s) required"
+      }
+    },
+    "buttons": {
+      "add": "Add",
+      "cancel": "Cancel"
+    }
+  }
+}

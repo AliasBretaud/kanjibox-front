@@ -1,14 +1,14 @@
-const buildUrl = (baseUrl: string, params?: URLSearchParams) => {
-  const url = new URL(baseUrl);
-  if (params) {
-    params.forEach((v, k) => url.searchParams.append(k, v));
-  }
-  return url;
-};
+"use server";
 
-export async function get(url: string, params?: URLSearchParams) {
+import { buildUrl } from "@/lib/utils/buildUrl";
+
+export async function get(
+  url: string,
+  params?: URLSearchParams,
+  tags?: string[],
+) {
   const urlWithParams = buildUrl(url, params);
-  return await fetch(urlWithParams);
+  return await fetch(urlWithParams, { next: { tags } });
 }
 
 export async function post(

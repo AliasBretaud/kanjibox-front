@@ -1,10 +1,19 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidateTag } from "next/cache";
 
-import { getFormDataField } from "@/lib/utils";
-import type { $Kanji, FormState, Page } from "@/types";
+import { getFormDataField } from "@/lib/utils/getFormDataField";
 import { get, post } from "./api";
+import { cookies } from "next/headers";
+import { formatInputList } from "@/lib/utils/formatInputList";
+import type { KanjiFormType } from "@/lib/validation/schemas/kanji";
+import { kanjiSchema } from "@/lib/validation/schemas/kanji";
+import validateSchema from "@/lib/validation/validateSchema";
+import { getLocaleFromCookiesOrDefault } from "@/lib/utils/getLocaleFromCookiesOrDefault";
+import type { Page } from "@/types/api";
+import type { $Kanji } from "@/types/models";
+import type { FormState } from "@/types/form";
+import type { RequiredProps } from "@/types/utils";
 
 const KANJI_ENDPOINT = `${process.env.BACKEND_API_URL}/kanjis`;
 
@@ -23,7 +32,7 @@ export const getKanjis = async (
   if (search) {
     params.append("search", search);
   }
-  const res = await get(KANJI_ENDPOINT, params);
+  const res = await get(KANJI_ENDPOINT, params, ["kanjis"]);
 
   return (await res.json()) as Page<$Kanji>;
 };
@@ -34,34 +43,60 @@ export const getKanji = async (id: number) => {
 };
 
 export const addKanji = async (
-  _: FormState,
+  _: unknown,
   data: FormData,
-): Promise<FormState> => {
-  const kanji: $Kanji = { value: getFormDataField<$Kanji>(data, "value") };
-  const autoDetectReadings = data.get("autoDetectReadings") === "on";
+): Promise<FormState<KanjiFormType>> => {
+  const parsedKanji = parseKanjiFormData(data);
+  const { autoDetectReadings } = parsedKanji;
 
-  if (!autoDetectReadings) {
-    kanji.kunYomi = getFormDataField<$Kanji>(data, "kunYomi").split(";");
-    kanji.onYomi = getFormDataField<$Kanji>(data, "onYomi").split(";");
-    const translations = getFormDataField<$Kanji>(data, "translations").split(
-      ";",
-    );
-    kanji.translations = { en: translations };
+  const validation = validateSchema<KanjiFormType>(kanjiSchema, parsedKanji);
+  if (!validation.success) {
+    return { validationErrors: validation.errors };
   }
 
+  const locale = getLocaleFromCookiesOrDefault(cookies());
+  const kanji = buildKanji(parsedKanji, locale);
   try {
     const params = new URLSearchParams({
       autoDetectReadings: autoDetectReadings.toString(),
     });
     const response = await post(KANJI_ENDPOINT, kanji, params);
     if (response.ok) {
-      revalidatePath("/kanjis");
-      revalidatePath("/");
-      return { isSuccess: true };
+      revalidateTag("kanjis");
+      return { apiResponse: { isSuccess: true } };
     }
     throw new Error("API request error", { cause: await response.json() });
   } catch (error) {
     console.error(error);
-    return { isError: true };
+    return { apiResponse: { isError: true } };
   }
+};
+
+const parseKanjiFormData = (data: FormData): RequiredProps<KanjiFormType> => ({
+  value: getFormDataField(data, "value"),
+  autoDetectReadings: data.get("autoDetectReadings") === "on",
+  onYomi: getFormDataField(data, "onYomi"),
+  kunYomi: getFormDataField(data, "kunYomi"),
+  translations: getFormDataField(data, "translations"),
+});
+
+const buildKanji = (
+  {
+    autoDetectReadings,
+    value,
+    onYomi,
+    kunYomi,
+    translations,
+  }: RequiredProps<KanjiFormType>,
+  locale: string,
+): $Kanji => {
+  const kanji: $Kanji = { value };
+  if (!autoDetectReadings) {
+    const translationsFormat = formatInputList(translations);
+    kanji.kunYomi = formatInputList(onYomi);
+    kanji.onYomi = formatInputList(kunYomi);
+    kanji.translations = { [locale]: translationsFormat };
+  }
+
+  return kanji;
 };

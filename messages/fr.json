@@ -1,0 +1,79 @@
+{
+  "metadata": {
+    "title": "Kanjibox",
+    "description": "A simple Japanese learning app"
+  },
+  "navigation": {
+    "kanjis": "Kanjis",
+    "words": "Mots"
+  },
+  "loading": {
+    "kanjis": "Chargement des Kanjis...",
+    "words": "Chargement des Mots..."
+  },
+  "welcome": {
+    "header": "Boîte à Kanjis",
+    "description": "Accueil de la Boîte à Kanjis, ci-dessous les kanjis récemment enregistrés. Pour consulter / éditer des kanjis ou des mots, cliquer sur les boutons ci-dessous.",
+    "cta": {
+      "kanjis": "Les Kanjis (unitaires)",
+      "words": "Les Mots"
+    }
+  },
+  "buttons": {
+    "addKanji": "Ajouter un Kanji",
+    "addWord": "Ajouter un mot"
+  },
+  "modals": {
+    "addKanji": {
+      "header": "Ajouter Kanji",
+      "description": "Pour ajouter un kanji, veuillez renseigner sa valeur. Vous pouvez, si vous le souhaitez, laisser l'appli se charger de la détection des différentes lectures et traductions (en anglais).",
+      "value": "Valeur du Kanji",
+      "autoDetectReadings": "Détection automatique des lectures/traductions",
+      "onYomi": {
+        "label": "On Yomi",
+        "description": "Séparer par des ';'"
+      },
+      "kunYomi": {
+        "label": "Kun Yomi",
+        "description": "Séparer par des ';'"
+      },
+      "translations": {
+        "label": "Traductions",
+        "description": "Séparer par des ';'"
+      },
+      "notifications": {
+        "success": "Kanji ajouté !",
+        "error": "Erreur"
+      },
+      "validations": {
+        "value": "Valeur du kanji au format Japonais requise",
+        "onYomi": "Lecture(s) ON requise(s) (katakana)",
+        "kunYomi": "Lecture(s) KUN requise(s) (hiragana)",
+        "translations": "Traduction(s) requise(s)"
+      }
+    },
+    "addWord": {
+      "header": "Ajouter un mot",
+      "description": "Pour ajouter un mot, veuillez renseigner sa valeur, sa transcription furigana et sa traduction.",
+      "value": "Valeur du mot",
+      "furigana": "Transcription furigana",
+      "translations": {
+        "label": "Traductions",
+        "description": "Séparer par des ';'"
+      },
+      "notifications": {
+        "success": "Mot ajouté !",
+        "error": "Erreur"
+      },
+      "validations": {
+        "value": "Valeur du mot au format Japonais requise",
+        "furiganaValue": "Transcription furigana requise (hiragana)",
+        "translations": "Traduction(s) requise(s)"
+      }
+    },
+    "buttons": {
+      "add": "Ajouter",
+      "cancel": "Annuler"
+    }
+  }
+}
