@@ -1,8 +1,8 @@
 import { Box, Card, CardContent } from "@mui/material";
 import Table, { Row } from "@/components/ui/Table";
 import { ClickableKanji } from "./ClickableKanji";
-import getLocalizedTranslations from "@/lib/utils/getLocalizedTranslations";
-import extractKanjiFromWord from "@/lib/utils/extractKanjiFromWord";
+import { getLocalizedTranslations } from "@/lib/utils/getLocalizedTranslations";
+import { extractKanjiFromWord } from "@/lib/utils/extractKanjiFromWord";
 import type { PropsWithLocalization } from "@/types/utils";
 import type { $Word } from "@/types/models";
 

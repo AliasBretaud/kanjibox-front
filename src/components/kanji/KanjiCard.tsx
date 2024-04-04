@@ -1,7 +1,7 @@
 import { Paper, Typography } from "@mui/material";
 
 import Table, { Row } from "@/components/ui/Table";
-import getLocalizedTranslations from "@/lib/utils/getLocalizedTranslations";
+import { getLocalizedTranslations } from "@/lib/utils/getLocalizedTranslations";
 import type { PropsWithLocalization } from "@/types/utils";
 import type { $Kanji } from "@/types/models";
 

@@ -1,9 +1,9 @@
 "use server";
 
 import { get, post } from "./api";
-import getFormDataField from "@/lib/utils/getFormDataField";
+import { getFormDataField } from "@/lib/utils/getFormDataField";
 import { revalidateTag } from "next/cache";
-import formatInputList from "@/lib/utils/formatInputList";
+import { formatInputList } from "@/lib/utils/formatInputList";
 import { cookies } from "next/headers";
 import { type WordFormType, wordSchema } from "@/lib/validation/schemas/word";
 import { getLocaleFromCookiesOrDefault } from "@/lib/utils/getLocaleFromCookiesOrDefault";

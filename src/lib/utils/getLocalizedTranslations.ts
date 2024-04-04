@@ -13,5 +13,3 @@ export const getLocalizedTranslations = (
 
   return ["-"];
 };
-
-export default getLocalizedTranslations;

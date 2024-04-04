@@ -7,7 +7,12 @@ import { useTranslations } from "next-intl";
 
 type FormData = Pick<KanjiFormType, "translations">;
 
-const TranslationsInput = ({ disabled, errors }: FormInputProps<FormData>) => {
+const TranslationsInput = ({
+  value,
+  onChange,
+  disabled,
+  errors,
+}: FormInputProps<FormData>) => {
   const t = useTranslations("modals.addKanji.translations");
   return (
     <TextField
@@ -15,6 +20,8 @@ const TranslationsInput = ({ disabled, errors }: FormInputProps<FormData>) => {
       name="translations"
       fullWidth
       type="text"
+      value={value}
+      onChange={onChange}
       helperText={t("description")}
       error={!!errors?.translations}
       disabled={disabled}

@@ -8,5 +8,3 @@ export const formatInputList = (input: string) =>
         })
         .filter((s) => s)
     : [];
-
-export default formatInputList;

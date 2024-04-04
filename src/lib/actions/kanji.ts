@@ -2,10 +2,10 @@
 
 import { revalidateTag } from "next/cache";
 
-import getFormDataField from "@/lib/utils/getFormDataField";
+import { getFormDataField } from "@/lib/utils/getFormDataField";
 import { get, post } from "./api";
 import { cookies } from "next/headers";
-import formatInputList from "@/lib/utils/formatInputList";
+import { formatInputList } from "@/lib/utils/formatInputList";
 import type { KanjiFormType } from "@/lib/validation/schemas/kanji";
 import { kanjiSchema } from "@/lib/validation/schemas/kanji";
 import validateSchema from "@/lib/validation/validateSchema";

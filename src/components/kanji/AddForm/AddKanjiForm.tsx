@@ -29,6 +29,7 @@ import KunYomiInput from "./KunYomiInput";
 import TranslationsInput from "./TranslationsInput";
 import ValidationErrors from "@/components/form/ValidationErrors";
 import ButtonsBlock from "@/components/form/ButtonsBlock";
+import { hasValidationErrors } from "@/lib/utils/hasValidationErrors";
 
 const AddKanjiForm = () => {
   const t = useTranslations("modals.addKanji");
@@ -39,18 +40,35 @@ const AddKanjiForm = () => {
   const [autoDetectReadings, setAutoDetectReadings] = useState(false);
   const [kunYomi, setKunYomi] = useState("");
   const [onYomi, setOnYomi] = useState("");
+  const [translations, setTranslations] = useState("");
   const [errors, setErrors] = useState(formState?.validationErrors);
   const { hideModal } = useModal();
   const { showSuccessNotif, showErrorNotif } = useNotification();
 
   const formProps = { errors };
 
-  const handleClose = useCallback(() => {
+  const clearControlledFields = useCallback(() => {
     setKunYomi("");
     setOnYomi("");
+    setTranslations("");
+  }, []);
+
+  const handleClose = useCallback(() => {
+    clearControlledFields();
     hideModal();
     setErrors(undefined);
-  }, [hideModal]);
+  }, [clearControlledFields, hideModal]);
+
+  useEffect(() => {
+    if (autoDetectReadings) {
+      clearControlledFields();
+      setErrors((errors) =>
+        errors
+          ? { ...errors, onYomi: "", kunYomi: "", translations: "" }
+          : undefined,
+      );
+    }
+  }, [autoDetectReadings, clearControlledFields]);
 
   useEffect(() => {
     if (formState?.validationErrors) {
@@ -113,16 +131,21 @@ const AddKanjiForm = () => {
                 {...formProps}
                 value={kunYomi}
                 onChange={(evt) => {
-                  setOnYomi(convertInputToHiragana(evt.target.value));
+                  setKunYomi(convertInputToHiragana(evt.target.value));
                 }}
                 disabled={autoDetectReadings}
               />
             </Grid>
             <Grid item xs={12}>
-              <TranslationsInput {...formProps} disabled={autoDetectReadings} />
+              <TranslationsInput
+                {...formProps}
+                value={translations}
+                onChange={(evt) => setTranslations(evt.target.value)}
+                disabled={autoDetectReadings}
+              />
             </Grid>
           </Grid>
-          {errors && (
+          {errors && hasValidationErrors(errors) && (
             <ValidationErrors<KanjiFormType>
               errors={errors}
               tKey="modals.addKanji.validations"

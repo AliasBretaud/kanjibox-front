@@ -9,9 +9,11 @@ export default function ValidationErrors<F>({ errors, tKey }: Props<F>) {
   const t = useTranslations(tKey);
   return (
     <Alert severity="error" sx={{ mt: 2 }}>
-      {Object.values(errors).map((k, i) => (
-        <div key={i}>{t(k)}</div>
-      ))}
+      {Object.values(errors)
+        .filter((e) => e)
+        .map((k, i) => (
+          <div key={i}>{t(k)}</div>
+        ))}
     </Alert>
   );
 }
