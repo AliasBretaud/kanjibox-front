@@ -3,16 +3,12 @@
 import { useCallback, useEffect, useState } from "react";
 import { useFormState } from "react-dom";
 import {
-  Alert,
   Button,
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
-  FormControlLabel,
   Grid,
-  Switch,
-  TextField,
 } from "@mui/material";
 
 import { addKanji } from "@/lib/actions/kanji";
@@ -28,19 +24,29 @@ import {
 import type { KanjiFormType } from "@/lib/validation/schemas/kanji";
 import type { FormState } from "@/types/form";
 import type { MKanji } from "@/types/modals";
+import ValueInput from "./ValueInput";
+import AutoDetectReadingsSwitch from "./AutoDetectReadingsSwitch";
+import OnYomiInput from "./OnYomiInput";
+import KunYomiInput from "./KunYomiInput";
+import TranslationsInput from "./TranslationsInput";
+import dynamic from "next/dynamic";
+
+const ValidationErrors = dynamic(() => import("./ValidationErrors"));
 
 const AddKanjiForm = () => {
   const t = useTranslations("modals");
   const [formState, formAction] = useFormState<
     FormState<KanjiFormType>,
     FormData
-  >(addKanji, {});
+  >(addKanji, null);
   const [autoDetectReadings, setAutoDetectReadings] = useState(false);
   const [kunYomi, setKunYomi] = useState("");
   const [onYomi, setOnYomi] = useState("");
-  const [errors, setErrors] = useState(formState.validationErrors);
+  const [errors, setErrors] = useState(formState?.validationErrors);
   const { hideModal } = useModal();
   const { showSuccessNotif, showErrorNotif } = useNotification();
+
+  const formProps = { errors };
 
   const handleClose = useCallback(() => {
     setKunYomi("");
@@ -50,13 +56,13 @@ const AddKanjiForm = () => {
   }, [hideModal]);
 
   useEffect(() => {
-    if (formState.validationErrors) {
+    if (formState?.validationErrors) {
       setErrors(formState.validationErrors);
     }
-  }, [formState.validationErrors]);
+  }, [formState?.validationErrors]);
 
   useEffect(() => {
-    if (formState.apiResponse) {
+    if (formState?.apiResponse) {
       const { isSuccess, isError } = formState.apiResponse;
       if (isSuccess) {
         showSuccessNotif(t("addKanji.notifications.success"));
@@ -65,7 +71,13 @@ const AddKanjiForm = () => {
       }
       handleClose();
     }
-  }, [formState.apiResponse, handleClose, showErrorNotif, showSuccessNotif, t]);
+  }, [
+    formState?.apiResponse,
+    handleClose,
+    showErrorNotif,
+    showSuccessNotif,
+    t,
+  ]);
 
   return (
     <BaseModal<MKanji>
@@ -81,80 +93,39 @@ const AddKanjiForm = () => {
           </DialogContentText>
           <Grid container alignItems="flex-start" spacing={2}>
             <Grid item xs={12}>
-              <TextField
-                autoFocus
-                name="value"
-                label={t("addKanji.value")}
-                fullWidth
-                type="text"
-                error={!!errors?.value}
-                inputProps={{ maxLength: 1 }}
-                required
-              />
+              <ValueInput {...formProps} />
             </Grid>
             <Grid item xs={12}>
-              <FormControlLabel
-                control={
-                  <Switch
-                    checked={autoDetectReadings}
-                    onChange={(evt) =>
-                      setAutoDetectReadings(evt.target.checked)
-                    }
-                  />
-                }
-                label={t("addKanji.autoDetectReadings")}
-                name="autoDetectReadings"
+              <AutoDetectReadingsSwitch
+                checked={autoDetectReadings}
+                onChange={(evt) => setAutoDetectReadings(evt.target.checked)}
               />
             </Grid>
             <Grid item xs={6}>
-              <TextField
-                label={t("addKanji.onYomi.label")}
-                name="onYomi"
-                multiline
-                maxRows={4}
+              <OnYomiInput
+                {...formProps}
                 value={onYomi}
                 onChange={(evt) => {
                   setOnYomi(convertInputToKatakana(evt.target.value));
                 }}
-                helperText={t("addKanji.onYomi.description")}
-                error={!!errors?.onYomi}
                 disabled={autoDetectReadings}
               />
             </Grid>
             <Grid item xs={6}>
-              <TextField
-                label={t("addKanji.kunYomi.label")}
-                name="kunYomi"
-                multiline
-                maxRows={4}
+              <KunYomiInput
+                {...formProps}
                 value={kunYomi}
                 onChange={(evt) => {
-                  setKunYomi(convertInputToHiragana(evt.target.value));
+                  setOnYomi(convertInputToHiragana(evt.target.value));
                 }}
-                helperText={t("addKanji.kunYomi.description")}
-                error={!!errors?.kunYomi}
                 disabled={autoDetectReadings}
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                label={t("addKanji.translations.label")}
-                name="translations"
-                fullWidth
-                type="text"
-                helperText={t("addKanji.translations.description")}
-                error={!!errors?.translations}
-                disabled={autoDetectReadings}
-              />
+              <TranslationsInput {...formProps} disabled={autoDetectReadings} />
             </Grid>
           </Grid>
-          {errors && (
-            <Alert severity="error" sx={{ mt: 2 }}>
-              {Object.values(errors).map((k) => (
-                <div key={k}>{t(`addKanji.validations.${k}`)}</div>
-              ))}
-            </Alert>
-          )}
+          {errors && <ValidationErrors errors={errors} />}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="error">

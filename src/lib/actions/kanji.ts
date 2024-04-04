@@ -46,7 +46,6 @@ export const addKanji = async (
   _: unknown,
   data: FormData,
 ): Promise<FormState<KanjiFormType>> => {
-  console.log(data);
   const parsedKanji = parseKanjiFormData(data);
   const { autoDetectReadings } = parsedKanji;
 

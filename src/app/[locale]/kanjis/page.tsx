@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 
-import AddKanjiForm from "@/components/kanji/AddKanjiForm";
+import AddKanjiForm from "@/components/kanji/AddForm/AddKanjiForm";
 import KanjiList from "@/components/kanji/KanjiList";
 import { LoadingState } from "@/components/ui/LoadingState";
 import Pagination from "@/components/ui/Pagination";

@@ -30,7 +30,7 @@ const AddWordForm = () => {
     FormState<WordFormType>,
     FormData
   >(addWord, {});
-  const [errors, setErrors] = useState(formState.validationErrors);
+  const [errors, setErrors] = useState(formState?.validationErrors);
   const [wordFuriganaValue, setWordFuriganaValue] = useState<string>("");
   const { hideModal } = useModal();
   const { showSuccessNotif, showErrorNotif } = useNotification();
@@ -46,13 +46,13 @@ const AddWordForm = () => {
   ) => setWordFuriganaValue(convertInputToHiragana(evt.target.value));
 
   useEffect(() => {
-    if (formState.validationErrors) {
+    if (formState?.validationErrors) {
       setErrors(formState.validationErrors);
     }
-  }, [formState.validationErrors]);
+  }, [formState?.validationErrors]);
 
   useEffect(() => {
-    if (formState.apiResponse) {
+    if (formState?.apiResponse) {
       const { isSuccess, isError } = formState.apiResponse;
       if (isSuccess) {
         showSuccessNotif(t("addWord.notifications.success"));
@@ -61,7 +61,13 @@ const AddWordForm = () => {
       }
       handleClose();
     }
-  }, [formState.apiResponse, handleClose, showErrorNotif, showSuccessNotif, t]);
+  }, [
+    formState?.apiResponse,
+    handleClose,
+    showErrorNotif,
+    showSuccessNotif,
+    t,
+  ]);
 
   return (
     <BaseModal<MWord> name="add-word">
