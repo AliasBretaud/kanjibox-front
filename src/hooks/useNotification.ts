@@ -1,24 +1,18 @@
-import type { FormState } from "@/types";
 import { enqueueSnackbar } from "notistack";
 import { useCallback } from "react";
 
 const useNotification = () => {
-  const showFormActionNotif = useCallback(
-    (
-      formState: FormState,
-      successMessage = "Success",
-      errorMessage = "Error",
-    ) => {
-      if (formState?.isSuccess) {
-        enqueueSnackbar(successMessage, { variant: "success" });
-      } else if (formState?.isError) {
-        enqueueSnackbar(errorMessage, { variant: "error" });
-      }
-    },
+  const showSuccessNotif = useCallback(
+    (message = "Success") => enqueueSnackbar(message, { variant: "success" }),
     [],
   );
 
-  return { showFormActionNotif };
+  const showErrorNotif = useCallback(
+    (message = "Error") => enqueueSnackbar(message, { variant: "error" }),
+    [],
+  );
+
+  return { showSuccessNotif, showErrorNotif };
 };
 
 export default useNotification;

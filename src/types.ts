@@ -63,10 +63,19 @@ export type ResponseError = {
   message: string;
 };
 
-export type FormState = Partial<{
+type ApiResponseStatus = Partial<{
   isError: boolean;
   isSuccess: boolean;
-}> | null;
+}>;
+
+export type RequiredProps<T> = {
+  [P in keyof T]-?: Required<NonNullable<T[P]>>;
+};
+
+export type FormState<T> = Partial<{
+  apiResponse: ApiResponseStatus;
+  validationErrors: Record<keyof T, string>;
+}>;
 
 export type MKanji = "add-kanji" | "kanji-details";
 

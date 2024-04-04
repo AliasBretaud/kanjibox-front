@@ -3,6 +3,7 @@
 import type { FormState, MWord } from "@/types";
 import BaseModal from "@/components/ui/BaseModal";
 import {
+  Alert,
   Button,
   DialogActions,
   DialogContent,
@@ -11,56 +12,55 @@ import {
   Grid,
   TextField,
 } from "@mui/material";
+import type { ChangeEvent } from "react";
 import { useCallback, useEffect, useState } from "react";
-import { isJapanese, isKana, toKana } from "wanakana";
 import useModal from "@/hooks/useModal";
-import isEmpty from "@/lib/utils/isEmpty";
 import { addWord } from "@/lib/actions/word";
 import { useFormState } from "react-dom";
 import useNotification from "@/hooks/useNotification";
 import { SaveButton } from "@/components/ui/SaveButton";
 import { useTranslations } from "next-intl";
-
-const canSave = (value: string, furiganaValue: string, translation: string) =>
-  isJapanese(value) && isKana(furiganaValue) && !isEmpty(translation);
+import type { WordFormType } from "@/lib/validation/schemas/word";
+import { convertInputToHiragana } from "@/lib/utils/convertInputToJapanese";
 
 const AddWordForm = () => {
   const t = useTranslations("modals");
-  const [formState, formAction] = useFormState<FormState, FormData>(
-    addWord,
-    null,
-  );
-  const [wordValue, setWordValue] = useState<string>("");
+  const [formState, formAction] = useFormState<
+    FormState<WordFormType>,
+    FormData
+  >(addWord, {});
+  const [errors, setErrors] = useState(formState.validationErrors);
   const [wordFuriganaValue, setWordFuriganaValue] = useState<string>("");
-  const [wordTranslation, setWordTranslation] = useState<string>("");
   const { hideModal } = useModal();
-  const { showFormActionNotif } = useNotification();
-
-  const convertAndSetFurigana = (value: string) => {
-    setWordFuriganaValue(
-      !(value.endsWith("n") || value.endsWith("ny"))
-        ? toKana(value).trim()
-        : value.trim(),
-    );
-  };
+  const { showSuccessNotif, showErrorNotif } = useNotification();
 
   const handleClose = useCallback(() => {
-    setWordValue("");
     setWordFuriganaValue("");
-    setWordTranslation("");
     hideModal();
+    setErrors(undefined);
   }, [hideModal]);
 
+  const formatFurigana = (
+    evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => setWordFuriganaValue(convertInputToHiragana(evt.target.value));
+
   useEffect(() => {
-    if (formState) {
-      showFormActionNotif(
-        formState,
-        t("addWord.notifications.success"),
-        t("addWord.notifications.error"),
-      );
+    if (formState.validationErrors) {
+      setErrors(formState.validationErrors);
+    }
+  }, [formState.validationErrors]);
+
+  useEffect(() => {
+    if (formState.apiResponse) {
+      const { isSuccess, isError } = formState.apiResponse;
+      if (isSuccess) {
+        showSuccessNotif(t("addWord.notifications.success"));
+      } else if (isError) {
+        showErrorNotif(t("addWord.notifications.error"));
+      }
       handleClose();
     }
-  }, [formState, handleClose, showFormActionNotif, t]);
+  }, [formState.apiResponse, handleClose, showErrorNotif, showSuccessNotif, t]);
 
   return (
     <BaseModal<MWord> name="add-word">
@@ -79,11 +79,8 @@ const AddWordForm = () => {
                 label={t("addWord.value")}
                 fullWidth
                 type="text"
-                value={wordValue}
-                onChange={(evt) => {
-                  setWordValue(evt.target.value);
-                }}
                 required
+                error={!!errors?.value}
               />
             </Grid>
             <Grid item xs={12}>
@@ -94,10 +91,9 @@ const AddWordForm = () => {
                 fullWidth
                 type="text"
                 value={wordFuriganaValue}
-                onChange={(evt) => {
-                  convertAndSetFurigana(evt.target.value);
-                }}
+                onChange={formatFurigana}
                 required
+                error={!!errors?.furiganaValue}
               />
             </Grid>
             <Grid item xs={12}>
@@ -107,25 +103,25 @@ const AddWordForm = () => {
                 name="translations"
                 fullWidth
                 type="text"
-                value={wordTranslation}
-                onChange={(evt) => {
-                  setWordTranslation(evt.target.value);
-                }}
                 helperText={t("addWord.translations.description")}
                 required
+                error={!!errors?.translations}
               />
             </Grid>
           </Grid>
+          {errors && (
+            <Alert severity="error" sx={{ mt: 2 }}>
+              {Object.values(errors).map((k) => (
+                <div key={k}>{t(`addWord.validations.${k}`)}</div>
+              ))}
+            </Alert>
+          )}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="error">
             {t("buttons.cancel")}
           </Button>
-          <SaveButton
-            disabled={!canSave(wordValue, wordFuriganaValue, wordTranslation)}
-          >
-            {t("buttons.add")}
-          </SaveButton>
+          <SaveButton>{t("buttons.add")}</SaveButton>
         </DialogActions>
       </form>
     </BaseModal>

@@ -40,6 +40,12 @@
       "notifications": {
         "success": "Kanji ajouté !",
         "error": "Erreur"
+      },
+      "validations": {
+        "value": "Veuillez saisir un kanji au format Japonais",
+        "onYomi": "Veuiilez saisir la lecture en katakana",
+        "kunYomi": "Veuillez saisir la lecture en hiragana",
+        "translations": "Veuillez saisir les traductions en lettres romanes"
       }
     },
     "addWord": {
