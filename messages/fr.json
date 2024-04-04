@@ -7,6 +7,10 @@
     "kanjis": "Kanjis",
     "words": "Mots"
   },
+  "loading": {
+    "kanjis": "Chargement des Kanjis...",
+    "words": "Chargement des Mots..."
+  },
   "welcome": {
     "header": "Boîte à Kanjis",
     "description": "Accueil de la Boîte à Kanjis, ci-dessous les kanjis récemment enregistrés. Pour consulter / éditer des kanjis ou des mots, cliquer sur les boutons ci-dessous.",
@@ -42,10 +46,10 @@
         "error": "Erreur"
       },
       "validations": {
-        "value": "Veuillez saisir un kanji au format Japonais",
-        "onYomi": "Veuiilez saisir la lecture en katakana",
-        "kunYomi": "Veuillez saisir la lecture en hiragana",
-        "translations": "Veuillez saisir les traductions en lettres romanes"
+        "value": "Valeur du kanji au format Japonais requise",
+        "onYomi": "Lecture(s) ON requise(s) (katakana)",
+        "kunYomi": "Lecture(s) KUN requise(s) (hiragana)",
+        "translations": "Traduction(s) requise(s)"
       }
     },
     "addWord": {
@@ -60,6 +64,11 @@
       "notifications": {
         "success": "Mot ajouté !",
         "error": "Erreur"
+      },
+      "validations": {
+        "value": "Valeur du mot au format Japonais requise",
+        "furiganaValue": "Transcription furigana requise (hiragana)",
+        "translations": "Traduction(s) requise(s)"
       }
     },
     "buttons": {

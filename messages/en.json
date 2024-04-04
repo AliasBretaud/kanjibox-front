@@ -7,6 +7,10 @@
     "kanjis": "Kanjis",
     "words": "Words"
   },
+  "loading": {
+    "kanjis": "Loading Kanjis...",
+    "words": "Loading Words..."
+  },
   "welcome": {
     "header": "Kanji Box",
     "description": "Home page of Kanji Box, below are the recently recorded kanji. To view/edit kanji or words, click on the buttons below.",
@@ -40,6 +44,12 @@
       "notifications": {
         "success": "Kanji added !",
         "error": "Error"
+      },
+      "validations": {
+        "value": "Kanji value format required (Japanese)",
+        "onYomi": "ON reading(s) required (katakana)",
+        "kunYomi": "KUN reading(s) required (hiragana)",
+        "translations": "Translation(s) required"
       }
     },
     "addWord": {
@@ -54,6 +64,11 @@
       "notifications": {
         "success": "Word added !",
         "error": "Error"
+      },
+      "validations": {
+        "value": "Word value required (Japanese)",
+        "furiganaValue": "Furigana transcription required (hiragana)",
+        "translations": "Translation(s) required"
       }
     },
     "buttons": {

@@ -15,6 +15,7 @@ import {
   type AbstractIntlMessages,
   NextIntlClientProvider,
   useMessages,
+  useTranslations,
 } from "next-intl";
 import pick from "lodash.pick";
 
@@ -47,10 +48,11 @@ export default function WordsPage({
   // Enable static rendering
   unstable_setRequestLocale(locale);
 
+  const t = useTranslations("loading");
   const messages = useMessages();
   const page = searchParams?.page || 1;
   return (
-    <Suspense key={page} fallback={<LoadingState text="Loading Words..." />}>
+    <Suspense key={page} fallback={<LoadingState text={t("words")} />}>
       <WordsContainer
         page={page}
         messages={pick(messages, ["modals", "buttons"])}

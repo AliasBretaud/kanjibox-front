@@ -7,6 +7,10 @@
     "kanjis": "漢字",
     "words": "単語"
   },
+  "loading": {
+    "kanjis": "読み込み中",
+    "words": "読み込み中"
+  },
   "welcome": {
     "header": "漢字ボックス",
     "description": "漢字ボックスのホームページです。以下には最近記録された漢字が表示されます。漢字や単語の表示/編集は、下のボタンをクリックしてください。",
@@ -40,6 +44,12 @@
       "notifications": {
         "success": "漢字が追加されました！",
         "error": "エラー"
+      },
+      "validations": {
+        "value": "漢字の値の形式が必要です",
+        "onYomi": "音読みが必要です（カタカナ）",
+        "kunYomi": "訓読みが必要です（ひらがな）",
+        "translations": "翻訳が必要です"
       }
     },
     "addWord": {
@@ -54,6 +64,11 @@
       "notifications": {
         "success": "単語が追加されました！",
         "error": "エラー"
+      },
+      "validations": {
+        "value": "単語の値の形式が必要です",
+        "furiganaValue": "フリガナの転写が必要です（ひらがな）",
+        "translations": "翻訳が必要です"
       }
     },
     "buttons": {

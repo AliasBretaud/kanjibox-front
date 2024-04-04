@@ -6,18 +6,21 @@ import { KeyboardArrowDown, Translate } from "@mui/icons-material";
 import { Button, Menu, MenuItem } from "@mui/material";
 import { indigo } from "@mui/material/colors";
 import { useLocale } from "next-intl";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import type { MouseEvent } from "react";
 import { useState, useTransition } from "react";
 
 const LanguageSelector = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
   const locale = useLocale();
   const { replace } = useRouter();
   const [isPending, startTransition] = useTransition();
   const pathname = usePathname();
   const params = useParams();
+  const searchParams = useSearchParams();
+
+  const open = Boolean(anchorEl);
+  const query = Object.fromEntries(searchParams.entries());
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -33,7 +36,7 @@ const LanguageSelector = () => {
         // @ts-expect-error -- TypeScript will validate that only known `params`
         // are used in combination with a given `pathname`. Since the two will
         // always match for the current route, we can skip runtime checks.
-        { pathname, params },
+        { pathname, query, params },
         { locale: lang },
       );
       handleClose();

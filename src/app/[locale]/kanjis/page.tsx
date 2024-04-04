@@ -11,7 +11,11 @@ import AddKanjiButton from "@/components/kanji/AddKanjiButton";
 import SnackBarProvider from "@/components/ui/SnackBarProvider";
 import { unstable_setRequestLocale } from "next-intl/server";
 import type { AbstractIntlMessages } from "next-intl";
-import { NextIntlClientProvider, useMessages } from "next-intl";
+import {
+  NextIntlClientProvider,
+  useMessages,
+  useTranslations,
+} from "next-intl";
 import pick from "lodash.pick";
 
 const KanjiContainer = async ({
@@ -42,11 +46,12 @@ export default function KanjisPage({
   // Enable static rendering
   unstable_setRequestLocale(locale);
 
+  const t = useTranslations("loading");
   const messages = useMessages();
   const page = searchParams?.page || 1;
   return (
     <>
-      <Suspense key={page} fallback={<LoadingState text="Loading Kanjis..." />}>
+      <Suspense key={page} fallback={<LoadingState text={t("kanjis")} />}>
         <KanjiContainer
           page={page}
           messages={pick(messages, ["modals", "buttons"])}

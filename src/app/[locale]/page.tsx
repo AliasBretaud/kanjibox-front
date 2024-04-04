@@ -8,6 +8,7 @@ import WelcomeMessage from "@/components/home/WelcomeMessage";
 import { getKanjis } from "@/lib/actions/kanji";
 import { unstable_setRequestLocale } from "next-intl/server";
 import type { PageParams } from "@/types/utils";
+import { useTranslations } from "next-intl";
 
 const KanjiContainer = async ({ search }: { search: string }) => {
   const kanjis = await getKanjis(8, 0, search);
@@ -21,15 +22,13 @@ export default function Home({
   // Enable static rendering
   unstable_setRequestLocale(locale);
 
+  const t = useTranslations("loading");
   const query = searchParams?.query || "";
   return (
     <main>
       <SearchBar />
       {!query && <WelcomeMessage />}
-      <Suspense
-        key={query}
-        fallback={<LoadingState text="Loading Kanjis..." />}
-      >
+      <Suspense key={query} fallback={<LoadingState text={t("kanjis")} />}>
         <KanjiContainer search={query} />
       </Suspense>
     </main>
