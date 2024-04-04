@@ -1,4 +1,4 @@
-import type { MappedValue } from "@/types";
+import type { MappedValue } from "@/types/utils";
 
 export const getLocalizedTranslations = (
   translations: MappedValue<string, string[]> | undefined,

@@ -3,7 +3,6 @@
 import { revalidateTag } from "next/cache";
 
 import getFormDataField from "@/lib/utils/getFormDataField";
-import type { $Kanji, FormState, Page, RequiredProps } from "@/types";
 import { get, post } from "./api";
 import { cookies } from "next/headers";
 import formatInputList from "@/lib/utils/formatInputList";
@@ -11,6 +10,10 @@ import type { KanjiFormType } from "@/lib/validation/schemas/kanji";
 import { kanjiSchema } from "@/lib/validation/schemas/kanji";
 import validateSchema from "@/lib/validation/validateSchema";
 import { getLocaleFromCookiesOrDefault } from "@/lib/utils/getLocaleFromCookiesOrDefault";
+import type { Page } from "@/types/api";
+import type { $Kanji } from "@/types/models";
+import type { FormState } from "@/types/form";
+import type { RequiredProps } from "@/types/utils";
 
 const KANJI_ENDPOINT = `${process.env.BACKEND_API_URL}/kanjis`;
 

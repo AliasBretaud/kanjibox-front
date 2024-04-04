@@ -1,6 +1,5 @@
 "use server";
 
-import type { $Word, FormState, Page } from "@/types";
 import { get, post } from "./api";
 import getFormDataField from "@/lib/utils/getFormDataField";
 import { revalidateTag } from "next/cache";
@@ -9,6 +8,9 @@ import { cookies } from "next/headers";
 import { type WordFormType, wordSchema } from "@/lib/validation/schemas/word";
 import { getLocaleFromCookiesOrDefault } from "@/lib/utils/getLocaleFromCookiesOrDefault";
 import validateSchema from "@/lib/validation/validateSchema";
+import type { FormState } from "@/types/form";
+import type { $Word } from "@/types/models";
+import type { Page } from "@/types/api";
 
 const WORD_ENDPOINT = `${process.env.BACKEND_API_URL}/words`;
 

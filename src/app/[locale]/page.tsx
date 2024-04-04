@@ -7,7 +7,7 @@ import WelcomeMessage from "@/components/home/WelcomeMessage";
 
 import { getKanjis } from "@/lib/actions/kanji";
 import { unstable_setRequestLocale } from "next-intl/server";
-import type { PageParams } from "@/types";
+import type { PageParams } from "@/types/utils";
 
 const KanjiContainer = async ({ search }: { search: string }) => {
   const kanjis = await getKanjis(8, 0, search);

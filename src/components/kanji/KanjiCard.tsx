@@ -1,8 +1,9 @@
 import { Paper, Typography } from "@mui/material";
 
-import type { $Kanji, PropsWithLocalization } from "@/types";
 import Table, { Row } from "@/components/ui/Table";
 import getLocalizedTranslations from "@/lib/utils/getLocalizedTranslations";
+import type { PropsWithLocalization } from "@/types/utils";
+import type { $Kanji } from "@/types/models";
 
 const KanjiCard = ({
   kunYomi,

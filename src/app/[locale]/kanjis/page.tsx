@@ -6,7 +6,7 @@ import { LoadingState } from "@/components/ui/LoadingState";
 import Pagination from "@/components/ui/Pagination";
 
 import { getKanjis } from "@/lib/actions/kanji";
-import type { PageParams } from "@/types";
+import type { PageParams } from "@/types/utils";
 import AddKanjiButton from "@/components/kanji/AddKanjiButton";
 import SnackBarProvider from "@/components/ui/SnackBarProvider";
 import { unstable_setRequestLocale } from "next-intl/server";

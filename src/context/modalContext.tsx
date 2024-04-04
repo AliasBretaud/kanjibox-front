@@ -1,6 +1,6 @@
 "use client";
 
-import type { $Kanji } from "@/types";
+import type { $Kanji } from "@/types/models";
 import React from "react";
 
 export type ModalOptions = Partial<Record<string, string | string[] | $Kanji>>;

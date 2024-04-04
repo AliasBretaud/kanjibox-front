@@ -5,7 +5,7 @@ import { LoadingState } from "@/components/ui/LoadingState";
 import Pagination from "@/components/ui/Pagination";
 
 import { getWords } from "@/lib/actions/word";
-import type { PageParams } from "@/types";
+import type { PageParams } from "@/types/utils";
 import AddWordButton from "@/components/word/AddWordButton";
 import SnackBarProvider from "@/components/ui/SnackBarProvider";
 import KanjiDetailsModal from "@/components/word/KanjiDetailsModal";

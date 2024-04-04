@@ -16,7 +16,6 @@ import {
 } from "@mui/material";
 
 import { addKanji } from "@/lib/actions/kanji";
-import type { FormState, MKanji } from "@/types";
 import BaseModal from "@/components/ui/BaseModal";
 import useModal from "@/hooks/useModal";
 import useNotification from "@/hooks/useNotification";
@@ -27,6 +26,8 @@ import {
   convertInputToKatakana,
 } from "@/lib/utils/convertInputToJapanese";
 import type { KanjiFormType } from "@/lib/validation/schemas/kanji";
+import type { FormState } from "@/types/form";
+import type { MKanji } from "@/types/modals";
 
 const AddKanjiForm = () => {
   const t = useTranslations("modals");

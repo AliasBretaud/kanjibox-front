@@ -1,4 +1,4 @@
-import type { $Kanji } from "@/types";
+import type { $Kanji } from "@/types/models";
 import { isKanji } from "wanakana";
 
 export const extractKanjiFromWord = (char: string, wordKanjis?: $Kanji[]) =>

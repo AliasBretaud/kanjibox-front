@@ -1,6 +1,6 @@
 import { Grid } from "@mui/material";
 import WordCard from "./WordCard";
-import type { $Word } from "@/types";
+import type { $Word } from "@/types/models";
 import { useLocale } from "next-intl";
 
 const WordList = ({ data: words = [] }: { data: $Word[] }) => {

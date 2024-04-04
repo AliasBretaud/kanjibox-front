@@ -1,7 +1,7 @@
 "use client";
 
 import useModal from "@/hooks/useModal";
-import type { MWord } from "@/types";
+import type { MWord } from "@/types/modals";
 import AddButton from "@/components/ui/AddButton";
 import { useTranslations } from "next-intl";
 

@@ -1,7 +1,7 @@
 "use client";
 
 import useModal from "@/hooks/useModal";
-import type { MKanji } from "@/types";
+import type { MKanji } from "@/types/modals";
 import AddButton from "@/components/ui/AddButton";
 import { useTranslations } from "next-intl";
 

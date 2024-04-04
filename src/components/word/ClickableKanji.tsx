@@ -1,7 +1,8 @@
 "use client";
 
 import useModal from "@/hooks/useModal";
-import type { $Kanji, MKanji } from "@/types";
+import type { MKanji } from "@/types/modals";
+import type { $Kanji } from "@/types/models";
 import { Typography } from "@mui/material";
 
 export const ClickableKanji = (kanji: $Kanji) => {

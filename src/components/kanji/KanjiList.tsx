@@ -1,7 +1,7 @@
 import { Grid } from "@mui/material";
 import type { GridProps } from "@mui/material";
 
-import type { $Kanji } from "@/types";
+import type { $Kanji } from "@/types/models";
 
 import KanjiCard from "./KanjiCard";
 import { useLocale } from "next-intl";

@@ -1,6 +1,5 @@
 "use client";
 
-import type { FormState, MWord } from "@/types";
 import BaseModal from "@/components/ui/BaseModal";
 import {
   Alert,
@@ -22,6 +21,8 @@ import { SaveButton } from "@/components/ui/SaveButton";
 import { useTranslations } from "next-intl";
 import type { WordFormType } from "@/lib/validation/schemas/word";
 import { convertInputToHiragana } from "@/lib/utils/convertInputToJapanese";
+import type { MWord } from "@/types/modals";
+import type { FormState } from "@/types/form";
 
 const AddWordForm = () => {
   const t = useTranslations("modals");
