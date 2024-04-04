@@ -2,6 +2,13 @@ import { Stack, Toolbar } from "@mui/material";
 import NavigationLink from "./NavigationLink";
 import { useTranslations } from "next-intl";
 import LanguageSelector from "./LanguageSelector";
+import { Suspense } from "react";
+
+const LanguageSelectorLoader = () => (
+  <Suspense>
+    <LanguageSelector />
+  </Suspense>
+);
 
 const Navigation = () => {
   const t = useTranslations("navigation");
@@ -31,7 +38,7 @@ const Navigation = () => {
           */}
           </Stack>
         </Stack>
-        <LanguageSelector />
+        <LanguageSelectorLoader />
       </Stack>
     </Toolbar>
   );
