@@ -93,8 +93,8 @@ const buildKanji = (
   const kanji: $Kanji = { value };
   if (!autoDetectReadings) {
     const translationsFormat = formatInputList(translations);
-    kanji.kunYomi = formatInputList(onYomi);
-    kanji.onYomi = formatInputList(kunYomi);
+    kanji.onYomi = formatInputList(onYomi);
+    kanji.kunYomi = formatInputList(kunYomi);
     kanji.translations = { [locale]: translationsFormat };
   }
 
