@@ -2,16 +2,24 @@ import { Box, Card, CardContent } from "@mui/material";
 import Table, { Row } from "@/components/ui/Table";
 import { ClickableKanji } from "./ClickableKanji";
 import { getLocalizedTranslations } from "@/lib/utils/getLocalizedTranslations";
-import { extractKanjiFromWord } from "@/lib/utils/extractKanjiFromWord";
 import type { PropsWithLocalization } from "@/types/utils";
 import type { $Word } from "@/types/models";
 
+const WordCharacters = ({ value, kanjis }: Pick<$Word, "value" | "kanjis">) =>
+  value.split("").map((char, idx) => {
+    const kanji = kanjis?.find((k) => k.value === char);
+    return kanji ? (
+      <ClickableKanji key={idx} {...kanji} />
+    ) : (
+      <span key={idx}>{char}</span>
+    );
+  });
+
 const WordCard = ({
-  value,
   furiganaValue,
-  kanjis,
   translations,
   locale,
+  ...p
 }: PropsWithLocalization<$Word>) => {
   const localizedTranslations = getLocalizedTranslations(translations, locale);
   return (
@@ -31,14 +39,7 @@ const WordCard = ({
         >
           <ruby>
             <Box display="table" sx={{ wordBreak: "break-word" }}>
-              {value.split("").map((char, idx) => {
-                const kanji = extractKanjiFromWord(char, kanjis);
-                return kanji ? (
-                  <ClickableKanji key={idx} {...kanji} />
-                ) : (
-                  <span key={idx}>{char}</span>
-                );
-              })}
+              <WordCharacters {...p} />
             </Box>
             <rp>(</rp>
             <Box component="rt" fontSize="15pt">

@@ -1,5 +1,5 @@
 export const formatInputList = (input: string) =>
-  input
+  input?.length
     ? input
         .split(";")
         .map((s) => {

@@ -6,7 +6,7 @@ import { revalidateTag } from "next/cache";
 import { formatInputList } from "@/lib/utils/formatInputList";
 import { cookies } from "next/headers";
 import { type WordFormType, wordSchema } from "@/lib/validation/schemas/word";
-import { getLocaleFromCookiesOrDefault } from "@/lib/utils/getLocaleFromCookiesOrDefault";
+import { getCookiesLocaleOrDefault } from "@/lib/utils/getCookiesLocaleOrDefault";
 import validateSchema from "@/lib/validation/validateSchema";
 import type { FormState } from "@/types/form";
 import type { $Word } from "@/types/models";
@@ -45,7 +45,7 @@ export const addWord = async (
     return { validationErrors: validation.errors };
   }
 
-  const locale = getLocaleFromCookiesOrDefault(cookies());
+  const locale = getCookiesLocaleOrDefault(cookies());
   const word = buildWord(parsedWord, locale);
 
   try {
