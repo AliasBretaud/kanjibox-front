@@ -10,7 +10,7 @@ import { unstable_setRequestLocale } from "next-intl/server";
 import type { PageParams } from "@/types/utils";
 import { useTranslations } from "next-intl";
 
-const KanjiContainer = async ({ search }: { search: string }) => {
+const KanjiContainer = async ({ search }: { search?: string }) => {
   const kanjis = await getKanjis(8, 0, search);
   return <KanjiList data={kanjis.content} />;
 };

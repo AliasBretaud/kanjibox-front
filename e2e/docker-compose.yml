@@ -1,0 +1,37 @@
+version: "3.3"
+
+services:
+  db:
+    image: postgres:latest
+    container_name: kanjibox-db
+    environment:
+      POSTGRES_DB: kanji
+      POSTGRES_USER: kanji
+      POSTGRES_PASSWORD: kanji
+    ports:
+      - "5432:5432"
+    networks:
+      - kanji_network
+
+  api:
+    image: fbrtd/kanjibox-api:test
+    container_name: kanjibox-api
+    depends_on:
+      - db
+    ports:
+      - "8080:8080"
+    networks:
+      - kanji_network
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/kanji
+      SPRING_DATASOURCE_USERNAME: kanji
+      SPRING_DATASOURCE_PASSWORD: kanji
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/kanjibox/actuator/health"]
+      interval: 10s
+      timeout: 10s
+      retries: 30
+
+networks:
+  kanji_network:
+    driver: bridge

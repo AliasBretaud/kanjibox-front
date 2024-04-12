@@ -1,0 +1,94 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`KanjiCard component tests renders homepage unchanged 1`] = `
+<div>
+  <div
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 w-full max-w-md flex flex-col items-center css-i0bk1x-MuiPaper-root"
+  >
+    <p
+      class="MuiTypography-root MuiTypography-body1 font-kanji css-1hdi49b-MuiTypography-root"
+    >
+      人
+    </p>
+    <table
+      class="w-full border-collapse text-left font-kanji border border-solid border-neutral-300"
+    >
+      <tbody>
+        <tr>
+          <th
+            class="bg-stone-100 text-center text-sm w-[75px] border border-solid border-neutral-300"
+            rowspan="2"
+          >
+            音読み
+          </th>
+          <td
+            class="py-[5px] px-2 border border-solid border-neutral-300"
+          >
+            <p
+              class="MuiTypography-root MuiTypography-body1 css-vkc4v8-MuiTypography-root"
+            >
+              ニン
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td
+            class="py-[5px] px-2 border border-solid border-neutral-300"
+          >
+            <p
+              class="MuiTypography-root MuiTypography-body1 css-vkc4v8-MuiTypography-root"
+            >
+              ジン
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <th
+            class="bg-stone-100 text-center text-sm w-[75px] border border-solid border-neutral-300"
+            rowspan="1"
+          >
+            訓読み
+          </th>
+          <td
+            class="py-[5px] px-2 border border-solid border-neutral-300"
+          >
+            <p
+              class="MuiTypography-root MuiTypography-body1 css-vkc4v8-MuiTypography-root"
+            >
+              ひと
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <th
+            class="bg-stone-100 text-center text-sm w-[75px] border border-solid border-neutral-300"
+            rowspan="2"
+          >
+            意味
+          </th>
+          <td
+            class="py-[5px] px-2 border border-solid border-neutral-300"
+          >
+            <p
+              class="MuiTypography-root MuiTypography-body1 css-vkc4v8-MuiTypography-root"
+            >
+              People
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td
+            class="py-[5px] px-2 border border-solid border-neutral-300"
+          >
+            <p
+              class="MuiTypography-root MuiTypography-body1 css-vkc4v8-MuiTypography-root"
+            >
+              Person
+            </p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+`;

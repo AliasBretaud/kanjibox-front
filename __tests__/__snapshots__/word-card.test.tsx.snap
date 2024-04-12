@@ -1,0 +1,64 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WordCard component tests renders WordCard unchanged 1`] = `
+<div>
+  <div
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-91xihe-MuiPaper-root-MuiCard-root"
+  >
+    <div
+      class="MuiCardContent-root css-46bh2p-MuiCardContent-root"
+    >
+      <div
+        class="MuiBox-root css-1vgn2hj"
+      >
+        <ruby>
+          <div
+            class="MuiBox-root css-iih18f"
+          >
+            <span>
+              言
+            </span>
+            <span>
+              葉
+            </span>
+          </div>
+          <rp>
+            (
+          </rp>
+          <rt
+            class="MuiBox-root css-1r0hgr4"
+          >
+            ことば
+          </rt>
+          <rp>
+            )
+          </rp>
+        </ruby>
+      </div>
+      <table
+        class="w-full border-collapse text-left font-kanji border border-solid border-neutral-300"
+      >
+        <tbody>
+          <tr>
+            <th
+              class="bg-stone-100 text-center text-sm w-[75px] border border-solid border-neutral-300"
+              rowspan="1"
+            >
+              翻訳
+            </th>
+            <td
+              class="py-[5px] px-2 border border-solid border-neutral-300"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body1 css-vkc4v8-MuiTypography-root"
+              >
+                Word
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+`;

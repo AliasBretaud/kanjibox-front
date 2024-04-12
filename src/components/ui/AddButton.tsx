@@ -11,13 +11,13 @@ const AddButton = ({
     variant="contained"
     color="primary"
     onClick={onClick}
+    fullWidth
     sx={{
-      my: "50px",
+      my: 6,
       borderRadius: "9999px",
-      width: "100%",
-      maxWidth: "300px",
-      minHeight: "50px",
-      fontSize: "15px",
+      maxWidth: 300,
+      minHeight: 50,
+      fontSize: 15,
     }}
   >
     {children}

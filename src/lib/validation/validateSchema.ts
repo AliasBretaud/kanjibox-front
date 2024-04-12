@@ -1,6 +1,6 @@
 import type { ZodSchema } from "zod";
 
-type ValidationReturnType<T> = Partial<{
+export type ValidationReturnType<T> = Partial<{
   success: boolean;
   errors: Record<keyof T, string>;
 }>;

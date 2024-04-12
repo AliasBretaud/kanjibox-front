@@ -9,7 +9,7 @@ import { formatInputList } from "@/lib/utils/formatInputList";
 import type { KanjiFormType } from "@/lib/validation/schemas/kanji";
 import { kanjiSchema } from "@/lib/validation/schemas/kanji";
 import validateSchema from "@/lib/validation/validateSchema";
-import { getLocaleFromCookiesOrDefault } from "@/lib/utils/getLocaleFromCookiesOrDefault";
+import { getCookiesLocaleOrDefault } from "@/lib/utils/getCookiesLocaleOrDefault";
 import type { Page } from "@/types/api";
 import type { $Kanji } from "@/types/models";
 import type { FormState } from "@/types/form";
@@ -54,7 +54,7 @@ export const addKanji = async (
     return { validationErrors: validation.errors };
   }
 
-  const locale = getLocaleFromCookiesOrDefault(cookies());
+  const locale = getCookiesLocaleOrDefault(cookies());
   const kanji = buildKanji(parsedKanji, locale);
   try {
     const params = new URLSearchParams({
