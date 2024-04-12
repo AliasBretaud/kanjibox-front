@@ -48,6 +48,7 @@ const SearchBar = () => {
         disableElevation
         variant="contained"
         onClick={handleSearch}
+        data-testid="search"
       >
         <Image src={searchIcon} alt="Search" height={50} width={50} />
       </Button>

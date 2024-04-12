@@ -9,7 +9,10 @@
     "lint": "next lint",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:update:snapshot": "jest --updateSnapshot"
+    "test:update:snapshot": "jest --updateSnapshot",
+    "docker:playwright:up": "docker-compose --file e2e/docker-compose.yml up --force-recreate --detach",
+    "docker:playwright:down": "docker-compose --file e2e/docker-compose.yml down",
+    "docker:playwright:status": "docker-compose --file e2e/docker-compose.yml ps"
   },
   "dependencies": {
     "@emotion/cache": "^11.11.0",
@@ -33,6 +36,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@playwright/test": "^1.43.0",
     "@testing-library/jest-dom": "^6.4.2",
     "@testing-library/react": "^14.2.2",
     "@types/jest": "^29.5.12",
