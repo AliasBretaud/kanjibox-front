@@ -1,4 +1,4 @@
-name: kanjibox-e2e
+version: "3.3"
 
 services:
   db:

@@ -11,6 +11,7 @@ jobs:
     timeout-minutes: 60
 
     env:
+      COMPOSE_PROJECT_NAME: kanjibox-e2e
       BACKEND_API_URL: http://localhost:8080/kanjibox
 
     steps:
@@ -23,7 +24,7 @@ jobs:
         run: npm install -g yarn && yarn
 
       - name: Install Playwright Browsers
-        run: yarn playwright install --with-deps
+        run: yarn playwright install --with-deps chromium
 
       - name: Start backend processes
         run: docker-compose -f e2e/docker-compose.yml up -d
