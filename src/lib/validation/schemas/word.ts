@@ -13,8 +13,9 @@ export const wordSchema = z.object({
     .refine((s) => isHiragana(s), "furiganaValue"),
   translations: z
     .string()
-    .refine((translations) =>
-      validateSplitValue(translations, (s) => !isJapanese(s)),
+    .refine(
+      (translations) => validateSplitValue(translations, (s) => !isJapanese(s)),
+      "translations",
     ),
 });
 

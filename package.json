@@ -11,7 +11,8 @@
     "test:watch": "jest --watch",
     "test:update:snapshot": "jest --updateSnapshot",
     "docker:playwright:up": "docker-compose --file e2e/docker-compose.yml up --force-recreate --detach",
-    "docker:playwright:down": "docker-compose --file e2e/docker-compose.yml down",
+    "docker:playwright:down": "docker-compose --file e2e/docker-compose.yml down -v",
+    "docker:playwright:reset": "yarn docker:playwright:down & yarn docker:playwright:up",
     "docker:playwright:status": "docker-compose --file e2e/docker-compose.yml ps"
   },
   "dependencies": {

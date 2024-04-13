@@ -27,7 +27,13 @@ services:
       SPRING_DATASOURCE_USERNAME: kanji
       SPRING_DATASOURCE_PASSWORD: kanji
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/kanjibox/actuator/health"]
+      test:
+        [
+          "CMD",
+          "curl",
+          "-f",
+          "http://localhost:8080/kanjibox/actuator/health"
+        ]
       interval: 10s
       timeout: 10s
       retries: 30

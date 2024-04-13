@@ -35,10 +35,10 @@ jobs:
       - name: Build and start frontend app
         run: |
           yarn build
-          yarn start &
+          node .next/standalone/server.js &
 
       - name: Run Playwright tests
         run: yarn playwright test
 
       - name: Cleanup
-        run: docker-compose -f e2e/docker-compose.yml down
+        run: docker-compose -f e2e/docker-compose.yml down -v
