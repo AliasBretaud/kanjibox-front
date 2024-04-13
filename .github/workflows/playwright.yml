@@ -21,9 +21,6 @@ jobs:
           node-version: lts/*
           cache: yarn
 
-      - name: Install Yarn
-        run: npm install -g yarn
-
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
