@@ -29,13 +29,13 @@ jobs:
       - name: Start backend processes
         run: docker-compose -f e2e/docker-compose.yml up -d
 
-      - name: Wait for container healthchecks
-        run: timeout 300s sh -c 'until docker ps | grep kanjibox-api | grep -q healthy; do echo "Waiting for container to be healthy..."; sleep 2; done'
+      - name: Wait for API container to be up
+        run: timeout 300s sh -c 'until docker ps | grep kanjibox-api | grep -q healthy; do echo "API starting..."; sleep 2; done'
 
-      - name: Build and start frontend app
+      - name: Start frontend app
         run: |
           yarn build
-          yarn dev &
+          yarn start &
 
       - name: Run Playwright tests
         run: yarn playwright test
