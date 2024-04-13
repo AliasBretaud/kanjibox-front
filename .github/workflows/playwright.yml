@@ -35,7 +35,7 @@ jobs:
       - name: Build and start frontend app
         run: |
           yarn build
-          node .next/standalone/server.js &
+          yarn dev &
 
       - name: Run Playwright tests
         run: yarn playwright test
