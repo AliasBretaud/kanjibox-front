@@ -1,4 +1,5 @@
 import type { MappedValue } from "@/types/utils";
+import capitalize from "./capitalize";
 
 export const getLocalizedTranslations = (
   translations: MappedValue<string, string[]> | undefined,
@@ -8,7 +9,9 @@ export const getLocalizedTranslations = (
     const localizedTranslations = translations[locale]?.length
       ? translations[locale]
       : translations["en"];
-    return localizedTranslations?.length ? localizedTranslations : ["-"];
+    return localizedTranslations?.length
+      ? localizedTranslations.map(capitalize)
+      : ["-"];
   }
 
   return ["-"];

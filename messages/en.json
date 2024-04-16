@@ -49,6 +49,7 @@
         "value": "Kanji value format required (Japanese)",
         "onYomi": "ON reading(s) required (katakana)",
         "kunYomi": "KUN reading(s) required (hiragana)",
+        "readingRequired": "Please enter at least one KUN or ON reading",
         "translations": "Translation(s) required"
       }
     },

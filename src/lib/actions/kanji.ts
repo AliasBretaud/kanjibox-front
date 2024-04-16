@@ -5,7 +5,6 @@ import { revalidateTag } from "next/cache";
 import { getFormDataField } from "@/lib/utils/getFormDataField";
 import { get, post } from "./api";
 import { cookies } from "next/headers";
-import { formatInputList } from "@/lib/utils/formatInputList";
 import type { KanjiFormType } from "@/lib/validation/schemas/kanji";
 import { kanjiSchema } from "@/lib/validation/schemas/kanji";
 import validateSchema from "@/lib/validation/validateSchema";
@@ -14,6 +13,7 @@ import type { Page } from "@/types/api";
 import type { $Kanji } from "@/types/models";
 import type { FormState } from "@/types/form";
 import type { RequiredProps } from "@/types/utils";
+import { getFormDataFieldList } from "@/lib/utils/getFormDataFieldList";
 
 const KANJI_ENDPOINT = `${process.env.BACKEND_API_URL}/kanjis`;
 
@@ -73,11 +73,12 @@ export const addKanji = async (
 };
 
 const parseKanjiFormData = (data: FormData): RequiredProps<KanjiFormType> => ({
-  value: getFormDataField(data, "value"),
-  autoDetectReadings: data.get("autoDetectReadings") === "on",
-  onYomi: getFormDataField(data, "onYomi"),
-  kunYomi: getFormDataField(data, "kunYomi"),
-  translations: getFormDataField(data, "translations"),
+  value: getFormDataField<KanjiFormType>(data, "value"),
+  autoDetectReadings:
+    getFormDataField<KanjiFormType>(data, "autoDetectReadings") === "on",
+  onYomi: getFormDataFieldList<KanjiFormType>(data, "onYomi"),
+  kunYomi: getFormDataFieldList<KanjiFormType>(data, "kunYomi"),
+  translations: getFormDataFieldList<KanjiFormType>(data, "translations"),
 });
 
 const buildKanji = (
@@ -89,14 +90,10 @@ const buildKanji = (
     translations,
   }: RequiredProps<KanjiFormType>,
   locale: string,
-): $Kanji => {
-  const kanji: $Kanji = { value };
+) => {
+  const kanji: $Kanji = { value, onYomi, kunYomi };
   if (!autoDetectReadings) {
-    const translationsFormat = formatInputList(translations);
-    kanji.onYomi = formatInputList(onYomi);
-    kanji.kunYomi = formatInputList(kunYomi);
-    kanji.translations = { [locale]: translationsFormat };
+    kanji.translations = { [locale]: translations };
   }
-
   return kanji;
 };

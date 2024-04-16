@@ -1,29 +1,21 @@
 "use client";
 
+import { InputList } from "@/components/ui/InputList";
+import { convertInputToKatakana } from "@/lib/utils/convertInputToJapanese";
 import type { KanjiFormType } from "@/lib/validation/schemas/kanji";
 import type { FormInputProps } from "@/types/form";
-import { TextField } from "@mui/material";
 import { useTranslations } from "next-intl";
 
 type FormData = Pick<KanjiFormType, "onYomi">;
 
-const OnYomiInput = ({
-  value,
-  onChange,
-  errors,
-  disabled,
-}: FormInputProps<FormData>) => {
+const OnYomiInput = ({ errors, disabled }: FormInputProps<FormData>) => {
   const t = useTranslations("modals.addKanji.onYomi");
   return (
-    <TextField
+    <InputList<FormData>
       label={t("label")}
       name="onYomi"
-      multiline
-      maxRows={4}
-      value={value}
-      onChange={onChange}
-      helperText={t("description")}
-      error={!!errors?.onYomi}
+      setValueAs={convertInputToKatakana}
+      errors={errors?.onYomi?.params?.indexes as number[]}
       disabled={disabled}
     />
   );

@@ -1,3 +1,5 @@
+import type { Error } from "@/lib/validation/validateSchema";
+
 export const hasValidationErrors = <T extends string>(
-  errors: Record<T, string>,
-) => Object.values(errors).filter((e) => e).length > 0;
+  errors: Record<T, Error>,
+) => Object.values<Error>(errors).filter((e) => !!e?.message).length > 0;

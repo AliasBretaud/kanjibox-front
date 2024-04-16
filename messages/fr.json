@@ -49,6 +49,7 @@
         "value": "Valeur du kanji au format Japonais requise",
         "onYomi": "Lecture(s) ON requise(s) (katakana)",
         "kunYomi": "Lecture(s) KUN requise(s) (hiragana)",
+        "readingRequired": "Veuillez entrer au moins une lecture ON ou KUN",
         "translations": "Traduction(s) requise(s)"
       }
     },

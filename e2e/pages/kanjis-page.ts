@@ -1,7 +1,8 @@
 import type { KanjiFormType } from "@/lib/validation/schemas/kanji";
 import type { Locator, Page } from "@playwright/test";
+import { fillInputList } from "e2e/utils/inputUtils";
 
-type KanjiForm = Record<keyof KanjiFormType, Locator>;
+type KanjiForm = Partial<Record<keyof KanjiFormType, Locator>>;
 
 export class KanjisPage {
   private readonly page: Page;
@@ -14,9 +15,6 @@ export class KanjisPage {
       autoDetectReadings: this.page.getByLabel(
         "Automatic detection of readings/translations",
       ),
-      onYomi: this.page.getByLabel("On Yomi"),
-      kunYomi: this.page.getByLabel("Kun Yomi"),
-      translations: this.page.getByLabel("Translations", { exact: true }),
     };
   }
 
@@ -33,24 +31,27 @@ export class KanjisPage {
     translations,
   }: Partial<KanjiFormType>) {
     if (value) {
-      await this.addKanjiForm.value.fill(value);
+      await this.addKanjiForm.value?.fill(value);
     }
     if (autoDetectReadings) {
-      await this.addKanjiForm.autoDetectReadings.check();
+      await this.addKanjiForm.autoDetectReadings?.check();
     }
     if (onYomi) {
-      await this.addKanjiForm.onYomi.fill(onYomi);
+      await fillInputList(this.page, "onYomi", onYomi);
     }
     if (kunYomi) {
-      await this.addKanjiForm.kunYomi.fill(kunYomi);
+      await fillInputList(this.page, "kunYomi", kunYomi);
     }
     if (translations) {
-      await this.addKanjiForm.translations.fill(translations);
+      await fillInputList(this.page, "translations", translations);
     }
   }
 
   public async submitAddKanjiForm() {
-    const formAddButton = this.page.getByRole("button", { name: "Add" });
+    const formAddButton = this.page.getByRole("button", {
+      name: "Add",
+      exact: true,
+    });
     await formAddButton.click();
   }
 }

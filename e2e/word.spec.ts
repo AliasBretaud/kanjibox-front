@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { WordsPage } from "./page-utils/words-page";
+import { WordsPage } from "./pages/words-page";
 
 test.describe("Add a new word", () => {
   test("All infos filled", async ({ page }) => {

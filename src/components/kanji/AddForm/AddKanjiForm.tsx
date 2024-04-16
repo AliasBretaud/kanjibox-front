@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useFormState } from "react-dom";
 import {
+  Collapse,
   DialogActions,
   DialogContent,
   DialogContentText,
@@ -15,10 +16,6 @@ import BaseModal from "@/components/ui/BaseModal";
 import useModal from "@/hooks/useModal";
 import useNotification from "@/hooks/useNotification";
 import { useTranslations } from "next-intl";
-import {
-  convertInputToHiragana,
-  convertInputToKatakana,
-} from "@/lib/utils/convertInputToJapanese";
 import type { KanjiFormType } from "@/lib/validation/schemas/kanji";
 import type { FormState } from "@/types/form";
 import type { MKanji } from "@/types/modals";
@@ -30,6 +27,7 @@ import TranslationsInput from "./TranslationsInput";
 import ValidationErrors from "@/components/form/ValidationErrors";
 import ButtonsBlock from "@/components/form/ButtonsBlock";
 import { hasValidationErrors } from "@/lib/utils/hasValidationErrors";
+import { BlockDivider } from "@/components/ui/BlockDivider";
 
 const AddKanjiForm = () => {
   const t = useTranslations("modals.addKanji");
@@ -38,37 +36,30 @@ const AddKanjiForm = () => {
     FormData
   >(addKanji, null);
   const [autoDetectReadings, setAutoDetectReadings] = useState(false);
-  const [kunYomi, setKunYomi] = useState("");
-  const [onYomi, setOnYomi] = useState("");
-  const [translations, setTranslations] = useState("");
   const [errors, setErrors] = useState(formState?.validationErrors);
   const { hideModal } = useModal();
   const { showSuccessNotif, showErrorNotif } = useNotification();
 
-  const formProps = { errors };
-
-  const clearControlledFields = useCallback(() => {
-    setKunYomi("");
-    setOnYomi("");
-    setTranslations("");
-  }, []);
-
   const handleClose = useCallback(() => {
-    clearControlledFields();
     hideModal();
     setErrors(undefined);
-  }, [clearControlledFields, hideModal]);
+    setAutoDetectReadings(false);
+  }, [hideModal]);
 
   useEffect(() => {
     if (autoDetectReadings) {
-      clearControlledFields();
       setErrors((errors) =>
         errors
-          ? { ...errors, onYomi: "", kunYomi: "", translations: "" }
+          ? {
+              ...errors,
+              onYomi: { message: "" },
+              kunYomi: { message: "" },
+              translations: { message: "" },
+            }
           : undefined,
       );
     }
-  }, [autoDetectReadings, clearControlledFields]);
+  }, [autoDetectReadings]);
 
   useEffect(() => {
     if (formState?.validationErrors) {
@@ -108,7 +99,7 @@ const AddKanjiForm = () => {
           </DialogContentText>
           <Grid container alignItems="flex-start" spacing={2}>
             <Grid item xs={12}>
-              <ValueInput {...formProps} />
+              <ValueInput errors={errors} />
             </Grid>
             <Grid item xs={12}>
               <AutoDetectReadingsSwitch
@@ -116,33 +107,31 @@ const AddKanjiForm = () => {
                 onChange={(evt) => setAutoDetectReadings(evt.target.checked)}
               />
             </Grid>
-            <Grid item xs={6}>
-              <OnYomiInput
-                {...formProps}
-                value={onYomi}
-                onChange={(evt) => {
-                  setOnYomi(convertInputToKatakana(evt.target.value));
-                }}
-                disabled={autoDetectReadings}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <KunYomiInput
-                {...formProps}
-                value={kunYomi}
-                onChange={(evt) => {
-                  setKunYomi(convertInputToHiragana(evt.target.value));
-                }}
-                disabled={autoDetectReadings}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TranslationsInput
-                {...formProps}
-                value={translations}
-                onChange={(evt) => setTranslations(evt.target.value)}
-                disabled={autoDetectReadings}
-              />
+            <Grid item container>
+              <Collapse in={!autoDetectReadings}>
+                <Grid container item spacing={2}>
+                  <Grid item xs={12} sm={6}>
+                    <OnYomiInput
+                      errors={errors}
+                      disabled={autoDetectReadings}
+                    />
+                  </Grid>
+                  <BlockDivider />
+                  <Grid item xs={12} sm={6}>
+                    <KunYomiInput
+                      errors={errors}
+                      disabled={autoDetectReadings}
+                    />
+                  </Grid>
+                  <BlockDivider />
+                  <Grid item xs={12}>
+                    <TranslationsInput
+                      errors={errors}
+                      disabled={autoDetectReadings}
+                    />
+                  </Grid>
+                </Grid>
+              </Collapse>
             </Grid>
           </Grid>
           {errors && hasValidationErrors(errors) && (
