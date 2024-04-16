@@ -24,6 +24,7 @@ const FuriganaValueInput = ({
       onChange={onChange}
       required
       error={!!errors?.furiganaValue}
+      inputProps={{ maxLength: 15 }}
     />
   );
 };

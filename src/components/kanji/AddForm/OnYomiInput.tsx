@@ -17,6 +17,7 @@ const OnYomiInput = ({ errors, disabled }: FormInputProps<FormData>) => {
       setValueAs={convertInputToKatakana}
       errors={errors?.onYomi?.params?.indexes as number[]}
       disabled={disabled}
+      maxLength={4}
     />
   );
 };

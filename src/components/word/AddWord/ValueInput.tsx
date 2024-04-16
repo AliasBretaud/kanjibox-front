@@ -19,6 +19,7 @@ const ValueInput = ({ errors }: FormInputProps<FormData>) => {
       type="text"
       required
       error={!!errors?.value}
+      inputProps={{ maxLength: 5 }}
     />
   );
 };

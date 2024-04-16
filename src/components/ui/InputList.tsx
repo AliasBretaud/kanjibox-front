@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 
 type InputListProps<T> = Pick<InputProps, "disabled" | "required"> & {
   label: string;
+  maxLength?: number;
   name: keyof T;
   errors?: number[];
   values?: string[];
@@ -77,6 +78,7 @@ export function InputList<T>({
   name,
   required,
   disabled,
+  maxLength,
 }: InputListProps<T>) {
   const [values, setValues] = useState(initValues || [""]);
 
@@ -113,6 +115,7 @@ export function InputList<T>({
             fullWidth
             disabled={disabled}
             required={required && i === 0}
+            inputProps={{ maxLength }}
           />
           {!disabled ? (
             <ActionButton
