@@ -34,22 +34,26 @@ describe("Validation tests for the `value` field", () => {
 });
 
 describe("Validation tests for the `furigana` field", () => {
-  it("Single character", () => {
-    const formData = { ...formDataBase, furiganaValue: "こ" };
-    const res = validateSchema(wordSchema, formData);
-    expectError(res, "furiganaValue");
-  });
-
   it("Not japanese character", () => {
     const formData = { ...formDataBase, furiganaValue: "V" };
     const res = validateSchema(wordSchema, formData);
     expectError(res, "furiganaValue");
   });
 
-  it("Empty value", () => {
+  it("Not allowed empty value", () => {
     const formData = { ...formDataBase, furiganaValue: "" };
     const res = validateSchema(wordSchema, formData);
     expectError(res, "furiganaValue");
+  });
+
+  it("Allowed empty value", () => {
+    const formData = {
+      ...formDataBase,
+      value: "コンビニ",
+      furiganaValue: undefined,
+    };
+    const res = validateSchema(wordSchema, formData);
+    expect(res.success).toBeTruthy();
   });
 });
 
