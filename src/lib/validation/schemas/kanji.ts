@@ -1,14 +1,7 @@
 import { z } from "zod";
 import { isHiragana, isJapanese, isKanji, isKatakana } from "wanakana";
 import isEmpty from "@/lib/utils/isEmpty";
-
-type ValidationOptions = {
-  path: keyof KanjiFormType;
-  values: string[] | undefined | null;
-  checkFct: (s: string) => boolean;
-  ctx: z.RefinementCtx;
-  required?: boolean;
-};
+import { validateListValues } from "@/lib/validation/validateListValues";
 
 export const kanjiSchema = z
   .object({
@@ -55,29 +48,6 @@ const checkReadings = (
       values: kunYomi,
       checkFct: isHiragana,
       ctx,
-    });
-  }
-};
-
-const validateListValues = ({
-  path,
-  values,
-  checkFct,
-  ctx,
-  required = false,
-}: ValidationOptions) => {
-  const valuesErrorIdx = values?.reduce((acc, s, i) => {
-    if (isEmpty(s) && !required) return acc;
-    if (isEmpty(s) || !checkFct(s)) acc.push(i);
-    return acc;
-  }, [] as number[]);
-
-  if ((required && !values?.length) || valuesErrorIdx?.length) {
-    ctx.addIssue({
-      message: path,
-      path: [path],
-      code: "custom",
-      params: { indexes: valuesErrorIdx },
     });
   }
 };

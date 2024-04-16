@@ -6,7 +6,7 @@ import type { InputProps } from "@mui/material";
 import { Box, IconButton, Stack, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 
-type InputListProps<T> = Pick<InputProps, "disabled"> & {
+type InputListProps<T> = Pick<InputProps, "disabled" | "required"> & {
   label: string;
   name: keyof T;
   errors?: number[];
@@ -75,6 +75,7 @@ export function InputList<T>({
   setValueAs,
   label,
   name,
+  required,
   disabled,
 }: InputListProps<T>) {
   const [values, setValues] = useState(initValues || [""]);
@@ -111,6 +112,7 @@ export function InputList<T>({
             error={errors?.includes(i) && !disabled}
             fullWidth
             disabled={disabled}
+            required={required && i === 0}
           />
           {!disabled ? (
             <ActionButton

@@ -3,7 +3,6 @@
 import { get, post } from "./api";
 import { getFormDataField } from "@/lib/utils/getFormDataField";
 import { revalidateTag } from "next/cache";
-import { formatInputList } from "@/lib/utils/formatInputList";
 import { cookies } from "next/headers";
 import { type WordFormType, wordSchema } from "@/lib/validation/schemas/word";
 import { getCookiesLocaleOrDefault } from "@/lib/utils/getCookiesLocaleOrDefault";
@@ -11,6 +10,7 @@ import validateSchema from "@/lib/validation/validateSchema";
 import type { FormState } from "@/types/form";
 import type { $Word } from "@/types/models";
 import type { Page } from "@/types/api";
+import { getFormDataFieldList } from "@/lib/utils/getFormDataFieldList";
 
 const WORD_ENDPOINT = `${process.env.BACKEND_API_URL}/words`;
 
@@ -68,7 +68,7 @@ export const addWord = async (
 const parseWordFormData = (data: FormData): Required<WordFormType> => ({
   value: getFormDataField<$Word>(data, "value"),
   furiganaValue: getFormDataField<$Word>(data, "furiganaValue"),
-  translations: getFormDataField(data, "translations"),
+  translations: getFormDataFieldList<$Word>(data, "translations"),
 });
 
 const buildWord = (
@@ -77,5 +77,5 @@ const buildWord = (
 ): $Word => ({
   value,
   furiganaValue,
-  translations: { [locale]: formatInputList(translations) },
+  translations: { [locale]: translations },
 });

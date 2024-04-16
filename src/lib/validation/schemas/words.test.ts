@@ -5,7 +5,7 @@ import { type WordFormType, wordSchema } from "./word";
 const formDataBase: WordFormType = {
   value: "言葉",
   furiganaValue: "ことば",
-  translations: "words",
+  translations: ["words", "some words"],
 };
 
 it("Valid a word from the validation schema", () => {
