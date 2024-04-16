@@ -6,9 +6,9 @@ import validateSchema from "@/lib/validation/validateSchema";
 const formDataBase: KanjiFormType = {
   autoDetectReadings: false,
   value: "人",
-  onYomi: "ジン;ニン",
-  kunYomi: "ひと",
-  translations: "Person;People",
+  onYomi: ["ジン", "ニン"],
+  kunYomi: ["ひと"],
+  translations: ["Person", "People"],
 };
 
 it("Valid a kanji from the validation schema", () => {

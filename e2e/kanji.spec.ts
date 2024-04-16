@@ -1,8 +1,8 @@
 import { expect, test } from "@playwright/test";
-import { KanjisPage } from "./page-utils/kanjis-page";
+import { KanjisPage } from "./pages/kanjis-page";
 
 test.describe("Kanji Search", () => {
-  test("should diplay the requested kanji info", async ({ page }) => {
+  test("should display the requested kanji info", async ({ page }) => {
     await page.goto("http://localhost:3000/en/");
 
     const searchInput = page.getByPlaceholder("キーワードを入力");
@@ -32,10 +32,10 @@ test.describe("Add a new kanji", () => {
     // Add kanji
     await kanjisPage.openAddKanjiForm();
     await kanjisPage.fillAddKanjiForm({
-      value: "犬",
-      onYomi: "ケン",
-      kunYomi: "いぬ",
-      translations: "dog",
+      value: "力",
+      onYomi: ["リョク", "リキ"],
+      kunYomi: ["ちから"],
+      translations: ["Power", "Strength"],
     });
     await kanjisPage.submitAddKanjiForm();
 
@@ -62,8 +62,10 @@ test.describe("Add a new kanji", () => {
     const notif = page.getByText("Kanji added !");
     await expect(notif).toBeVisible();
   });
+});
 
-  test("Form validations", async ({ page }) => {
+test.describe("Form validations", () => {
+  test("All invalid", async ({ page }) => {
     // Kanjis page
     await page.goto("http://localhost:3000/en/kanjis");
 
@@ -78,12 +80,51 @@ test.describe("Add a new kanji", () => {
     const errors = page.getByTestId("error-messages");
     const messages = [
       "Kanji value format required (Japanese)",
-      "ON reading(s) required (katakana)",
-      "KUN reading(s) required (hiragana)",
+      "Please enter at least one KUN or ON reading",
       "Translation(s) required",
     ];
     for (const m of messages) {
       await expect(errors).toContainText(m);
     }
+  });
+
+  test("Wrong on yomi", async ({ page }) => {
+    // Kanjis page
+    await page.goto("http://localhost:3000/en/kanjis");
+
+    const kanjisPage = new KanjisPage(page);
+
+    // Add kanji
+    await kanjisPage.openAddKanjiForm();
+    await kanjisPage.fillAddKanjiForm({
+      value: "犬",
+      onYomi: ["AB"],
+      translations: ["Dog"],
+    });
+    // Empty values
+    await kanjisPage.submitAddKanjiForm();
+    // Get errors
+    const errors = page.getByTestId("error-messages");
+    await expect(errors).toContainText("ON reading(s) required (katakana)");
+  });
+
+  test("Wrong kun yomi", async ({ page }) => {
+    // Kanjis page
+    await page.goto("http://localhost:3000/en/kanjis");
+
+    const kanjisPage = new KanjisPage(page);
+
+    // Add kanji
+    await kanjisPage.openAddKanjiForm();
+    await kanjisPage.fillAddKanjiForm({
+      value: "犬",
+      kunYomi: ["AB"],
+      translations: ["Dog"],
+    });
+    // Empty values
+    await kanjisPage.submitAddKanjiForm();
+    // Get errors
+    const errors = page.getByTestId("error-messages");
+    await expect(errors).toContainText("KUN reading(s) required (hiragana)");
   });
 });

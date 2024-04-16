@@ -1,5 +1,6 @@
 import type { WordFormType } from "@/lib/validation/schemas/word";
 import type { Locator, Page } from "@playwright/test";
+import { fillInputList } from "e2e/utils/inputUtils";
 
 type WordForm = Record<keyof WordFormType, Locator>;
 
@@ -33,12 +34,15 @@ export class WordsPage {
       await this.addWordForm.furiganaValue.fill(furiganaValue);
     }
     if (translations) {
-      await this.addWordForm.translations.fill(translations);
+      await fillInputList(this.page, "translations", translations);
     }
   }
 
   public async submitAddWordForm() {
-    const formAddButton = this.page.getByRole("button", { name: "Add" });
+    const formAddButton = this.page.getByRole("button", {
+      name: "Add",
+      exact: true,
+    });
     await formAddButton.click();
   }
 }

@@ -1,29 +1,21 @@
 "use client";
 
+import { InputList } from "@/components/ui/InputList";
+import { convertInputToHiragana } from "@/lib/utils/convertInputToJapanese";
 import type { KanjiFormType } from "@/lib/validation/schemas/kanji";
 import type { FormInputProps } from "@/types/form";
-import { TextField } from "@mui/material";
 import { useTranslations } from "next-intl";
 
 type FormData = Pick<KanjiFormType, "kunYomi">;
 
-const KunYomiInput = ({
-  value,
-  onChange,
-  errors,
-  disabled,
-}: FormInputProps<FormData>) => {
+const KunYomiInput = ({ errors, disabled }: FormInputProps<FormData>) => {
   const t = useTranslations("modals.addKanji.kunYomi");
   return (
-    <TextField
+    <InputList<FormData>
       label={t("label")}
       name="kunYomi"
-      multiline
-      maxRows={4}
-      value={value}
-      onChange={onChange}
-      helperText={t("description")}
-      error={!!errors?.kunYomi}
+      setValueAs={convertInputToHiragana}
+      errors={errors?.kunYomi?.params?.indexes as number[]}
       disabled={disabled}
     />
   );

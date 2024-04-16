@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { WordsPage } from "./page-utils/words-page";
+import { WordsPage } from "./pages/words-page";
 
 test.describe("Add a new word", () => {
   test("All infos filled", async ({ page }) => {
@@ -13,7 +13,7 @@ test.describe("Add a new word", () => {
     await wordsPage.fillAddWordForm({
       value: "言葉",
       furiganaValue: "ことば",
-      translations: "Word",
+      translations: ["Word"],
     });
     await wordsPage.submitAddWordForm();
 
@@ -33,7 +33,7 @@ test.describe("Add a new word", () => {
     await wordsPage.fillAddWordForm({
       value: "A",
       furiganaValue: "N",
-      translations: "こ",
+      translations: ["こ"],
     });
     // Empty values
     await wordsPage.submitAddWordForm();

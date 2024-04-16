@@ -1,4 +1,15 @@
-export const isEmpty = (str: string) =>
-  str === undefined || str === null || str.trim().length === 0;
+export default function isEmpty(input: string | unknown[] | undefined | null) {
+  if (typeof input === "undefined" || input === null) {
+    return true;
+  }
 
-export default isEmpty;
+  if (Array.isArray(input)) {
+    return input.length === 0 || input.every((val) => !val);
+  }
+
+  if (typeof input === "string") {
+    return input.trim() === "";
+  }
+
+  return false;
+}

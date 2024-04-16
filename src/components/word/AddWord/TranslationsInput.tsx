@@ -1,8 +1,8 @@
 "use client";
 
+import { InputList } from "@/components/ui/InputList";
 import type { WordFormType } from "@/lib/validation/schemas/word";
 import type { FormInputProps } from "@/types/form";
-import { TextField } from "@mui/material";
 import { useTranslations } from "next-intl";
 
 type FormData = Pick<WordFormType, "translations">;
@@ -10,15 +10,11 @@ type FormData = Pick<WordFormType, "translations">;
 const TranslationsInput = ({ errors }: FormInputProps<FormData>) => {
   const t = useTranslations("modals.addWord.translations");
   return (
-    <TextField
-      id="wordTranslation"
+    <InputList<FormData>
       label={t("label")}
       name="translations"
-      fullWidth
-      type="text"
-      helperText={t("description")}
+      errors={errors?.translations?.params?.indexes as number[]}
       required
-      error={!!errors?.translations}
     />
   );
 };
