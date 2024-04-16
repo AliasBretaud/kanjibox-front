@@ -1,10 +1,11 @@
-import { Box, Card, CardContent } from "@mui/material";
+import { Box } from "@mui/material";
 import Table, { Row } from "@/components/ui/Table";
 import { ClickableKanji } from "./ClickableKanji";
 import { getLocalizedTranslations } from "@/lib/utils/getLocalizedTranslations";
 import type { PropsWithLocalization } from "@/types/utils";
 import type { $Word } from "@/types/models";
 import type { PropsWithChildren } from "react";
+import { Card } from "@/components/ui/Card";
 
 const WordCharacters = ({ value, kanjis }: Pick<$Word, "value" | "kanjis">) =>
   value.split("").map((char, idx) => {
@@ -57,21 +58,13 @@ const WordCard = ({
 }: PropsWithLocalization<$Word>) => {
   const localizedTranslations = getLocalizedTranslations(translations, locale);
   return (
-    <Card
-      sx={{
-        textAlign: "center",
-        width: "100%",
-        maxWidth: "300px",
-      }}
-    >
-      <CardContent>
-        <WordValueDetail {...p} />
-        {localizedTranslations && (
-          <Table>
-            <Row title="翻訳" data={localizedTranslations} />
-          </Table>
-        )}
-      </CardContent>
+    <Card>
+      <WordValueDetail {...p} />
+      {localizedTranslations && (
+        <Table>
+          <Row title="翻訳" data={localizedTranslations} />
+        </Table>
+      )}
     </Card>
   );
 };

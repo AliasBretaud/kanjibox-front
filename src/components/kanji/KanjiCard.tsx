@@ -1,9 +1,10 @@
-import { Paper, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 
 import Table, { Row } from "@/components/ui/Table";
 import { getLocalizedTranslations } from "@/lib/utils/getLocalizedTranslations";
 import type { PropsWithLocalization } from "@/types/utils";
 import type { $Kanji } from "@/types/models";
+import { Card } from "@/components/ui/Card";
 
 const KanjiCard = ({
   kunYomi,
@@ -14,7 +15,7 @@ const KanjiCard = ({
 }: PropsWithLocalization<$Kanji>) => {
   const localizedTranslations = getLocalizedTranslations(translations, locale);
   return (
-    <Paper sx={{ p: 2 }} className="w-full max-w-md flex flex-col items-center">
+    <Card>
       <Typography
         className="font-kanji"
         sx={{ opacity: 0.75, color: "black", fontSize: 80 }}
@@ -28,7 +29,7 @@ const KanjiCard = ({
           <Row title="意味" data={localizedTranslations} />
         )}
       </Table>
-    </Paper>
+    </Card>
   );
 };
 
