@@ -17,6 +17,7 @@ const KunYomiInput = ({ errors, disabled }: FormInputProps<FormData>) => {
       setValueAs={convertInputToHiragana}
       errors={errors?.kunYomi?.params?.indexes as number[]}
       disabled={disabled}
+      maxLength={11}
     />
   );
 };

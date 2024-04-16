@@ -15,6 +15,7 @@ const TranslationsInput = ({ errors }: FormInputProps<FormData>) => {
       name="translations"
       errors={errors?.translations?.params?.indexes as number[]}
       required
+      maxLength={50}
     />
   );
 };
