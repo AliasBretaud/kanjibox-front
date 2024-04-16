@@ -11,6 +11,7 @@ import type { FormState } from "@/types/form";
 import type { $Word } from "@/types/models";
 import type { Page } from "@/types/api";
 import { getFormDataFieldList } from "@/lib/utils/getFormDataFieldList";
+import { isKana } from "wanakana";
 
 const WORD_ENDPOINT = `${process.env.BACKEND_API_URL}/words`;
 
@@ -76,6 +77,6 @@ const buildWord = (
   locale: string,
 ): $Word => ({
   value,
-  furiganaValue,
+  furiganaValue: isKana(value) ? undefined : furiganaValue || undefined,
   translations: { [locale]: translations },
 });

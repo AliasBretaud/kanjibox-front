@@ -8,12 +8,11 @@ const WordList = ({ data: words = [] }: { data: $Word[] }) => {
   return (
     <Grid
       container
-      spacing={4}
+      justifyContent="center"
       className="font-kanji"
-      m={0}
+      spacing={4}
       flexGrow={1}
-      width="100%"
-      pb={4}
+      p={4}
     >
       {words.map((word, i) => (
         <Grid
