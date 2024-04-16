@@ -9,7 +9,7 @@ exports[`WordCard component tests renders WordCard unchanged 1`] = `
       class="MuiCardContent-root css-46bh2p-MuiCardContent-root"
     >
       <div
-        class="MuiBox-root css-1vgn2hj"
+        class="MuiBox-root css-1wqq0gm"
       >
         <ruby>
           <div
@@ -22,17 +22,11 @@ exports[`WordCard component tests renders WordCard unchanged 1`] = `
               葉
             </span>
           </div>
-          <rp>
-            (
-          </rp>
           <rt
             class="MuiBox-root css-1r0hgr4"
           >
             ことば
           </rt>
-          <rp>
-            )
-          </rp>
         </ruby>
       </div>
       <table

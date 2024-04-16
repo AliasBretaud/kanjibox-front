@@ -24,6 +24,7 @@ import FuriganaValueInput from "./FuriganaValueInput";
 import TranslationsInput from "./TranslationsInput";
 import ValidationErrors from "@/components/form/ValidationErrors";
 import ButtonsBlock from "@/components/form/ButtonsBlock";
+import { isKana } from "wanakana";
 
 const AddWordForm = () => {
   const t = useTranslations("modals.addWord");
@@ -32,6 +33,7 @@ const AddWordForm = () => {
     FormData
   >(addWord, {});
   const [errors, setErrors] = useState(formState?.validationErrors);
+  const [value, setValue] = useState("");
   const [wordFuriganaValue, setWordFuriganaValue] = useState<string>("");
   const { hideModal } = useModal();
   const { showSuccessNotif, showErrorNotif } = useNotification();
@@ -82,12 +84,17 @@ const AddWordForm = () => {
           </DialogContentText>
           <Grid container alignItems="flex-start" spacing={2}>
             <Grid item xs={12}>
-              <ValueInput {...formProps} />
+              <ValueInput
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+                {...formProps}
+              />
             </Grid>
             <Grid item xs={12}>
               <FuriganaValueInput
                 value={wordFuriganaValue}
                 onChange={formatFurigana}
+                disabled={isKana(value)}
                 {...formProps}
               />
             </Grid>

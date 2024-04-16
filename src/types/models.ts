@@ -11,7 +11,7 @@ export type $Kanji = {
 export type $Word = {
   id?: number;
   value: string;
-  furiganaValue: string;
+  furiganaValue?: string;
   kanjis?: $Kanji[];
   translations: MappedValue<string, string[]>;
 };

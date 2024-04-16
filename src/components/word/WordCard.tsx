@@ -4,6 +4,7 @@ import { ClickableKanji } from "./ClickableKanji";
 import { getLocalizedTranslations } from "@/lib/utils/getLocalizedTranslations";
 import type { PropsWithLocalization } from "@/types/utils";
 import type { $Word } from "@/types/models";
+import type { PropsWithChildren } from "react";
 
 const WordCharacters = ({ value, kanjis }: Pick<$Word, "value" | "kanjis">) =>
   value.split("").map((char, idx) => {
@@ -15,8 +16,41 @@ const WordCharacters = ({ value, kanjis }: Pick<$Word, "value" | "kanjis">) =>
     );
   });
 
-const WordCard = ({
+const Ruby = ({ children, rt }: PropsWithChildren<{ rt: string }>) => (
+  <ruby>
+    {children}
+    <Box component="rt" fontSize="15pt">
+      {rt}
+    </Box>
+  </ruby>
+);
+
+const WordValueDetail = ({
   furiganaValue,
+  ...p
+}: Pick<$Word, "value" | "kanjis" | "furiganaValue">) => {
+  const value = (
+    <Box display="table" sx={{ wordBreak: "break-word" }}>
+      <WordCharacters {...p} />
+    </Box>
+  );
+  return (
+    <Box
+      component="div"
+      fontSize="35pt"
+      color="black"
+      sx={{ cursor: "default", opacity: 0.75 }}
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      minHeight={92}
+    >
+      {furiganaValue ? <Ruby rt={furiganaValue}>{value}</Ruby> : value}
+    </Box>
+  );
+};
+
+const WordCard = ({
   translations,
   locale,
   ...p
@@ -31,23 +65,7 @@ const WordCard = ({
       }}
     >
       <CardContent>
-        <Box
-          component="div"
-          fontSize="35pt"
-          color="black"
-          sx={{ cursor: "default", opacity: 0.75 }}
-        >
-          <ruby>
-            <Box display="table" sx={{ wordBreak: "break-word" }}>
-              <WordCharacters {...p} />
-            </Box>
-            <rp>(</rp>
-            <Box component="rt" fontSize="15pt">
-              {furiganaValue}
-            </Box>
-            <rp>)</rp>
-          </ruby>
-        </Box>
+        <WordValueDetail {...p} />
         {localizedTranslations && (
           <Table>
             <Row title="翻訳" data={localizedTranslations} />

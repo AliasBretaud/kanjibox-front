@@ -7,7 +7,7 @@ import { useTranslations } from "next-intl";
 
 type FormData = Pick<WordFormType, "value">;
 
-const ValueInput = ({ errors }: FormInputProps<FormData>) => {
+const ValueInput = ({ errors, value, onChange }: FormInputProps<FormData>) => {
   const t = useTranslations("modals.addWord");
   return (
     <TextField
@@ -18,6 +18,8 @@ const ValueInput = ({ errors }: FormInputProps<FormData>) => {
       fullWidth
       type="text"
       required
+      value={value}
+      onChange={onChange}
       error={!!errors?.value}
       inputProps={{ maxLength: 5 }}
     />
