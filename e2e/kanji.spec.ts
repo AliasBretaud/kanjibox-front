@@ -73,7 +73,7 @@ test.describe("Form validations", () => {
 
     // Add kanji
     await kanjisPage.openAddKanjiForm();
-    await kanjisPage.fillAddKanjiForm({ value: "A" });
+    await kanjisPage.fillAddKanjiForm({ value: "A", translations: ["き"] });
     // Empty values
     await kanjisPage.submitAddKanjiForm();
     // Get errors

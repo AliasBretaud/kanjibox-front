@@ -16,6 +16,7 @@ const TranslationsInput = ({ disabled, errors }: FormInputProps<FormData>) => {
       errors={errors?.translations?.params?.indexes as number[]}
       disabled={disabled}
       maxLength={50}
+      required
     />
   );
 };

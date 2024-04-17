@@ -28,7 +28,7 @@ export const validateListValues = ({
       message: path,
       path: [path],
       code: "custom",
-      params: { indexes: valuesErrorIdx },
+      params: { indexes: valuesErrorIdx?.length ? valuesErrorIdx : [0] },
     });
   }
 };

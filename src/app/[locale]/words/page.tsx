@@ -17,7 +17,7 @@ import {
   useMessages,
   useTranslations,
 } from "next-intl";
-import pick from "lodash.pick";
+import { pick } from "@/lib/utils/pick";
 
 const WordsContainer = async ({
   page,
@@ -50,13 +50,11 @@ export default function WordsPage({
 
   const t = useTranslations("loading");
   const messages = useMessages();
+  const messageF = pick(messages, ["modals", "buttons"]);
   const page = searchParams?.page || 1;
   return (
     <Suspense key={page} fallback={<LoadingState text={t("words")} />}>
-      <WordsContainer
-        page={page}
-        messages={pick(messages, ["modals", "buttons"])}
-      />
+      <WordsContainer page={page} messages={messageF} />
     </Suspense>
   );
 }

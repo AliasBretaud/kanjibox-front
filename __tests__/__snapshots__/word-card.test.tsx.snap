@@ -3,17 +3,29 @@
 exports[`WordCard component tests renders WordCard unchanged 1`] = `
 <div>
   <div
-    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-91xihe-MuiPaper-root-MuiCard-root"
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 w-full max-w-md flex flex-col items-center css-i0bk1x-MuiPaper-root"
   >
     <div
-      class="MuiCardContent-root css-46bh2p-MuiCardContent-root"
+      class="MuiStack-root css-12h60pv-MuiStack-root"
     >
-      <div
-        class="MuiBox-root css-1wqq0gm"
+      <span
+        lang="ja"
+        style="display: flex; flex-flow: row wrap; font-family: 'ヒラギノ角ゴ ProN', 'Hiragino Kaku Gothic ProN', 'TakaoPゴシック', TakaoPGothic, '游ゴシック', '游ゴシック体', YuGothic, 'Yu Gothic', 'メイリオ', Meiryo, 'ＭＳ ゴシック', 'MS Gothic', HiraKakuProN-W3, 'MotoyaLCedar', 'Droid Sans Japanese', sans-serif; font-size: 35pt; color: black; cursor: default; opacity: 0.75; justify-content: center; align-items: center; min-height: 83px;"
       >
-        <ruby>
-          <div
-            class="MuiBox-root css-iih18f"
+        <span
+          class="font-kanji"
+          lang="ja"
+          style="display: inline-flex; line-height: 1; flex-flow: column nowrap; justify-content: flex-end; align-items: center; align-self: flex-end; gap: 10px;"
+        >
+          <span
+            lang="ja"
+            style="display: block; font-size: 15pt; letter-spacing: -0.02em; margin: 0px 0.1em; padding-top: 0.2em; padding-bottom: 0.1em; user-select: none; opacity: 0.9;"
+          >
+            ことば
+          </span>
+          <span
+            lang="ja"
+            style="display: block;"
           >
             <span>
               言
@@ -21,14 +33,9 @@ exports[`WordCard component tests renders WordCard unchanged 1`] = `
             <span>
               葉
             </span>
-          </div>
-          <rt
-            class="MuiBox-root css-1r0hgr4"
-          >
-            ことば
-          </rt>
-        </ruby>
-      </div>
+          </span>
+        </span>
+      </span>
       <table
         class="w-full border-collapse text-left font-kanji border border-solid border-neutral-300"
       >

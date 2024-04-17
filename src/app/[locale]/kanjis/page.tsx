@@ -16,7 +16,7 @@ import {
   useMessages,
   useTranslations,
 } from "next-intl";
-import pick from "lodash.pick";
+import { pick } from "@/lib/utils/pick";
 
 const KanjiContainer = async ({
   messages,

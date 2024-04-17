@@ -1,11 +1,14 @@
-import { Box } from "@mui/material";
+import React from "react";
+import { Stack } from "@mui/material";
 import Table, { Row } from "@/components/ui/Table";
 import { ClickableKanji } from "./ClickableKanji";
 import { getLocalizedTranslations } from "@/lib/utils/getLocalizedTranslations";
+import { Furi, Pair, Text, Wrapper, useFuriPairs } from "react-furi";
+import { Card } from "@/components/ui/Card";
 import type { PropsWithLocalization } from "@/types/utils";
 import type { $Word } from "@/types/models";
-import type { PropsWithChildren } from "react";
-import { Card } from "@/components/ui/Card";
+
+type RubyProps = Pick<$Word, "kanjis" | "furiganaValue" | "value">;
 
 const WordCharacters = ({ value, kanjis }: Pick<$Word, "value" | "kanjis">) =>
   value.split("").map((char, idx) => {
@@ -17,37 +20,49 @@ const WordCharacters = ({ value, kanjis }: Pick<$Word, "value" | "kanjis">) =>
     );
   });
 
-const Ruby = ({ children, rt }: PropsWithChildren<{ rt: string }>) => (
-  <ruby>
-    {children}
-    <Box component="rt" fontSize="15pt">
-      {rt}
-    </Box>
-  </ruby>
+const Ruby = ({ furiganaValue, value, kanjis }: RubyProps) => (
+  <Pair style={{ fontSize: "inherit", gap: 10 }} className="font-kanji">
+    {furiganaValue && <Furi style={{ fontSize: "15pt" }}>{furiganaValue}</Furi>}
+    <Text>
+      <WordCharacters value={value} kanjis={kanjis} />
+    </Text>
+  </Pair>
 );
 
 const WordValueDetail = ({
   furiganaValue,
   ...p
 }: Pick<$Word, "value" | "kanjis" | "furiganaValue">) => {
-  const value = (
-    <Box display="table" sx={{ wordBreak: "break-word" }}>
-      <WordCharacters {...p} />
-    </Box>
-  );
+  const pairs: Array<[string, string]> = useFuriPairs(p.value, furiganaValue);
+  const noFurigana = pairs.map(([furigana]) => furigana).every((v) => !v);
   return (
-    <Box
-      component="div"
-      fontSize="35pt"
-      color="black"
-      sx={{ cursor: "default", opacity: 0.75 }}
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      minHeight={92}
+    <Wrapper
+      style={{
+        fontSize: "35pt",
+        color: "black",
+        cursor: "default",
+        opacity: 0.75,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        minHeight: 83,
+      }}
     >
-      {furiganaValue ? <Ruby rt={furiganaValue}>{value}</Ruby> : value}
-    </Box>
+      {noFurigana ? (
+        <Ruby furiganaValue={furiganaValue} {...p} />
+      ) : (
+        pairs
+          .filter(([, text]) => !!text)
+          .map(([furiText, text], index) => (
+            <Ruby
+              key={text + index}
+              furiganaValue={furiText}
+              value={text}
+              kanjis={p.kanjis}
+            />
+          ))
+      )}
+    </Wrapper>
   );
 };
 
@@ -59,12 +74,14 @@ const WordCard = ({
   const localizedTranslations = getLocalizedTranslations(translations, locale);
   return (
     <Card>
-      <WordValueDetail {...p} />
-      {localizedTranslations && (
-        <Table>
-          <Row title="翻訳" data={localizedTranslations} />
-        </Table>
-      )}
+      <Stack spacing={2} alignSelf="stretch">
+        <WordValueDetail {...p} />
+        {localizedTranslations && (
+          <Table>
+            <Row title="翻訳" data={localizedTranslations} />
+          </Table>
+        )}
+      </Stack>
     </Card>
   );
 };
