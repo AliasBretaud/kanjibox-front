@@ -12,4 +12,4 @@ export type FormProps<F> = {
 };
 
 export type FormInputProps<F> = FormProps<F> &
-  Pick<InputProps, "value" | "onChange" | "disabled">;
+  Pick<InputProps, "value" | "onChange" | "disabled" | "required">;

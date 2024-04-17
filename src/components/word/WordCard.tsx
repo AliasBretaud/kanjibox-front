@@ -46,6 +46,7 @@ const WordValueDetail = ({
         justifyContent: "center",
         alignItems: "center",
         minHeight: 83,
+        alignContent: "center",
       }}
     >
       {noFurigana ? (

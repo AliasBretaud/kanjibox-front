@@ -37,10 +37,12 @@ const AddWordForm = () => {
   const [wordFuriganaValue, setWordFuriganaValue] = useState<string>("");
   const { hideModal } = useModal();
   const { showSuccessNotif, showErrorNotif } = useNotification();
+  const enableFurigana = !isKana(value);
 
   const formProps = { errors };
 
   const handleClose = useCallback(() => {
+    setValue("");
     setWordFuriganaValue("");
     hideModal();
     setErrors(undefined);
@@ -94,7 +96,8 @@ const AddWordForm = () => {
               <FuriganaValueInput
                 value={wordFuriganaValue}
                 onChange={formatFurigana}
-                disabled={isKana(value)}
+                disabled={!enableFurigana}
+                required={enableFurigana}
                 {...formProps}
               />
             </Grid>

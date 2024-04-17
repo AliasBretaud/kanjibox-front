@@ -12,6 +12,7 @@ const FuriganaValueInput = ({
   onChange,
   errors,
   disabled,
+  required,
 }: FormInputProps<FormData>) => {
   const t = useTranslations("modals.addWord");
   return (
@@ -23,7 +24,7 @@ const FuriganaValueInput = ({
       type="text"
       value={value}
       onChange={onChange}
-      required
+      required={required}
       error={!!errors?.furiganaValue}
       inputProps={{ maxLength: 15 }}
       disabled={disabled}
