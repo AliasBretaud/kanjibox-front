@@ -23,6 +23,7 @@
     "@mui/lab": "^5.0.0-alpha.169",
     "@mui/material": "^5.15.14",
     "@mui/material-nextjs": "^5.15.11",
+    "@next/bundle-analyzer": "^14.2.1",
     "@typescript-eslint/eslint-plugin": "^7.1.0",
     "clsx": "^2.1.0",
     "eslint-plugin-prettier": "^5.1.3",

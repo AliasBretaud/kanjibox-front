@@ -2,7 +2,8 @@
 
 import { locales } from "@/locale-config";
 import { usePathname, useRouter } from "@/navigation";
-import { KeyboardArrowDown, Translate } from "@mui/icons-material";
+import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown";
+import Translate from "@mui/icons-material/Translate";
 import { Button, Menu, MenuItem } from "@mui/material";
 import { indigo } from "@mui/material/colors";
 import { useLocale } from "next-intl";
