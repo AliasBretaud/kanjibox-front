@@ -11,9 +11,9 @@ export default function ValidationErrors<F>({ errors, tKey }: Props<F>) {
   return (
     <Alert severity="error" sx={{ mt: 2 }} data-testid="error-messages">
       {Object.values<Error>(errors)
-        .filter((e) => !!e.message)
-        .map((k, i) => (
-          <div key={i}>{t(k.message)}</div>
+        .filter((e) => !!e?.message)
+        .map((e, i) => (
+          <div key={i}>{t(e?.message)}</div>
         ))}
     </Alert>
   );

@@ -41,6 +41,10 @@
         "label": "英訳",
         "description": "';'で区切る"
       },
+      "stepper": {
+        "enterInfo": "漢字の値",
+        "preview": "プレビューと検証"
+      },
       "notifications": {
         "success": "漢字が追加されました！",
         "error": "エラー"
@@ -62,6 +66,10 @@
         "label": "英訳",
         "description": "';'で区切る"
       },
+      "stepper": {
+        "enterInfo": "単語の値",
+        "preview": "プレビューと検証"
+      },
       "notifications": {
         "success": "単語が追加されました！",
         "error": "エラー"
@@ -74,7 +82,9 @@
     },
     "buttons": {
       "add": "追加",
-      "cancel": "キャンセル"
+      "back": "戻る",
+      "cancel": "キャンセル",
+      "next": "次へ"
     }
   }
 }

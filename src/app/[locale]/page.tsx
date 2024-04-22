@@ -27,7 +27,7 @@ export default function Home({
   return (
     <main>
       <SearchBar />
-      {!query && <WelcomeMessage />}
+      {!query ? <WelcomeMessage /> : null}
       <Suspense key={query} fallback={<LoadingState text={t("kanjis")} />}>
         <KanjiContainer search={query} />
       </Suspense>

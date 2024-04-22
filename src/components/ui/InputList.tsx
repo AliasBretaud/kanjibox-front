@@ -4,15 +4,15 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import type { InputProps } from "@mui/material";
 import { Box, IconButton, Stack, TextField } from "@mui/material";
-import { useEffect, useState } from "react";
 
-type InputListProps<T> = Pick<InputProps, "disabled" | "required"> & {
+export type InputListProps<T> = Pick<InputProps, "disabled" | "required"> & {
   label: string;
   maxLength?: number;
   name: keyof T;
   errors?: number[];
   values?: string[];
   setValueAs?: (value: string) => string;
+  onChange: (values: string[]) => void;
 };
 
 type ActionButtonProps = {
@@ -44,7 +44,7 @@ const AddButton = ({
     aria-label="add"
     size="small"
     onClick={addAction}
-    data-testId={testId}
+    data-testid={testId}
   >
     <AddIcon fontSize="inherit" color="primary" />
   </IconButton>
@@ -72,34 +72,29 @@ const ActionButton = ({
 
 export function InputList<T>({
   errors,
-  values: initValues,
+  values = [],
   setValueAs,
   label,
   name,
   required,
   disabled,
   maxLength,
+  onChange,
 }: InputListProps<T>) {
-  const [values, setValues] = useState(initValues || [""]);
-
   const updateValue = (value: string, index: number) => {
     const newVal = setValueAs ? setValueAs(value) : value;
     const updatedvalues = [...values];
     updatedvalues.splice(index, 1, newVal);
-    setValues(updatedvalues);
+    onChange(updatedvalues);
   };
 
   const removeValue = (index: number) => {
     const updatedvalues = [...values];
     updatedvalues.splice(index, 1);
-    setValues(updatedvalues);
+    onChange(updatedvalues);
   };
 
-  const addValue = () => setValues([...values, ""]);
-
-  useEffect(() => {
-    if (disabled) setValues([""]);
-  }, [disabled]);
+  const addValue = () => onChange([...values, ""]);
 
   return (
     <Stack gap={2}>

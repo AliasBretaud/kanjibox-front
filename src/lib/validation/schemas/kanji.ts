@@ -3,7 +3,14 @@ import { isHiragana, isJapanese, isKanji, isKatakana } from "wanakana";
 import isEmpty from "@/lib/utils/isEmpty";
 import { validateListValues } from "@/lib/validation/validateListValues";
 
-export const kanjiSchema = z
+export const kanjiSchema = z.object({
+  value: z.string().refine((s) => s.length === 1 && isKanji(s), "value"),
+  onYomi: z.string().array().optional(),
+  kunYomi: z.string().array().optional(),
+  translations: z.record(z.array(z.string())).optional(),
+});
+
+export const kanjiFormSchema = z
   .object({
     value: z.string().refine((s) => s.length === 1 && isKanji(s), "value"),
     autoDetectReadings: z.boolean(),
@@ -52,4 +59,4 @@ const checkReadings = (
   }
 };
 
-export type KanjiFormType = z.infer<typeof kanjiSchema>;
+export type KanjiFormType = z.infer<typeof kanjiFormSchema>;

@@ -25,18 +25,22 @@ const WelcomeMessage = () => {
       </Typography>
       <Grid container spacing={2} justifyContent="center" className="mt-8">
         <Grid item>
-          <Link href="/kanjis">
-            <Button variant="contained" color="primary">
-              {t("cta.kanjis")}
-            </Button>
-          </Link>
+          <div>
+            <Link href="/kanjis">
+              <Button variant="contained" color="primary">
+                {t("cta.kanjis")}
+              </Button>
+            </Link>
+          </div>
         </Grid>
         <Grid item>
-          <Link href="/words">
-            <Button variant="outlined" className="!bg-white !text-black">
-              {t("cta.words")}
-            </Button>
-          </Link>
+          <div>
+            <Link href="/words">
+              <Button variant="outlined" className="!bg-white !text-black">
+                {t("cta.words")}
+              </Button>
+            </Link>
+          </div>
         </Grid>
       </Grid>
     </Container>

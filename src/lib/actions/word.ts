@@ -38,7 +38,7 @@ export const getWords = async (
 export const addWord = async (
   _: unknown,
   data: FormData,
-): Promise<FormState<WordFormType>> => {
+): Promise<FormState<WordFormType, $Word>> => {
   const parsedWord = parseWordFormData(data);
 
   const validation = validateSchema<WordFormType>(wordSchema, parsedWord);
@@ -57,12 +57,14 @@ export const addWord = async (
       if (createdWord.kanjis?.length) {
         revalidateTag("kanjis");
       }
-      return { apiResponse: { isSuccess: true } };
+      return {
+        apiResponse: { status: { isSuccess: true }, data: createdWord },
+      };
     }
     throw new Error("API request error", { cause: await response.json() });
   } catch (error) {
     console.error(error);
-    return { apiResponse: { isError: true } };
+    return { apiResponse: { status: { isError: true } } };
   }
 };
 

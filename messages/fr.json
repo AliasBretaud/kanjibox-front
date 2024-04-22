@@ -41,6 +41,10 @@
         "label": "Traductions",
         "description": "Séparer par des ';'"
       },
+      "stepper": {
+        "enterInfo": "Valeur du kanji",
+        "preview": "Prévisualiser et valider"
+      },
       "notifications": {
         "success": "Kanji ajouté !",
         "error": "Erreur"
@@ -62,6 +66,10 @@
         "label": "Traductions",
         "description": "Séparer par des ';'"
       },
+      "stepper": {
+        "enterInfo": "",
+        "preview": ""
+      },
       "notifications": {
         "success": "Mot ajouté !",
         "error": "Erreur"
@@ -74,7 +82,9 @@
     },
     "buttons": {
       "add": "Ajouter",
-      "cancel": "Annuler"
+      "back": "Précédent",
+      "cancel": "Annuler",
+      "next": "Suivant"
     }
   }
 }

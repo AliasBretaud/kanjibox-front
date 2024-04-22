@@ -25,11 +25,12 @@ import TranslationsInput from "./TranslationsInput";
 import ValidationErrors from "@/components/form/ValidationErrors";
 import ButtonsBlock from "@/components/form/ButtonsBlock";
 import { isKana } from "wanakana";
+import type { $Word } from "@/types/models";
 
 const AddWordForm = () => {
   const t = useTranslations("modals.addWord");
   const [formState, formAction] = useFormState<
-    FormState<WordFormType>,
+    FormState<WordFormType, $Word>,
     FormData
   >(addWord, {});
   const [errors, setErrors] = useState(formState?.validationErrors);
@@ -37,7 +38,7 @@ const AddWordForm = () => {
   const [wordFuriganaValue, setWordFuriganaValue] = useState<string>("");
   const { hideModal } = useModal();
   const { showSuccessNotif, showErrorNotif } = useNotification();
-  const enableFurigana = !isKana(value);
+  const isValueKana = isKana(value);
 
   const formProps = { errors };
 
@@ -60,7 +61,7 @@ const AddWordForm = () => {
 
   useEffect(() => {
     if (formState?.apiResponse) {
-      const { isSuccess, isError } = formState.apiResponse;
+      const { isSuccess, isError } = formState.apiResponse.status;
       if (isSuccess) {
         showSuccessNotif(t("notifications.success"));
       } else if (isError) {
@@ -96,8 +97,8 @@ const AddWordForm = () => {
               <FuriganaValueInput
                 value={wordFuriganaValue}
                 onChange={formatFurigana}
-                disabled={!enableFurigana}
-                required={enableFurigana}
+                disabled={isValueKana}
+                required={!isValueKana}
                 {...formProps}
               />
             </Grid>

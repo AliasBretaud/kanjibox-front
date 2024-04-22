@@ -41,6 +41,10 @@
         "label": "Translations",
         "description": "Separate by ';'"
       },
+      "stepper": {
+        "enterInfo": "Input kanji value",
+        "preview": "Preview and validate"
+      },
       "notifications": {
         "success": "Kanji added !",
         "error": "Error"
@@ -62,6 +66,10 @@
         "label": "Translations",
         "description": "Separate by ';'"
       },
+      "stepper": {
+        "enterInfo": "Input word value",
+        "preview": "Preview and validate"
+      },
       "notifications": {
         "success": "Word added !",
         "error": "Error"
@@ -74,7 +82,9 @@
     },
     "buttons": {
       "add": "Add",
-      "cancel": "Cancel"
+      "back": "Back",
+      "cancel": "Cancel",
+      "next": "Next"
     }
   }
 }

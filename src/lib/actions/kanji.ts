@@ -1,12 +1,10 @@
 "use server";
 
-import { revalidateTag } from "next/cache";
-
 import { getFormDataField } from "@/lib/utils/getFormDataField";
 import { get, post } from "./api";
 import { cookies } from "next/headers";
 import type { KanjiFormType } from "@/lib/validation/schemas/kanji";
-import { kanjiSchema } from "@/lib/validation/schemas/kanji";
+import { kanjiFormSchema, kanjiSchema } from "@/lib/validation/schemas/kanji";
 import validateSchema from "@/lib/validation/validateSchema";
 import { getCookiesLocaleOrDefault } from "@/lib/utils/getCookiesLocaleOrDefault";
 import type { Page } from "@/types/api";
@@ -14,6 +12,8 @@ import type { $Kanji } from "@/types/models";
 import type { FormState } from "@/types/form";
 import type { RequiredProps } from "@/types/utils";
 import { getFormDataFieldList } from "@/lib/utils/getFormDataFieldList";
+import { handleApiCallError, handleApiResponse } from "@/lib/utils/apiUtils";
+import { stringToBoolean } from "@/lib/utils/stringToBoolean";
 
 const KANJI_ENDPOINT = `${process.env.BACKEND_API_URL}/kanjis`;
 
@@ -42,33 +42,55 @@ export const getKanji = async (id: number) => {
   return await res.json();
 };
 
-export const addKanji = async (
+export const addKanjiForm = async (
   _: unknown,
   data: FormData,
-): Promise<FormState<KanjiFormType>> => {
+): Promise<FormState<KanjiFormType, $Kanji>> => {
   const parsedKanji = parseKanjiFormData(data);
-  const { autoDetectReadings } = parsedKanji;
-
-  const validation = validateSchema<KanjiFormType>(kanjiSchema, parsedKanji);
+  const validation = validateSchema<KanjiFormType>(
+    kanjiFormSchema,
+    parsedKanji,
+  );
   if (!validation.success) {
     return { validationErrors: validation.errors };
   }
 
   const locale = getCookiesLocaleOrDefault(cookies());
   const kanji = buildKanji(parsedKanji, locale);
+  const autoDetectReadings = parsedKanji.autoDetectReadings.toString();
+  const preview = stringToBoolean(data.get("preview")?.toString());
+
   try {
     const params = new URLSearchParams({
-      autoDetectReadings: autoDetectReadings.toString(),
+      autoDetectReadings,
+      preview: preview.toString(),
     });
     const response = await post(KANJI_ENDPOINT, kanji, params);
-    if (response.ok) {
-      revalidateTag("kanjis");
-      return { apiResponse: { isSuccess: true } };
-    }
-    throw new Error("API request error", { cause: await response.json() });
+    return await handleApiResponse(
+      response,
+      { preview },
+      preview ? undefined : ["kanjis"],
+    );
   } catch (error) {
-    console.error(error);
-    return { apiResponse: { isError: true } };
+    return handleApiCallError(error);
+  }
+};
+
+export const addKanji = async (
+  kanji: $Kanji,
+): Promise<FormState<never, $Kanji>> => {
+  const validation = validateSchema(kanjiSchema, {
+    ...kanji,
+  });
+  if (!validation.success) {
+    return { validationErrors: validation.errors };
+  }
+
+  try {
+    const response = await post(KANJI_ENDPOINT, kanji);
+    return await handleApiResponse(response, undefined, ["kanjis"]);
+  } catch (error) {
+    return handleApiCallError(error);
   }
 };
 
