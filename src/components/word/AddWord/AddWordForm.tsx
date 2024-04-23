@@ -1,119 +1,140 @@
 "use client";
 
 import BaseModal from "@/components/ui/BaseModal";
-import {
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  Grid,
-} from "@mui/material";
-import type { ChangeEvent } from "react";
-import { useCallback, useEffect, useState } from "react";
-import useModal from "@/hooks/useModal";
-import { addWord } from "@/lib/actions/word";
-import { useFormState } from "react-dom";
-import useNotification from "@/hooks/useNotification";
+import { DialogActions, DialogContent, DialogTitle } from "@mui/material";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { addWord, addWordForm } from "@/lib/actions/word";
 import { useTranslations } from "next-intl";
 import type { WordFormType } from "@/lib/validation/schemas/word";
-import { convertInputToHiragana } from "@/lib/utils/convertInputToJapanese";
 import type { MWord } from "@/types/modals";
-import type { FormState } from "@/types/form";
-import ValueInput from "./ValueInput";
-import FuriganaValueInput from "./FuriganaValueInput";
-import TranslationsInput from "./TranslationsInput";
-import ValidationErrors from "@/components/form/ValidationErrors";
-import ButtonsBlock from "@/components/form/ButtonsBlock";
-import { isKana } from "wanakana";
+import { useFormStateValidation } from "@/hooks/useFormStateValidation";
+import type { ApiResponseStatus } from "@/types/api";
+import useModalNotification from "@/hooks/useModalNotification";
+import { Stepper } from "@/components/ui/Stepper";
+import { WordDetailsInput } from "./WordDetailsInput";
+import { WordPreviewSummary } from "./WordPreviewSummary";
+import { StepperButtons } from "@/components/form/StepperButtons";
 
 const AddWordForm = () => {
   const t = useTranslations("modals.addWord");
-  const [formState, formAction] = useFormState<
-    FormState<WordFormType>,
-    FormData
-  >(addWord, {});
-  const [errors, setErrors] = useState(formState?.validationErrors);
-  const [value, setValue] = useState("");
-  const [wordFuriganaValue, setWordFuriganaValue] = useState<string>("");
-  const { hideModal } = useModal();
-  const { showSuccessNotif, showErrorNotif } = useNotification();
-  const enableFurigana = !isKana(value);
-
-  const formProps = { errors };
+  const tRef = useRef(t);
+  const { apiResponse, errors, formAction, setErrors } =
+    useFormStateValidation(addWordForm);
+  const [word, setWord] = useState<WordFormType>({
+    value: "",
+    autoDetect: true,
+  });
+  const [activeStep, setActiveStep] = useState(0);
+  const { closeModal, showNotification } = useModalNotification();
 
   const handleClose = useCallback(() => {
-    setValue("");
-    setWordFuriganaValue("");
-    hideModal();
+    closeModal();
+    setActiveStep(0);
+    setWord({ value: "", autoDetect: true });
     setErrors(undefined);
-  }, [hideModal]);
+  }, [closeModal, setErrors]);
 
-  const formatFurigana = (
-    evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => setWordFuriganaValue(convertInputToHiragana(evt.target.value));
+  const steps = useMemo(() => {
+    const translate = tRef.current;
+    return [
+      {
+        label: translate("stepper.enterInfo"),
+        render: () => (
+          <WordDetailsInput errors={errors} values={word} onChange={setWord} />
+        ),
+      },
+      {
+        label: translate("stepper.preview"),
+        render: () =>
+          apiResponse?.data && <WordPreviewSummary {...apiResponse.data} />,
+      },
+    ];
+  }, [apiResponse?.data, errors, word]);
 
-  useEffect(() => {
-    if (formState?.validationErrors) {
-      setErrors(formState.validationErrors);
-    }
-  }, [formState?.validationErrors]);
+  const showAddWordNotification = useCallback(
+    ({ isError }: ApiResponseStatus) => {
+      const translate = tRef.current;
+      showNotification(
+        translate(`notifications.${isError ? "error" : "success"}`),
+        !!isError,
+      );
+    },
+    [showNotification],
+  );
 
-  useEffect(() => {
-    if (formState?.apiResponse) {
-      const { isSuccess, isError } = formState.apiResponse;
-      if (isSuccess) {
-        showSuccessNotif(t("notifications.success"));
-      } else if (isError) {
-        showErrorNotif(t("notifications.error"));
+  const onAddWord = async () => {
+    const wordData = apiResponse?.data;
+    if (wordData) {
+      const res = await addWord(wordData);
+      if (res.apiResponse) {
+        showAddWordNotification(res.apiResponse.status);
+        handleClose();
       }
-      handleClose();
     }
-  }, [
-    formState?.apiResponse,
-    handleClose,
-    showErrorNotif,
-    showSuccessNotif,
-    t,
-  ]);
+  };
+
+  useEffect(() => {
+    if (word.autoDetect) {
+      setErrors((errors) =>
+        errors
+          ? {
+              ...errors,
+              furiganaValue: undefined,
+              translations: undefined,
+            }
+          : undefined,
+      );
+    }
+  }, [word.autoDetect, setErrors]);
+
+  useEffect(() => {
+    if (apiResponse) {
+      const { isSuccess, isError } = apiResponse.status;
+      if (apiResponse.params?.preview && isSuccess) {
+        setActiveStep((prevStep) => prevStep + 1);
+      } else {
+        showAddWordNotification({ isError });
+        handleClose();
+      }
+    }
+  }, [apiResponse, handleClose, showAddWordNotification]);
 
   return (
-    <BaseModal<MWord> name="add-word">
-      <form autoComplete="off" action={formAction}>
+    <BaseModal<MWord>
+      name="add-word"
+      onClose={handleClose}
+      responsive
+      maxWidth="sm"
+      fullWidth
+    >
+      <form
+        autoComplete="off"
+        action={formAction}
+        style={{ display: "flex", flexDirection: "column", flex: 1 }}
+      >
         <DialogTitle id="form-dialog-title">{t("header")}</DialogTitle>
         <DialogContent>
-          <DialogContentText marginBottom={2}>
-            {t("description")}
-          </DialogContentText>
-          <Grid container alignItems="flex-start" spacing={2}>
-            <Grid item xs={12}>
-              <ValueInput
-                value={value}
-                onChange={(e) => setValue(e.target.value)}
-                {...formProps}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FuriganaValueInput
-                value={wordFuriganaValue}
-                onChange={formatFurigana}
-                disabled={!enableFurigana}
-                required={enableFurigana}
-                {...formProps}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TranslationsInput {...formProps} />
-            </Grid>
-          </Grid>
-          {errors && (
-            <ValidationErrors<WordFormType>
-              errors={errors}
-              tKey="modals.addWord.validations"
-            />
+          {word.autoDetect && (
+            <Stepper activeStep={activeStep} steps={steps} errors={errors} />
           )}
+          {steps[activeStep].render()}
+          <input
+            type="hidden"
+            name="preview"
+            value={Boolean(
+              word.autoDetect && activeStep < steps.length - 1,
+            ).toString()}
+          />
         </DialogContent>
         <DialogActions>
-          <ButtonsBlock onClose={handleClose} />
+          <StepperButtons
+            activeStep={activeStep}
+            autoDetect={word.autoDetect}
+            onAdd={onAddWord}
+            onBack={() => setActiveStep(activeStep - 1)}
+            onCancel={handleClose}
+            stepsCount={steps.length}
+          />
         </DialogActions>
       </form>
     </BaseModal>

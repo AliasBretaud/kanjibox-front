@@ -28,18 +28,14 @@
       "header": "Add Kanji",
       "description": "To add a kanji, please provide its value. You can optionally let the app handle the detection of various readings and translations (in English).",
       "value": "Kanji Value",
-      "autoDetectReadings": "Automatic detection of readings/translations",
-      "onYomi": {
-        "label": "On Yomi",
-        "description": "Separate by ';'"
-      },
-      "kunYomi": {
-        "label": "Kun Yomi",
-        "description": "Separate by ';'"
-      },
-      "translations": {
-        "label": "Translations",
-        "description": "Separate by ';'"
+      "autoDetect": "Automatic detection of readings/translations",
+      "onYomi": "On Yomi",
+      "kunYomi": "Kun Yomi",
+      "translations": "Translations",
+      "preview": "The following information has been automatically generated for this kanji. You can either accept it as is or go back to input it manually",
+      "stepper": {
+        "enterInfo": "Input kanji value",
+        "preview": "Preview and validate"
       },
       "notifications": {
         "success": "Kanji added !",
@@ -55,12 +51,18 @@
     },
     "addWord": {
       "header": "Add a Word",
-      "description": "To add a word, please provide its value, its furigana transcription, and its translation.",
+      "description": {
+        "auto": "To add a word, please provide its value.",
+        "manual": "To add a word, please provide its value, its furigana transcription, and its translation."
+      },
       "value": "Word Value",
+      "autoDetect": "Automatic detection of reading/translations",
       "furigana": "Furigana Transcription",
-      "translations": {
-        "label": "Translations",
-        "description": "Separate by ';'"
+      "translations": "Translations",
+      "preview": "The following information has been automatically generated for this word. You can either accept it as is or go back to input it manually",
+      "stepper": {
+        "enterInfo": "Input word value",
+        "preview": "Preview and validate"
       },
       "notifications": {
         "success": "Word added !",
@@ -74,7 +76,9 @@
     },
     "buttons": {
       "add": "Add",
-      "cancel": "Cancel"
+      "back": "Back",
+      "cancel": "Cancel",
+      "next": "Next"
     }
   }
 }

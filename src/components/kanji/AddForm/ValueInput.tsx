@@ -1,13 +1,13 @@
 "use client";
 
 import type { KanjiFormType } from "@/lib/validation/schemas/kanji";
-import type { FormProps } from "@/types/form";
+import type { FormInputProps } from "@/types/form";
 import { TextField } from "@mui/material";
 import { useTranslations } from "next-intl";
 
 type FormData = Pick<KanjiFormType, "value">;
 
-const ValueInput = ({ errors }: FormProps<FormData>) => {
+const ValueInput = ({ errors, value, onChange }: FormInputProps<FormData>) => {
   const t = useTranslations("modals.addKanji");
   return (
     <TextField
@@ -18,6 +18,8 @@ const ValueInput = ({ errors }: FormProps<FormData>) => {
       type="text"
       error={!!errors?.value}
       inputProps={{ maxLength: 1 }}
+      value={value}
+      onChange={onChange}
       required
     />
   );

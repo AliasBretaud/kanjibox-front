@@ -28,18 +28,14 @@
       "header": "Ajouter Kanji",
       "description": "Pour ajouter un kanji, veuillez renseigner sa valeur. Vous pouvez, si vous le souhaitez, laisser l'appli se charger de la détection des différentes lectures et traductions (en anglais).",
       "value": "Valeur du Kanji",
-      "autoDetectReadings": "Détection automatique des lectures/traductions",
-      "onYomi": {
-        "label": "On Yomi",
-        "description": "Séparer par des ';'"
-      },
-      "kunYomi": {
-        "label": "Kun Yomi",
-        "description": "Séparer par des ';'"
-      },
-      "translations": {
-        "label": "Traductions",
-        "description": "Séparer par des ';'"
+      "autoDetect": "Détection automatique des lectures/traductions",
+      "onYomi": "On Yomi",
+      "kunYomi": "Kun Yomi",
+      "translations": "Traductions",
+      "preview": "Les informations suivantes ont été générées automatiquement pour ce kanji. Vous pouvez les accepter telles quelles ou revenir en arrière pour les saisir manuellement",
+      "stepper": {
+        "enterInfo": "Valeur du kanji",
+        "preview": "Prévisualiser et valider"
       },
       "notifications": {
         "success": "Kanji ajouté !",
@@ -55,12 +51,18 @@
     },
     "addWord": {
       "header": "Ajouter un mot",
-      "description": "Pour ajouter un mot, veuillez renseigner sa valeur, sa transcription furigana et sa traduction.",
+      "description": {
+        "auto": "Pour ajouter un mot, veuillez renseigner sa valeur.",
+        "manual": "Pour ajouter un mot, veuillez renseigner sa valeur, sa transcription furigana et sa traduction."
+      },
       "value": "Valeur du mot",
+      "autoDetect": "Détection automatique de la lecture/traductions",
       "furigana": "Transcription furigana",
-      "translations": {
-        "label": "Traductions",
-        "description": "Séparer par des ';'"
+      "translations": "Traductions",
+      "preview": "Les informations suivantes ont été générées automatiquement pour ce mot. Vous pouvez les accepter telles quelles ou revenir en arrière pour les saisir manuellement",
+      "stepper": {
+        "enterInfo": "Valeur du mot",
+        "preview": "Prévisualiser et valider"
       },
       "notifications": {
         "success": "Mot ajouté !",
@@ -74,7 +76,9 @@
     },
     "buttons": {
       "add": "Ajouter",
-      "cancel": "Annuler"
+      "back": "Précédent",
+      "cancel": "Annuler",
+      "next": "Suivant"
     }
   }
 }

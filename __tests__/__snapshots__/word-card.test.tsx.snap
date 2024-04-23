@@ -10,7 +10,7 @@ exports[`WordCard component tests renders WordCard unchanged 1`] = `
     >
       <span
         lang="ja"
-        style="display: flex; flex-flow: row wrap; font-family: 'ヒラギノ角ゴ ProN', 'Hiragino Kaku Gothic ProN', 'TakaoPゴシック', TakaoPGothic, '游ゴシック', '游ゴシック体', YuGothic, 'Yu Gothic', 'メイリオ', Meiryo, 'ＭＳ ゴシック', 'MS Gothic', HiraKakuProN-W3, 'MotoyaLCedar', 'Droid Sans Japanese', sans-serif; font-size: 35pt; color: black; cursor: default; opacity: 0.75; justify-content: center; align-items: center; min-height: 83px;"
+        style="display: flex; flex-flow: row wrap; font-family: 'ヒラギノ角ゴ ProN', 'Hiragino Kaku Gothic ProN', 'TakaoPゴシック', TakaoPGothic, '游ゴシック', '游ゴシック体', YuGothic, 'Yu Gothic', 'メイリオ', Meiryo, 'ＭＳ ゴシック', 'MS Gothic', HiraKakuProN-W3, 'MotoyaLCedar', 'Droid Sans Japanese', sans-serif; font-size: 35pt; color: black; cursor: default; opacity: 0.75; justify-content: center; align-items: center; min-height: 83px; align-content: center;"
       >
         <span
           class="font-kanji"

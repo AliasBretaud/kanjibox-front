@@ -33,6 +33,7 @@ test.describe("Add a new kanji", () => {
     await kanjisPage.openAddKanjiForm();
     await kanjisPage.fillAddKanjiForm({
       value: "力",
+      autoDetect: false,
       onYomi: ["リョク", "リキ"],
       kunYomi: ["ちから"],
       translations: ["Power", "Strength"],
@@ -54,8 +55,8 @@ test.describe("Add a new kanji", () => {
     await kanjisPage.openAddKanjiForm();
     await kanjisPage.fillAddKanjiForm({
       value: "猫",
-      autoDetectReadings: true,
     });
+    await kanjisPage.nextStep();
     await kanjisPage.submitAddKanjiForm();
 
     // Ok notification
@@ -73,7 +74,11 @@ test.describe("Form validations", () => {
 
     // Add kanji
     await kanjisPage.openAddKanjiForm();
-    await kanjisPage.fillAddKanjiForm({ value: "A", translations: ["き"] });
+    await kanjisPage.fillAddKanjiForm({
+      value: "A",
+      autoDetect: false,
+      translations: ["き"],
+    });
     // Empty values
     await kanjisPage.submitAddKanjiForm();
     // Get errors
@@ -98,6 +103,7 @@ test.describe("Form validations", () => {
     await kanjisPage.openAddKanjiForm();
     await kanjisPage.fillAddKanjiForm({
       value: "犬",
+      autoDetect: false,
       onYomi: ["AB"],
       translations: ["Dog"],
     });
@@ -118,6 +124,7 @@ test.describe("Form validations", () => {
     await kanjisPage.openAddKanjiForm();
     await kanjisPage.fillAddKanjiForm({
       value: "犬",
+      autoDetect: false,
       kunYomi: ["AB"],
       translations: ["Dog"],
     });

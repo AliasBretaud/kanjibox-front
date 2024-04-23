@@ -1,148 +1,146 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
-import { useFormState } from "react-dom";
-import {
-  Collapse,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  Grid,
-} from "@mui/material";
-
-import { addKanji } from "@/lib/actions/kanji";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { DialogActions, DialogContent, DialogTitle } from "@mui/material";
+import { addKanji, addKanjiForm } from "@/lib/actions/kanji";
 import BaseModal from "@/components/ui/BaseModal";
-import useModal from "@/hooks/useModal";
-import useNotification from "@/hooks/useNotification";
 import { useTranslations } from "next-intl";
+import { KanjiDetailsInput } from "./KanjiDetailsInput";
+import { KanjiPreviewSummary } from "./KanjiPreviewSummary";
+import { Stepper } from "@/components/ui/Stepper";
 import type { KanjiFormType } from "@/lib/validation/schemas/kanji";
-import type { FormState } from "@/types/form";
+import useModalNotification from "@/hooks/useModalNotification";
+import type { ApiResponseStatus } from "@/types/api";
+import { useFormStateValidation } from "@/hooks/useFormStateValidation";
+import { StepperButtons } from "@/components/form/StepperButtons";
 import type { MKanji } from "@/types/modals";
-import ValueInput from "./ValueInput";
-import AutoDetectReadingsSwitch from "./AutoDetectReadingsSwitch";
-import OnYomiInput from "./OnYomiInput";
-import KunYomiInput from "./KunYomiInput";
-import TranslationsInput from "./TranslationsInput";
-import ValidationErrors from "@/components/form/ValidationErrors";
-import ButtonsBlock from "@/components/form/ButtonsBlock";
-import { hasValidationErrors } from "@/lib/utils/hasValidationErrors";
-import { BlockDivider } from "@/components/ui/BlockDivider";
 
 const AddKanjiForm = () => {
   const t = useTranslations("modals.addKanji");
-  const [formState, formAction] = useFormState<
-    FormState<KanjiFormType>,
-    FormData
-  >(addKanji, null);
-  const [autoDetectReadings, setAutoDetectReadings] = useState(false);
-  const [errors, setErrors] = useState(formState?.validationErrors);
-  const { hideModal } = useModal();
-  const { showSuccessNotif, showErrorNotif } = useNotification();
+  const tRef = useRef(t);
+  const { apiResponse, errors, formAction, setErrors } =
+    useFormStateValidation(addKanjiForm);
+  const [kanji, setKanji] = useState<KanjiFormType>({
+    value: "",
+    autoDetect: true,
+  });
+  const [activeStep, setActiveStep] = useState(0);
+  const { closeModal, showNotification } = useModalNotification();
+
+  const steps = useMemo(() => {
+    const translate = tRef.current;
+    return [
+      {
+        label: translate("stepper.enterInfo"),
+        render: () => (
+          <KanjiDetailsInput
+            errors={errors}
+            values={kanji}
+            onChange={setKanji}
+          />
+        ),
+      },
+      {
+        label: translate("stepper.preview"),
+        render: () =>
+          apiResponse?.data && <KanjiPreviewSummary {...apiResponse.data} />,
+      },
+    ];
+  }, [apiResponse?.data, errors, kanji]);
 
   const handleClose = useCallback(() => {
-    hideModal();
+    closeModal();
     setErrors(undefined);
-    setAutoDetectReadings(false);
-  }, [hideModal]);
+    setKanji({ value: "", autoDetect: true });
+    setActiveStep(0);
+  }, [closeModal, setErrors]);
+
+  const showAddKanjiNotification = useCallback(
+    ({ isError }: ApiResponseStatus) => {
+      const translate = tRef.current;
+      showNotification(
+        translate(`notifications.${isError ? "error" : "success"}`),
+        !!isError,
+      );
+    },
+    [showNotification],
+  );
+
+  const onAddKanji = async () => {
+    const kanjiData = apiResponse?.data;
+    if (kanjiData) {
+      const res = await addKanji(kanjiData);
+      if (res.apiResponse) {
+        showAddKanjiNotification(res.apiResponse.status);
+        handleClose();
+      }
+    }
+  };
 
   useEffect(() => {
-    if (autoDetectReadings) {
+    if (kanji.autoDetect) {
       setErrors((errors) =>
         errors
           ? {
               ...errors,
-              onYomi: { message: "" },
-              kunYomi: { message: "" },
-              translations: { message: "" },
+              onYomi: undefined,
+              kunYomi: undefined,
+              translations: undefined,
             }
           : undefined,
       );
     }
-  }, [autoDetectReadings]);
+  }, [kanji.autoDetect, setErrors]);
 
   useEffect(() => {
-    if (formState?.validationErrors) {
-      setErrors(formState.validationErrors);
-    }
-  }, [formState?.validationErrors]);
-
-  useEffect(() => {
-    if (formState?.apiResponse) {
-      const { isSuccess, isError } = formState.apiResponse;
-      if (isSuccess) {
-        showSuccessNotif(t("notifications.success"));
-      } else if (isError) {
-        showErrorNotif(t("notifications.error"));
+    if (apiResponse) {
+      const { isSuccess, isError } = apiResponse.status;
+      if (apiResponse.params?.preview && isSuccess) {
+        setActiveStep((prevStep) => prevStep + 1);
+      } else {
+        showAddKanjiNotification({ isError });
+        handleClose();
       }
-      handleClose();
     }
-  }, [
-    formState?.apiResponse,
-    handleClose,
-    showErrorNotif,
-    showSuccessNotif,
-    t,
-  ]);
+  }, [apiResponse, handleClose, showAddKanjiNotification]);
 
   return (
     <BaseModal<MKanji>
       onClose={handleClose}
       aria-labelledby="form-dialog-title"
       name="add-kanji"
+      responsive
+      maxWidth="sm"
+      fullWidth
     >
-      <form autoComplete="off" action={formAction}>
+      <form
+        autoComplete="off"
+        action={formAction}
+        style={{ display: "flex", flexDirection: "column", flex: 1 }}
+      >
         <DialogTitle id="form-dialog-title">{t("header")}</DialogTitle>
         <DialogContent>
-          <DialogContentText marginBottom={2}>
-            {t("description")}
-          </DialogContentText>
-          <Grid container alignItems="flex-start" spacing={2}>
-            <Grid item xs={12}>
-              <ValueInput errors={errors} />
-            </Grid>
-            <Grid item xs={12}>
-              <AutoDetectReadingsSwitch
-                checked={autoDetectReadings}
-                onChange={(evt) => setAutoDetectReadings(evt.target.checked)}
-              />
-            </Grid>
-            <Grid item container>
-              <Collapse in={!autoDetectReadings}>
-                <Grid container item spacing={2}>
-                  <Grid item xs={12} sm={6}>
-                    <OnYomiInput
-                      errors={errors}
-                      disabled={autoDetectReadings}
-                    />
-                  </Grid>
-                  <BlockDivider />
-                  <Grid item xs={12} sm={6}>
-                    <KunYomiInput
-                      errors={errors}
-                      disabled={autoDetectReadings}
-                    />
-                  </Grid>
-                  <BlockDivider />
-                  <Grid item xs={12}>
-                    <TranslationsInput
-                      errors={errors}
-                      disabled={autoDetectReadings}
-                    />
-                  </Grid>
-                </Grid>
-              </Collapse>
-            </Grid>
-          </Grid>
-          {errors && hasValidationErrors(errors) && (
-            <ValidationErrors<KanjiFormType>
-              errors={errors}
-              tKey="modals.addKanji.validations"
-            />
+          {kanji.autoDetect && (
+            <Stepper activeStep={activeStep} steps={steps} errors={errors} />
           )}
+          {steps[activeStep].render()}
+          <input
+            type="hidden"
+            name="preview"
+            value={Boolean(
+              kanji.autoDetect && activeStep < steps.length - 1,
+            ).toString()}
+          />
         </DialogContent>
         <DialogActions>
-          <ButtonsBlock onClose={handleClose} />
+          <StepperButtons
+            activeStep={activeStep}
+            autoDetect={kanji.autoDetect}
+            onAdd={onAddKanji}
+            onBack={() => setActiveStep(activeStep - 1)}
+            onCancel={handleClose}
+            stepsCount={steps.length}
+          />
         </DialogActions>
       </form>
     </BaseModal>

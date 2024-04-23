@@ -36,3 +36,9 @@ export type ApiResponseStatus = Partial<{
   isError: boolean;
   isSuccess: boolean;
 }>;
+
+export type ApiResponse<T> = {
+  status: ApiResponseStatus;
+  params?: Record<string, unknown>;
+  data?: T;
+};

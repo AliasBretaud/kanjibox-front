@@ -1,11 +1,11 @@
 import type { InputProps } from "@mui/material";
-import type { ApiResponseStatus } from "./api";
 import type { Error } from "@/lib/validation/validateSchema";
+import type { ApiResponse } from "./api";
 
-export type FormState<T> = Partial<{
-  apiResponse: ApiResponseStatus;
+export type FormState<T, D = unknown> = Partial<{
+  apiResponse: ApiResponse<D>;
   validationErrors: Record<keyof T, Error>;
-}> | null;
+}>;
 
 export type FormProps<F> = {
   errors?: NonNullable<FormState<F>>["validationErrors"];

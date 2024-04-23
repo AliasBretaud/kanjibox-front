@@ -12,7 +12,7 @@ export class KanjisPage {
     this.page = page;
     this.addKanjiForm = {
       value: this.page.getByLabel("Kanji Value"),
-      autoDetectReadings: this.page.getByLabel(
+      autoDetect: this.page.getByLabel(
         "Automatic detection of readings/translations",
       ),
     };
@@ -25,7 +25,7 @@ export class KanjisPage {
 
   public async fillAddKanjiForm({
     value,
-    autoDetectReadings,
+    autoDetect,
     kunYomi,
     onYomi,
     translations,
@@ -33,8 +33,8 @@ export class KanjisPage {
     if (value) {
       await this.addKanjiForm.value?.fill(value);
     }
-    if (autoDetectReadings) {
-      await this.addKanjiForm.autoDetectReadings?.check();
+    if (autoDetect === false) {
+      await this.addKanjiForm.autoDetect?.uncheck();
     }
     if (onYomi) {
       await fillInputList(this.page, "onYomi", onYomi);
@@ -45,6 +45,14 @@ export class KanjisPage {
     if (translations) {
       await fillInputList(this.page, "translations", translations);
     }
+  }
+
+  public async nextStep() {
+    const nextButton = this.page.getByRole("button", {
+      name: "Next",
+      exact: true,
+    });
+    await nextButton.click();
   }
 
   public async submitAddKanjiForm() {
