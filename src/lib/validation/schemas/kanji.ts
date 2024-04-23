@@ -13,13 +13,13 @@ export const kanjiSchema = z.object({
 export const kanjiFormSchema = z
   .object({
     value: z.string().refine((s) => s.length === 1 && isKanji(s), "value"),
-    autoDetectReadings: z.boolean(),
+    autoDetect: z.boolean(),
     onYomi: z.string().array().nullish(),
     kunYomi: z.string().array().nullish(),
     translations: z.string().array().nullish(),
   })
-  .superRefine(({ autoDetectReadings, onYomi, kunYomi, translations }, ctx) => {
-    if (!autoDetectReadings) {
+  .superRefine(({ autoDetect, onYomi, kunYomi, translations }, ctx) => {
+    if (!autoDetect) {
       validateListValues({
         path: "translations",
         values: translations,

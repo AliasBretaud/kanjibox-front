@@ -17,10 +17,10 @@ const KunYomiInput = ({
   InputListProps<FormData>,
   "errors" | "disabled" | "onChange" | "values"
 >) => {
-  const t = useTranslations("modals.addKanji.kunYomi");
+  const t = useTranslations("modals.addKanji");
   return (
     <InputList<FormData>
-      label={t("label")}
+      label={t("kunYomi")}
       name="kunYomi"
       setValueAs={convertInputToHiragana}
       errors={errors}

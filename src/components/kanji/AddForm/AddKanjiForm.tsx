@@ -9,10 +9,11 @@ import { KanjiDetailsInput } from "./KanjiDetailsInput";
 import { KanjiPreviewSummary } from "./KanjiPreviewSummary";
 import { Stepper } from "@/components/ui/Stepper";
 import type { KanjiFormType } from "@/lib/validation/schemas/kanji";
-import { ModalButtons } from "./ModalButtons";
 import useModalNotification from "@/hooks/useModalNotification";
 import type { ApiResponseStatus } from "@/types/api";
 import { useFormStateValidation } from "@/hooks/useFormStateValidation";
+import { StepperButtons } from "@/components/form/StepperButtons";
+import type { MKanji } from "@/types/modals";
 
 const AddKanjiForm = () => {
   const t = useTranslations("modals.addKanji");
@@ -21,7 +22,7 @@ const AddKanjiForm = () => {
     useFormStateValidation(addKanjiForm);
   const [kanji, setKanji] = useState<KanjiFormType>({
     value: "",
-    autoDetectReadings: true,
+    autoDetect: true,
   });
   const [activeStep, setActiveStep] = useState(0);
   const { closeModal, showNotification } = useModalNotification();
@@ -50,7 +51,7 @@ const AddKanjiForm = () => {
   const handleClose = useCallback(() => {
     closeModal();
     setErrors(undefined);
-    setKanji({ value: "", autoDetectReadings: true });
+    setKanji({ value: "", autoDetect: true });
     setActiveStep(0);
   }, [closeModal, setErrors]);
 
@@ -77,19 +78,19 @@ const AddKanjiForm = () => {
   };
 
   useEffect(() => {
-    if (kanji.autoDetectReadings) {
+    if (kanji.autoDetect) {
       setErrors((errors) =>
         errors
           ? {
               ...errors,
-              onYomi: { message: "" },
-              kunYomi: { message: "" },
-              translations: { message: "" },
+              onYomi: undefined,
+              kunYomi: undefined,
+              translations: undefined,
             }
           : undefined,
       );
     }
-  }, [kanji.autoDetectReadings, setErrors]);
+  }, [kanji.autoDetect, setErrors]);
 
   useEffect(() => {
     if (apiResponse) {
@@ -104,7 +105,7 @@ const AddKanjiForm = () => {
   }, [apiResponse, handleClose, showAddKanjiNotification]);
 
   return (
-    <BaseModal
+    <BaseModal<MKanji>
       onClose={handleClose}
       aria-labelledby="form-dialog-title"
       name="add-kanji"
@@ -119,7 +120,7 @@ const AddKanjiForm = () => {
       >
         <DialogTitle id="form-dialog-title">{t("header")}</DialogTitle>
         <DialogContent>
-          {kanji.autoDetectReadings && (
+          {kanji.autoDetect && (
             <Stepper activeStep={activeStep} steps={steps} errors={errors} />
           )}
           {steps[activeStep].render()}
@@ -127,15 +128,15 @@ const AddKanjiForm = () => {
             type="hidden"
             name="preview"
             value={Boolean(
-              kanji.autoDetectReadings && activeStep < steps.length - 1,
+              kanji.autoDetect && activeStep < steps.length - 1,
             ).toString()}
           />
         </DialogContent>
         <DialogActions>
-          <ModalButtons
+          <StepperButtons
             activeStep={activeStep}
-            autoDetectReadings={kanji.autoDetectReadings}
-            onAddKanji={onAddKanji}
+            autoDetect={kanji.autoDetect}
+            onAdd={onAddKanji}
             onBack={() => setActiveStep(activeStep - 1)}
             onCancel={handleClose}
             stepsCount={steps.length}

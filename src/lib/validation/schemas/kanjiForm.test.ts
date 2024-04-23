@@ -4,7 +4,7 @@ import type { ValidationReturnType } from "@/lib/validation/validateSchema";
 import validateSchema from "@/lib/validation/validateSchema";
 
 const formDataBase: KanjiFormType = {
-  autoDetectReadings: false,
+  autoDetect: false,
   value: "人",
   onYomi: ["ジン", "ニン"],
   kunYomi: ["ひと"],
@@ -110,13 +110,13 @@ describe("Validation tests for the `translations` field", () => {
 
 describe("Validates auto-detect readings and translations", () => {
   it("Valid value", () => {
-    const formData = { autoDetectReadings: true, value: "人" };
+    const formData = { autoDetect: true, value: "人" };
     const res = validateSchema(kanjiFormSchema, formData);
     expect(res.success).toBeTruthy();
   });
 
   it("Invalid value", () => {
-    const formData = { autoDetectReadings: true, value: "" };
+    const formData = { autoDetect: true, value: "" };
     const res = validateSchema(kanjiFormSchema, formData);
     expect(res.success).toBeFalsy();
   });

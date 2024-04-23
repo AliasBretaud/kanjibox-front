@@ -3,22 +3,20 @@ import {
   createRow,
   createTranslationsRow,
 } from "@/components/PreviewContainer";
-import type { $Kanji } from "@/types/models";
+import type { $Word } from "@/types/models";
 import { useLocale, useTranslations } from "next-intl";
 
-export const KanjiPreviewSummary = ({
+export const WordPreviewSummary = ({
   value,
-  onYomi,
-  kunYomi,
+  furiganaValue,
   translations = {},
-}: $Kanji) => {
-  const t = useTranslations("modals.addKanji");
+}: $Word) => {
+  const t = useTranslations("modals.addWord");
   const locale = useLocale();
 
   const rows = [
     createRow("value", t("value"), value),
-    createRow("onYomi", t("onYomi"), onYomi?.join(", ")),
-    createRow("kunYomi", t("kunYomi"), kunYomi?.join(", ")),
+    createRow("furiganaValue", t("furigana"), furiganaValue),
     createTranslationsRow(translations, locale, t("translations")),
   ];
   return <PreviewContainer title={t("preview")} rows={rows} />;

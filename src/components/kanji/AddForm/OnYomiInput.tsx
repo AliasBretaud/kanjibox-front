@@ -17,10 +17,10 @@ const OnYomiInput = ({
   InputListProps<FormData>,
   "errors" | "disabled" | "onChange" | "values"
 >) => {
-  const t = useTranslations("modals.addKanji.onYomi");
+  const t = useTranslations("modals.addKanji");
   return (
     <InputList<FormData>
-      label={t("label")}
+      label={t("onYomi")}
       name="onYomi"
       setValueAs={convertInputToKatakana}
       errors={errors}

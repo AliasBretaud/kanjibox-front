@@ -57,12 +57,12 @@ export const addKanjiForm = async (
 
   const locale = getCookiesLocaleOrDefault(cookies());
   const kanji = buildKanji(parsedKanji, locale);
-  const autoDetectReadings = parsedKanji.autoDetectReadings.toString();
+  const autoDetect = parsedKanji.autoDetect.toString();
   const preview = stringToBoolean(data.get("preview")?.toString());
 
   try {
     const params = new URLSearchParams({
-      autoDetectReadings,
+      autoDetect,
       preview: preview.toString(),
     });
     const response = await post(KANJI_ENDPOINT, kanji, params);
@@ -79,9 +79,7 @@ export const addKanjiForm = async (
 export const addKanji = async (
   kanji: $Kanji,
 ): Promise<FormState<never, $Kanji>> => {
-  const validation = validateSchema(kanjiSchema, {
-    ...kanji,
-  });
+  const validation = validateSchema(kanjiSchema, kanji);
   if (!validation.success) {
     return { validationErrors: validation.errors };
   }
@@ -96,8 +94,7 @@ export const addKanji = async (
 
 const parseKanjiFormData = (data: FormData): RequiredProps<KanjiFormType> => ({
   value: getFormDataField<KanjiFormType>(data, "value"),
-  autoDetectReadings:
-    getFormDataField<KanjiFormType>(data, "autoDetectReadings") === "on",
+  autoDetect: getFormDataField<KanjiFormType>(data, "autoDetect") === "on",
   onYomi: getFormDataFieldList<KanjiFormType>(data, "onYomi"),
   kunYomi: getFormDataFieldList<KanjiFormType>(data, "kunYomi"),
   translations: getFormDataFieldList<KanjiFormType>(data, "translations"),
@@ -105,7 +102,7 @@ const parseKanjiFormData = (data: FormData): RequiredProps<KanjiFormType> => ({
 
 const buildKanji = (
   {
-    autoDetectReadings,
+    autoDetect,
     value,
     onYomi,
     kunYomi,
@@ -114,7 +111,7 @@ const buildKanji = (
   locale: string,
 ) => {
   const kanji: $Kanji = { value, onYomi, kunYomi };
-  if (!autoDetectReadings) {
+  if (!autoDetect) {
     kanji.translations = { [locale]: translations };
   }
   return kanji;

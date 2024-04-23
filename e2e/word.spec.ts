@@ -12,9 +12,29 @@ test.describe("Add a new word", () => {
     await wordsPage.openAddWordForm();
     await wordsPage.fillAddWordForm({
       value: "言葉",
+      autoDetect: false,
       furiganaValue: "ことば",
       translations: ["Word"],
     });
+    await wordsPage.submitAddWordForm();
+
+    // Ok notification
+    const notif = page.getByText("Word added !");
+    await expect(notif).toBeVisible();
+  });
+
+  test("With auto-detect readings", async ({ page }) => {
+    // Kanjis page
+    await page.goto("http://localhost:3000/en/words");
+
+    const wordsPage = new WordsPage(page);
+
+    // Add word
+    await wordsPage.openAddWordForm();
+    await wordsPage.fillAddWordForm({
+      value: "高級",
+    });
+    await wordsPage.nextStep();
     await wordsPage.submitAddWordForm();
 
     // Ok notification
@@ -32,6 +52,7 @@ test.describe("Add a new word", () => {
     await wordsPage.openAddWordForm();
     await wordsPage.fillAddWordForm({
       value: "A",
+      autoDetect: false,
       furiganaValue: "N",
       translations: ["こ"],
     });

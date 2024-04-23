@@ -16,10 +16,10 @@ const TranslationsInput = ({
   InputListProps<FormData>,
   "errors" | "disabled" | "onChange" | "values"
 >) => {
-  const t = useTranslations("modals.addKanji.translations");
+  const t = useTranslations("modals.addKanji");
   return (
     <InputList<FormData>
-      label={t("label")}
+      label={t("translations")}
       name="translations"
       errors={errors}
       disabled={disabled}

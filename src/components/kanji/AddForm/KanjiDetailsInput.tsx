@@ -2,7 +2,7 @@ import type { KanjiFormType } from "@/lib/validation/schemas/kanji";
 import type { FormProps } from "@/types/form";
 import { Collapse, DialogContentText, Grid } from "@mui/material";
 import { useTranslations } from "next-intl";
-import AutoDetectReadingsSwitch from "./AutoDetectReadingsSwitch";
+import AutoDetectSwitch from "@/components/form/AutoDetectSwitch";
 import OnYomiInput from "./OnYomiInput";
 import { BlockDivider } from "@/components/ui/BlockDivider";
 import KunYomiInput from "./KunYomiInput";
@@ -33,22 +33,23 @@ export const KanjiDetailsInput = ({
           />
         </Grid>
         <Grid item xs={12}>
-          <AutoDetectReadingsSwitch
-            checked={!!values.autoDetectReadings}
+          <AutoDetectSwitch
+            label={t("autoDetect")}
+            checked={!!values.autoDetect}
             onChange={(evt) =>
-              onChange({ ...values, autoDetectReadings: evt.target.checked })
+              onChange({ ...values, autoDetect: evt.target.checked })
             }
           />
         </Grid>
         <Grid item container>
-          <Collapse in={!values.autoDetectReadings}>
+          <Collapse in={!values.autoDetect}>
             <Grid container item spacing={2}>
               <Grid item xs={12} sm={6}>
                 <OnYomiInput
                   values={values.onYomi || [""]}
                   errors={errors?.onYomi?.params?.indexes as number[]}
                   onChange={(onYomi) => onChange({ ...values, onYomi })}
-                  disabled={values.autoDetectReadings}
+                  disabled={values.autoDetect}
                 />
               </Grid>
               <BlockDivider />
@@ -57,7 +58,7 @@ export const KanjiDetailsInput = ({
                   values={values.kunYomi || [""]}
                   errors={errors?.kunYomi?.params?.indexes as number[]}
                   onChange={(kunYomi) => onChange({ ...values, kunYomi })}
-                  disabled={values.autoDetectReadings}
+                  disabled={values.autoDetect}
                 />
               </Grid>
               <BlockDivider />
@@ -68,7 +69,7 @@ export const KanjiDetailsInput = ({
                   onChange={(translations) =>
                     onChange({ ...values, translations })
                   }
-                  disabled={values.autoDetectReadings}
+                  disabled={values.autoDetect}
                 />
               </Grid>
             </Grid>

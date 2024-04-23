@@ -2,12 +2,28 @@
 
 import useModal from "@/hooks/useModal";
 import type { DialogProps, ModalProps } from "@mui/material";
-import { Dialog, useMediaQuery, useTheme } from "@mui/material";
+import { Dialog, IconButton, useMediaQuery, useTheme } from "@mui/material";
 import type { PropsWithChildren } from "react";
+import CloseIcon from "@mui/icons-material/Close";
 
 type BaseModalProps<T> = PropsWithChildren<
   { name: T; responsive?: boolean } & Omit<DialogProps, "open">
 >;
+
+const CloseButton = ({ onClose }: Pick<ModalProps, "onClose">) => (
+  <IconButton
+    aria-label="close"
+    onClick={(e) => (onClose ? onClose(e, "backdropClick") : undefined)}
+    sx={{
+      position: "absolute",
+      right: 8,
+      top: 8,
+      color: (theme) => theme.palette.grey[500],
+    }}
+  >
+    <CloseIcon />
+  </IconButton>
+);
 
 const BaseModal = <T extends string>({
   children,
@@ -33,6 +49,7 @@ const BaseModal = <T extends string>({
       disableRestoreFocus
     >
       {children}
+      {responsiveFullScreen ? <CloseButton onClose={onClose} /> : null}
     </Dialog>
   );
 };
