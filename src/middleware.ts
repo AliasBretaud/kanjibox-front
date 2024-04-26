@@ -1,24 +1,39 @@
-import createMiddleware from "next-intl/middleware";
+import createIntlMiddleware from "next-intl/middleware";
 import { localePrefix, locales, pathnames } from "./locale-config";
+import {
+  type NextFetchEvent,
+  type NextRequest,
+  NextResponse,
+} from "next/server";
+import { withMiddlewareAuthRequired } from "@auth0/nextjs-auth0/edge";
+import { pathToRegexp } from "path-to-regexp";
 
-export default createMiddleware({
+const publicPages = ["/", "/(fr|en|ja)", "/api/auth/:path*"];
+
+const intlPages = [
+  "/",
+  "/(fr|en|ja)/:path*",
+  "/((?!api|_next/static|_next/image|favicon.ico).*)",
+];
+
+const intlMiddleware = createIntlMiddleware({
   defaultLocale: "en",
   locales,
   pathnames,
   localePrefix,
 });
 
-export const config = {
-  matcher: [
-    // Enable a redirect to a matching locale at the root
-    "/",
+const authMiddleware = withMiddlewareAuthRequired((req) => intlMiddleware(req));
 
-    // Set a cookie to remember the previous locale for
-    // all requests that have a locale prefix
-    "/(fr|en)/:path*",
+export default function middleware(req: NextRequest, event: NextFetchEvent) {
+  const { pathname } = req.nextUrl;
 
-    // Enable redirects that add missing locales
-    // (e.g. `/pathnames` -> `/en/pathnames`)
-    "/((?!_next|_vercel|.*\\..*).*)",
-  ],
-};
+  const isPublicPage = publicPages.some((p) => pathToRegexp(p).test(pathname));
+
+  if (isPublicPage && intlPages.some((p) => pathToRegexp(p).test(pathname))) {
+    return intlMiddleware(req);
+  } else if (!isPublicPage) {
+    return authMiddleware(req, event);
+  }
+  return NextResponse.next();
+}

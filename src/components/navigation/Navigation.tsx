@@ -3,6 +3,7 @@ import NavigationLink from "./NavigationLink";
 import { useTranslations } from "next-intl";
 import LanguageSelector from "./LanguageSelector";
 import { Suspense } from "react";
+import AuthButtons from "./AuthBlock";
 
 const LanguageSelectorLoader = () => (
   <Suspense>
@@ -38,7 +39,10 @@ const Navigation = () => {
           */}
           </Stack>
         </Stack>
-        <LanguageSelectorLoader />
+        <Stack alignItems="center" direction="row" gap={2}>
+          <LanguageSelectorLoader />
+          <AuthButtons />
+        </Stack>
       </Stack>
     </Toolbar>
   );

@@ -56,7 +56,7 @@ export const addKanjiForm = async (
   }
 
   const locale = getCookiesLocaleOrDefault(cookies());
-  const kanji = buildKanji(parsedKanji, locale);
+  const kanji = buildKanji(parsedKanji, locale === "ja" ? "en" : locale);
   const autoDetect = parsedKanji.autoDetect.toString();
   const preview = stringToBoolean(data.get("preview")?.toString());
 

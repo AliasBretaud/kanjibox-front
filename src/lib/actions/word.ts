@@ -52,7 +52,7 @@ export const addWordForm = async (
   }
 
   const locale = getCookiesLocaleOrDefault(cookies());
-  const word = buildWord(parsedWord, locale);
+  const word = buildWord(parsedWord, locale === "ja" ? "en" : locale);
   const preview = stringToBoolean(data.get("preview")?.toString());
 
   try {

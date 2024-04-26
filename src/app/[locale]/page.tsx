@@ -9,8 +9,11 @@ import { getKanjis } from "@/lib/actions/kanji";
 import { unstable_setRequestLocale } from "next-intl/server";
 import type { PageParams } from "@/types/utils";
 import { useTranslations } from "next-intl";
+import { getSession } from "@auth0/nextjs-auth0";
 
 const KanjiContainer = async ({ search }: { search?: string }) => {
+  const session = await getSession();
+  if (!session) return null;
   const kanjis = await getKanjis(8, 0, search);
   return <KanjiList data={kanjis.content} />;
 };

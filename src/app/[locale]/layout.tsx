@@ -1,7 +1,7 @@
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 
-import Navigation from "@/components/Navigation";
+import Navigation from "@/components/navigation/Navigation";
 
 import theme from "@/lib/theme";
 
@@ -10,6 +10,7 @@ import { ModalProvider } from "@/context/modalContext";
 import type { PropsWithChildren } from "react";
 import { locales } from "@/locale-config";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
+import { UserProvider } from "@auth0/nextjs-auth0/client";
 
 type Props = PropsWithChildren<{
   params: { locale: string };
@@ -40,15 +41,17 @@ export default function RootLayout({
   return (
     <html lang={locale}>
       <body className="bg-grey-dark text-white">
-        <AppRouterCacheProvider>
-          <ThemeProvider theme={theme}>
-            <ModalProvider>
-              <CssBaseline />
-              <Navigation />
-              {children}
-            </ModalProvider>
-          </ThemeProvider>
-        </AppRouterCacheProvider>
+        <UserProvider>
+          <AppRouterCacheProvider>
+            <ThemeProvider theme={theme}>
+              <ModalProvider>
+                <CssBaseline />
+                <Navigation />
+                {children}
+              </ModalProvider>
+            </ThemeProvider>
+          </AppRouterCacheProvider>
+        </UserProvider>
       </body>
     </html>
   );

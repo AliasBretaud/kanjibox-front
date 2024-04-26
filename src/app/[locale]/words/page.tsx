@@ -18,6 +18,14 @@ import {
   useTranslations,
 } from "next-intl";
 import { pick } from "@/lib/utils/pick";
+import EmptyState from "@/components/ui/EmptyState";
+
+const AddWordBlock = ({ messages }: { messages?: AbstractIntlMessages }) => (
+  <NextIntlClientProvider messages={messages}>
+    <AddWordButton />
+    <AddWordForm />
+  </NextIntlClientProvider>
+);
 
 const WordsContainer = async ({
   page,
@@ -29,12 +37,20 @@ const WordsContainer = async ({
   const words = await getWords(12, page);
   return (
     <div className="flex flex-col items-center">
-      <Pagination pagesCount={words.totalPages} sx={{ paddingTop: "40px" }} />
-      <NextIntlClientProvider messages={messages}>
-        <AddWordButton />
-        <AddWordForm />
-      </NextIntlClientProvider>
-      <WordList data={words.content} />
+      {words.totalPages > 1 && (
+        <Pagination pagesCount={words.totalPages} sx={{ paddingTop: "40px" }} />
+      )}
+      <AddWordBlock messages={messages} />
+      {words.totalElements > 0 ? (
+        <WordList data={words.content} />
+      ) : (
+        <EmptyState
+          title={"Welcome !"}
+          description={
+            "This is where all your kanji will be recorded\nStart adding kanjis by clicking on the button above"
+          }
+        />
+      )}
       <KanjiDetailsModal />
       <SnackBarProvider />
     </div>

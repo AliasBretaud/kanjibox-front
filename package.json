@@ -16,6 +16,7 @@
     "docker:playwright:status": "docker-compose --file e2e/docker-compose.yml ps"
   },
   "dependencies": {
+    "@auth0/nextjs-auth0": "^3.5.0",
     "@emotion/cache": "^11.11.0",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.0",
@@ -30,6 +31,7 @@
     "next": "^14.1.3",
     "next-intl": "^3.10.0",
     "notistack": "^3.0.1",
+    "path-to-regexp": "^6.2.2",
     "react": "^18",
     "react-dom": "^18",
     "react-furi": "^2.0.2",

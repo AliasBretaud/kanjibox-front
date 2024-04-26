@@ -6,7 +6,6 @@ import { LoadingState } from "@/components/ui/LoadingState";
 import Pagination from "@/components/ui/Pagination";
 
 import { getKanjis } from "@/lib/actions/kanji";
-import type { PageParams } from "@/types/utils";
 import AddKanjiButton from "@/components/kanji/AddKanjiButton";
 import SnackBarProvider from "@/components/ui/SnackBarProvider";
 import { unstable_setRequestLocale } from "next-intl/server";
@@ -17,6 +16,15 @@ import {
   useTranslations,
 } from "next-intl";
 import { pick } from "@/lib/utils/pick";
+import type { PageParams } from "@/types/utils";
+import EmptyState from "@/components/ui/EmptyState";
+
+const AddKanjiBlock = ({ messages }: { messages?: AbstractIntlMessages }) => (
+  <NextIntlClientProvider messages={messages}>
+    <AddKanjiButton />
+    <AddKanjiForm />
+  </NextIntlClientProvider>
+);
 
 const KanjiContainer = async ({
   messages,
@@ -28,13 +36,23 @@ const KanjiContainer = async ({
   const kanjis = await getKanjis(12, page);
   return (
     <div className="flex flex-col items-center">
-      <Pagination pagesCount={kanjis.totalPages} sx={{ paddingTop: "40px" }} />
-      <NextIntlClientProvider messages={messages}>
-        <AddKanjiButton />
-        <AddKanjiForm />
-      </NextIntlClientProvider>
-
-      <KanjiList data={kanjis.content} />
+      {kanjis.totalPages > 0 && (
+        <Pagination
+          pagesCount={kanjis.totalPages}
+          sx={{ paddingTop: "40px" }}
+        />
+      )}
+      <AddKanjiBlock messages={messages} />
+      {kanjis.totalElements > 0 ? (
+        <KanjiList data={kanjis.content} />
+      ) : (
+        <EmptyState
+          title={"Welcome !"}
+          description={
+            "This is where all your kanji will be recorded\nStart adding kanjis by clicking on the button above"
+          }
+        />
+      )}
     </div>
   );
 };
