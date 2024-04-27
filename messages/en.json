@@ -5,18 +5,37 @@
   },
   "navigation": {
     "kanjis": "Kanjis",
-    "words": "Words"
+    "words": "Words",
+    "buttons": {
+      "login": "Login",
+      "signup": "Signup",
+      "logout": "Logout"
+    },
+    "drawer": {
+      "title": "Kanjibox"
+    }
   },
   "loading": {
     "kanjis": "Loading Kanjis...",
     "words": "Loading Words..."
   },
   "welcome": {
-    "header": "Kanji Box",
-    "description": "Home page of Kanji Box, below are the recently recorded kanji. To view/edit kanji or words, click on the buttons below.",
-    "cta": {
-      "kanjis": "Kanjis (unit)",
-      "words": "Words"
+    "auth": {
+      "header": "Kanji Box",
+      "description": "Below are the recently recorded kanji. To view/edit kanji or words, click on the buttons below.",
+      "cta": {
+        "kanjis": "Kanjis (unit)",
+        "words": "Words"
+      }
+    },
+    "unAuth": {
+      "header": "Kanji Box",
+      "description": "Welcome to Kanjibox, the Japanese learning app! You can here build your own dictionary of kanji and Japanese words.",
+      "login": "To get started, please log in or create an account.",
+      "cta": {
+        "login": "Login",
+        "signup": "New account"
+      }
     }
   },
   "buttons": {
@@ -36,6 +55,10 @@
       "stepper": {
         "enterInfo": "Input kanji value",
         "preview": "Preview and validate"
+      },
+      "emptyState": {
+        "title": "Welcome !",
+        "description": "This is where all your kanjis will be stored.<br></br>Start adding kanjis by using the button above."
       },
       "notifications": {
         "success": "Kanji added !",
@@ -63,6 +86,10 @@
       "stepper": {
         "enterInfo": "Input word value",
         "preview": "Preview and validate"
+      },
+      "emptyState": {
+        "title": "Welcome !",
+        "description": "This is where all your words will be stored.<br></br>Start adding words by using the button above."
       },
       "notifications": {
         "success": "Word added !",

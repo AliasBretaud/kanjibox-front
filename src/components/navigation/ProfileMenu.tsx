@@ -1,3 +1,5 @@
+"use client";
+
 import type { MouseEvent } from "react";
 import { useState } from "react";
 
@@ -5,6 +7,8 @@ import Logout from "@mui/icons-material/Logout";
 import { indigo } from "@mui/material/colors";
 import {
   Avatar,
+  Box,
+  CircularProgress,
   Container,
   Divider,
   IconButton,
@@ -16,8 +20,12 @@ import {
   Typography,
 } from "@mui/material";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { useUser } from "@auth0/nextjs-auth0/client";
 
-const ProfileMenu = ({ img, name }: Partial<{ img: string; name: string }>) => {
+const ProfileMenu = () => {
+  const t = useTranslations("navigation");
+  const { user, isLoading } = useUser();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -29,6 +37,20 @@ const ProfileMenu = ({ img, name }: Partial<{ img: string; name: string }>) => {
     setAnchorEl(null);
   };
 
+  if (isLoading) {
+    return (
+      <Box
+        width={42}
+        height={42}
+        alignItems="center"
+        justifyContent="center"
+        display="flex"
+      >
+        <CircularProgress size={32} color="inherit" sx={{ p: "5px" }} />
+      </Box>
+    );
+  }
+
   return (
     <>
       <Tooltip title="Profile">
@@ -39,7 +61,10 @@ const ProfileMenu = ({ img, name }: Partial<{ img: string; name: string }>) => {
           aria-haspopup="true"
           aria-expanded={open ? "true" : undefined}
         >
-          <Avatar sx={{ width: 32, height: 32 }} src={img} />
+          <Avatar
+            sx={{ width: 32, height: 32 }}
+            src={user?.picture || undefined}
+          />
         </IconButton>
       </Tooltip>
       <Menu
@@ -48,6 +73,7 @@ const ProfileMenu = ({ img, name }: Partial<{ img: string; name: string }>) => {
         open={open}
         onClose={handleClose}
         onClick={handleClose}
+        disableScrollLock
         slotProps={{
           paper: {
             elevation: 0,
@@ -82,7 +108,7 @@ const ProfileMenu = ({ img, name }: Partial<{ img: string; name: string }>) => {
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
         <Container sx={{ pb: 1 }}>
-          <Typography>{name}</Typography>
+          <Typography>{user?.name || undefined}</Typography>
         </Container>
         <Divider />
         <Link href="/api/auth/logout">
@@ -91,7 +117,7 @@ const ProfileMenu = ({ img, name }: Partial<{ img: string; name: string }>) => {
               <ListItemIcon>
                 <Logout fontSize="small" sx={{ color: "white" }} />
               </ListItemIcon>
-              Logout
+              {t("buttons.logout")}
             </Stack>
           </MenuItem>
         </Link>

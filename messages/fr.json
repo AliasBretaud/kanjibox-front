@@ -5,18 +5,37 @@
   },
   "navigation": {
     "kanjis": "Kanjis",
-    "words": "Mots"
+    "words": "Mots",
+    "buttons": {
+      "login": "Connexion",
+      "signup": "Inscription",
+      "logout": "Déconnexion"
+    },
+    "drawer": {
+      "title": "Kanjibox"
+    }
   },
   "loading": {
     "kanjis": "Chargement des Kanjis...",
     "words": "Chargement des Mots..."
   },
   "welcome": {
-    "header": "Boîte à Kanjis",
-    "description": "Accueil de la Boîte à Kanjis, ci-dessous les kanjis récemment enregistrés. Pour consulter / éditer des kanjis ou des mots, cliquer sur les boutons ci-dessous.",
-    "cta": {
-      "kanjis": "Les Kanjis (unitaires)",
-      "words": "Les Mots"
+    "auth": {
+      "header": "Boîte à Kanjis",
+      "description": "Ci-dessous les kanjis récemment enregistrés. Pour consulter / éditer des kanjis ou des mots, cliquer sur les boutons ci-dessous.",
+      "cta": {
+        "kanjis": "Les Kanjis (unitaires)",
+        "words": "Les Mots"
+      }
+    },
+    "unAuth": {
+      "header": "Kanji Box",
+      "description": "Bienvenue sur Kanjibox, l'application d'apprentissage du japonais ! Vous pouvez ici construire votre propre dictionnaire de kanjis et de mots japonais.",
+      "login": "Pour commencer, veuillez vous connecter ou créer un compte.",
+      "cta": {
+        "login": "Se connecter",
+        "signup": "Nouveau compte"
+      }
     }
   },
   "buttons": {
@@ -36,6 +55,10 @@
       "stepper": {
         "enterInfo": "Valeur du kanji",
         "preview": "Prévisualiser et valider"
+      },
+      "emptyState": {
+        "title": "Bienvenue !",
+        "description": "C'est ici que tous vos kanjis seront enregistrées.<br></br>Commencez à ajouter des kanjis en utilisant le bouton ci-dessus."
       },
       "notifications": {
         "success": "Kanji ajouté !",
@@ -63,6 +86,10 @@
       "stepper": {
         "enterInfo": "Valeur du mot",
         "preview": "Prévisualiser et valider"
+      },
+      "emptyState": {
+        "title": "Bienvenue !",
+        "description": "C'est ici que tous vos mots seront enregistrées.<br></br>Commencez à ajouter des mots en utilisant le bouton ci-dessus."
       },
       "notifications": {
         "success": "Mot ajouté !",

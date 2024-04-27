@@ -2,6 +2,7 @@
 
 import { ThemeProvider } from "@emotion/react";
 import { Paper, Stack, Typography, createTheme, styled } from "@mui/material";
+import type { ReactNode } from "react";
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -15,7 +16,7 @@ const EmptyState = ({
   description,
 }: {
   title: string;
-  description: string;
+  description: ReactNode;
 }) => {
   const theme = createTheme({ palette: { mode: "dark" } });
   return (

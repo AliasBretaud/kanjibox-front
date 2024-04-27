@@ -2,7 +2,7 @@ import {
   PreviewContainer,
   createRow,
   createTranslationsRow,
-} from "@/components/PreviewContainer";
+} from "@/components/form/PreviewContainer";
 import type { $Kanji } from "@/types/models";
 import { useLocale, useTranslations } from "next-intl";
 

@@ -11,6 +11,7 @@ import type { PropsWithChildren } from "react";
 import { locales } from "@/locale-config";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 import { UserProvider } from "@auth0/nextjs-auth0/client";
+import { NextIntlClientProvider, useMessages } from "next-intl";
 
 type Props = PropsWithChildren<{
   params: { locale: string };
@@ -38,6 +39,8 @@ export default function RootLayout({
   // Enable static rendering
   unstable_setRequestLocale(locale);
 
+  const messages = useMessages();
+
   return (
     <html lang={locale}>
       <body className="bg-grey-dark text-white">
@@ -46,8 +49,10 @@ export default function RootLayout({
             <ThemeProvider theme={theme}>
               <ModalProvider>
                 <CssBaseline />
-                <Navigation />
-                {children}
+                <NextIntlClientProvider locale={locale} messages={messages}>
+                  <Navigation />
+                  {children}
+                </NextIntlClientProvider>
               </ModalProvider>
             </ThemeProvider>
           </AppRouterCacheProvider>
