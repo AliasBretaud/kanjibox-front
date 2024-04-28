@@ -10,6 +10,7 @@ import {
   ListItem,
   ListItemButton,
   ListItemText,
+  Stack,
   Typography,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -18,6 +19,7 @@ import LanguageSelector from "./LanguageSelector";
 import { useTranslations } from "next-intl";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import Link from "next/link";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const Loader = () => (
   <Box width={48} height={48} p="12px" color="white">
@@ -37,8 +39,22 @@ export const DrawerMenu = () => {
   };
   const drawerWidth = 240;
 
+  const logoutButton = (
+    <Stack direction="row" spacing={2} justifyContent="center">
+      <LogoutIcon />
+      <span>{t("buttons.logout")}</span>
+    </Stack>
+  );
+
   const links = user
-    ? [{ label: t("buttons.logout"), href: "/api/auth/logout" }]
+    ? [
+        { label: t("kanjis"), href: "/kanjis" },
+        { label: t("words"), href: "/words" },
+        {
+          label: logoutButton,
+          href: "/api/auth/logout",
+        },
+      ]
     : [
         { label: t("buttons.login"), href: "/api/auth/login" },
         { label: t("buttons.signup"), href: "/api/auth/signup" },
@@ -56,8 +72,8 @@ export const DrawerMenu = () => {
       </Typography>
       <Divider />
       <List>
-        {links.map(({ href, label }) => (
-          <ListItem key={label} disablePadding>
+        {links.map(({ href, label }, idx) => (
+          <ListItem key={idx} disablePadding>
             <ListItemButton sx={{ textAlign: "center" }}>
               <ListItemText
                 primary={
