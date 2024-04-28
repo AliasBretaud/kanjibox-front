@@ -26,6 +26,8 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/kanji
       SPRING_DATASOURCE_USERNAME: kanji
       SPRING_DATASOURCE_PASSWORD: kanji
+      OKTA_OAUTH2_AUDIENCE: ${OKTA_OAUTH2_AUDIENCE}
+      OKTA_OAUTH2_ISSUER: ${OKTA_OAUTH2_ISSUER}
     healthcheck:
       test:
         [
