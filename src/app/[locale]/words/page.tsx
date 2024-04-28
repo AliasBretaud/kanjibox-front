@@ -11,30 +11,35 @@ import SnackBarProvider from "@/components/ui/SnackBarProvider";
 import KanjiDetailsModal from "@/components/word/KanjiDetailsModal";
 import AddWordForm from "@/components/word/AddWord/AddWordForm";
 import { unstable_setRequestLocale } from "next-intl/server";
-import {
-  type AbstractIntlMessages,
-  NextIntlClientProvider,
-  useMessages,
-  useTranslations,
-} from "next-intl";
-import { pick } from "@/lib/utils/pick";
+import { useTranslations } from "next-intl";
+import EmptyState from "@/components/ui/EmptyState";
 
-const WordsContainer = async ({
-  page,
-  messages,
-}: {
-  page: number;
-  messages: AbstractIntlMessages;
-}) => {
+const WordsEmptyState = () => {
+  const t = useTranslations("modals.addWord.emptyState");
+  return (
+    <EmptyState
+      title={t("title")}
+      description={t.rich("description", {
+        br: () => <br />,
+      })}
+    />
+  );
+};
+
+const WordsContainer = async ({ page }: { page: number }) => {
   const words = await getWords(12, page);
   return (
     <div className="flex flex-col items-center">
-      <Pagination pagesCount={words.totalPages} sx={{ paddingTop: "40px" }} />
-      <NextIntlClientProvider messages={messages}>
-        <AddWordButton />
-        <AddWordForm />
-      </NextIntlClientProvider>
-      <WordList data={words.content} />
+      {words.totalPages > 1 && (
+        <Pagination pagesCount={words.totalPages} sx={{ paddingTop: "40px" }} />
+      )}
+      <AddWordButton />
+      <AddWordForm />
+      {words.totalElements > 0 ? (
+        <WordList data={words.content} />
+      ) : (
+        <WordsEmptyState />
+      )}
       <KanjiDetailsModal />
       <SnackBarProvider />
     </div>
@@ -49,12 +54,10 @@ export default function WordsPage({
   unstable_setRequestLocale(locale);
 
   const t = useTranslations("loading");
-  const messages = useMessages();
-  const messageF = pick(messages, ["modals", "buttons"]);
   const page = searchParams?.page || 1;
   return (
     <Suspense key={page} fallback={<LoadingState text={t("words")} />}>
-      <WordsContainer page={page} messages={messageF} />
+      <WordsContainer page={page} />
     </Suspense>
   );
 }

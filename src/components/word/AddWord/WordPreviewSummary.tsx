@@ -2,7 +2,7 @@ import {
   PreviewContainer,
   createRow,
   createTranslationsRow,
-} from "@/components/PreviewContainer";
+} from "@/components/form/PreviewContainer";
 import type { $Word } from "@/types/models";
 import { useLocale, useTranslations } from "next-intl";
 

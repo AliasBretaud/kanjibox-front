@@ -6,35 +6,42 @@ import { LoadingState } from "@/components/ui/LoadingState";
 import Pagination from "@/components/ui/Pagination";
 
 import { getKanjis } from "@/lib/actions/kanji";
-import type { PageParams } from "@/types/utils";
 import AddKanjiButton from "@/components/kanji/AddKanjiButton";
 import SnackBarProvider from "@/components/ui/SnackBarProvider";
 import { unstable_setRequestLocale } from "next-intl/server";
-import type { AbstractIntlMessages } from "next-intl";
-import {
-  NextIntlClientProvider,
-  useMessages,
-  useTranslations,
-} from "next-intl";
-import { pick } from "@/lib/utils/pick";
+import { useTranslations } from "next-intl";
+import type { PageParams } from "@/types/utils";
+import EmptyState from "@/components/ui/EmptyState";
 
-const KanjiContainer = async ({
-  messages,
-  page,
-}: {
-  messages: AbstractIntlMessages;
-  page: number;
-}) => {
+const KanjisEmptyState = () => {
+  const t = useTranslations("modals.addKanji.emptyState");
+  return (
+    <EmptyState
+      title={t("title")}
+      description={t.rich("description", {
+        br: () => <br />,
+      })}
+    />
+  );
+};
+
+const KanjiContainer = async ({ page }: { page: number }) => {
   const kanjis = await getKanjis(12, page);
   return (
     <div className="flex flex-col items-center">
-      <Pagination pagesCount={kanjis.totalPages} sx={{ paddingTop: "40px" }} />
-      <NextIntlClientProvider messages={messages}>
-        <AddKanjiButton />
-        <AddKanjiForm />
-      </NextIntlClientProvider>
-
-      <KanjiList data={kanjis.content} />
+      {kanjis.totalPages > 1 && (
+        <Pagination
+          pagesCount={kanjis.totalPages}
+          sx={{ paddingTop: "40px" }}
+        />
+      )}
+      <AddKanjiButton />
+      <AddKanjiForm />
+      {kanjis.totalElements > 0 ? (
+        <KanjiList data={kanjis.content} />
+      ) : (
+        <KanjisEmptyState />
+      )}
     </div>
   );
 };
@@ -47,15 +54,11 @@ export default function KanjisPage({
   unstable_setRequestLocale(locale);
 
   const t = useTranslations("loading");
-  const messages = useMessages();
   const page = searchParams?.page || 1;
   return (
     <>
       <Suspense key={page} fallback={<LoadingState text={t("kanjis")} />}>
-        <KanjiContainer
-          page={page}
-          messages={pick(messages, ["modals", "buttons"])}
-        />
+        <KanjiContainer page={page} />
       </Suspense>
       <SnackBarProvider />
     </>

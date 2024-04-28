@@ -25,6 +25,8 @@ const LanguageSelector = () => {
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
+    event.preventDefault();
+    event.stopPropagation();
   };
 
   const handleClose = () => {
@@ -48,7 +50,7 @@ const LanguageSelector = () => {
     <>
       <Button
         disabled={isPending}
-        sx={{ color: "white" }}
+        sx={{ color: "white", height: "100%" }}
         startIcon={<Translate />}
         endIcon={<KeyboardArrowDown />}
         variant="outlined"
