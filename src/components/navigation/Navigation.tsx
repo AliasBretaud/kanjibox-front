@@ -81,10 +81,14 @@ export default function Navigation() {
   return (
     <>
       <Box display={{ xs: "none", sm: "block" }}>
-        <DesktopNavigation />
+        <div>
+          <DesktopNavigation />
+        </div>
       </Box>
       <Box display={{ xs: "block", sm: "none" }}>
-        <MobileNavigation />
+        <div>
+          <MobileNavigation />
+        </div>
       </Box>
     </>
   );
