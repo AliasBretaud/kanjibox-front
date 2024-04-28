@@ -21,11 +21,23 @@ import {
 } from "@mui/material";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
+import type { UserProfile } from "@auth0/nextjs-auth0/client";
 import { useUser } from "@auth0/nextjs-auth0/client";
 
-const ProfileMenu = () => {
+const Loader = () => (
+  <Box
+    width={42}
+    height={42}
+    alignItems="center"
+    justifyContent="center"
+    display="flex"
+  >
+    <CircularProgress size={32} color="inherit" sx={{ p: "5px" }} />
+  </Box>
+);
+
+const ProfileButton = ({ user }: { user?: UserProfile }) => {
   const t = useTranslations("navigation");
-  const { user, isLoading } = useUser();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -36,28 +48,13 @@ const ProfileMenu = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  if (isLoading) {
-    return (
-      <Box
-        width={42}
-        height={42}
-        alignItems="center"
-        justifyContent="center"
-        display="flex"
-      >
-        <CircularProgress size={32} color="inherit" sx={{ p: "5px" }} />
-      </Box>
-    );
-  }
-
   return (
     <>
       <Tooltip title="Profile">
         <IconButton
           onClick={handleClick}
           size="small"
-          aria-controls={open ? "account-menu" : undefined}
+          aria-controls={open ? "profile-menu" : undefined}
           aria-haspopup="true"
           aria-expanded={open ? "true" : undefined}
         >
@@ -69,7 +66,7 @@ const ProfileMenu = () => {
       </Tooltip>
       <Menu
         anchorEl={anchorEl}
-        id="account-menu"
+        id="profile-menu"
         open={open}
         onClose={handleClose}
         onClick={handleClose}
@@ -123,6 +120,15 @@ const ProfileMenu = () => {
         </Link>
       </Menu>
     </>
+  );
+};
+
+const ProfileMenu = () => {
+  const { isLoading, user } = useUser();
+  return (
+    <div data-testid="profile-menu">
+      {isLoading ? <Loader /> : <ProfileButton user={user} />}
+    </div>
   );
 };
 

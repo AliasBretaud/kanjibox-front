@@ -1,10 +1,15 @@
 import { expect, test } from "@playwright/test";
 import { KanjisPage } from "./pages/kanjis-page";
+import { LoginPage } from "./pages/login-page";
+
+test.beforeEach(async ({ page }) => {
+  const loginPage = new LoginPage(page);
+  await loginPage.loginWithUser("test-user@kanjibox.jp", "Password!123");
+});
 
 test.describe("Kanji Search", () => {
   test("should display the requested kanji info", async ({ page }) => {
-    await page.goto("http://localhost:3000/en/");
-
+    await page.goto("http://localhost:3000/en");
     const searchInput = page.getByPlaceholder("キーワードを入力");
     const searchButton = page.getByTestId("search");
     await searchInput.fill("話");

@@ -1,5 +1,11 @@
 import { expect, test } from "@playwright/test";
 import { WordsPage } from "./pages/words-page";
+import { LoginPage } from "./pages/login-page";
+
+test.beforeEach(async ({ page }) => {
+  const loginPage = new LoginPage(page);
+  await loginPage.loginWithUser("test-user@kanjibox.jp", "Password!123");
+});
 
 test.describe("Add a new word", () => {
   test("All infos filled", async ({ page }) => {
