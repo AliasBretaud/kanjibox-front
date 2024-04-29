@@ -5,11 +5,8 @@ import SearchBar from "./SearchBar";
 import WelcomeMessage from "./WelcomeMessage";
 import { Suspense } from "react";
 import { LoadingState } from "@/components/ui/LoadingState";
-import { isAuth } from "@/lib/actions/auth";
 
 const KanjiContainer = async ({ search }: { search?: string }) => {
-  const login = await isAuth();
-  if (!login) return null;
   const kanjis = await getKanjis(8, 0, search);
   return <KanjiList data={kanjis.content} />;
 };
