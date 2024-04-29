@@ -1,0 +1,8 @@
+"use server";
+
+import { getSession } from "@auth0/nextjs-auth0";
+
+export const isAuth = async () => {
+  const session = await getSession();
+  return !!session?.user;
+};

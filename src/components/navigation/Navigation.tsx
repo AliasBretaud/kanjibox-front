@@ -4,10 +4,10 @@ import { useTranslations } from "next-intl";
 import LanguageSelector from "./LanguageSelector";
 import { Suspense } from "react";
 import AuthButtons from "./AuthButtons";
-import { getSession } from "@auth0/nextjs-auth0";
 import ProfileMenu from "./ProfileMenu";
 import { LoginButton } from "./LoginButton";
 import { DrawerMenu } from "./DrawerMenu";
+import { isAuth } from "@/lib/actions/auth";
 
 const LanguageSelectorLoader = () => (
   <Suspense>
@@ -30,8 +30,7 @@ const ProtectedLinks = () => {
 };
 
 const MobileNavigation = async () => {
-  const session = await getSession();
-  const isAuth = !!session?.user;
+  const login = await isAuth();
   return (
     <Toolbar className="bg-blue-navy">
       <Stack
@@ -44,15 +43,14 @@ const MobileNavigation = async () => {
         <NavigationLink big className="font-kanji" href="/">
           Floの漢字箱
         </NavigationLink>
-        {isAuth ? <ProfileMenu /> : <LoginButton />}
+        {login ? <ProfileMenu /> : <LoginButton />}
       </Stack>
     </Toolbar>
   );
 };
 
 const DesktopNavigation = async () => {
-  const session = await getSession();
-  const isAuth = !!session?.user;
+  const login = await isAuth();
   return (
     <Toolbar className="bg-blue-navy">
       <Stack
@@ -65,12 +63,12 @@ const DesktopNavigation = async () => {
           <NavigationLink big className="font-kanji" href="/">
             Floの漢字箱
           </NavigationLink>
-          {isAuth && <ProtectedLinks />}
+          {login && <ProtectedLinks />}
         </Stack>
         <Stack alignItems="center" direction="row" gap={2}>
-          {!isAuth && <AuthButtons />}
+          {!login && <AuthButtons />}
           <LanguageSelectorLoader />
-          {isAuth && <ProfileMenu />}
+          {login && <ProfileMenu />}
         </Stack>
       </Stack>
     </Toolbar>

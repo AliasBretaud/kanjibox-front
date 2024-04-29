@@ -1,8 +1,8 @@
 import type { PageParams } from "@/types/utils";
-import { getSession } from "@auth0/nextjs-auth0";
 import AuthLayout from "@/components/home/Auth/Layout";
 import UnAuthLayout from "@/components/home/UnAuthLayout";
 import { unstable_setRequestLocale } from "next-intl/server";
+import { isAuth } from "@/lib/actions/auth";
 
 export default async function Home({
   params: { locale },
@@ -11,10 +11,10 @@ export default async function Home({
   // Enable static rendering
   unstable_setRequestLocale(locale);
 
-  const session = await getSession();
+  const login = await isAuth();
   return (
     <main>
-      {session?.user ? (
+      {login ? (
         <AuthLayout query={searchParams?.query || ""} />
       ) : (
         <UnAuthLayout />

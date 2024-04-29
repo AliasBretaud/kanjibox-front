@@ -19,6 +19,7 @@ export class LoginPage {
       await pass.fill(password);
       await button.click();
       await this.page.waitForURL("http://localhost:3000/en");
+      await this.page.waitForTimeout(1500);
     }
   }
 }
