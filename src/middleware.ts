@@ -5,7 +5,13 @@ import {
   type NextRequest,
   NextResponse,
 } from "next/server";
-import { withMiddlewareAuthRequired } from "@auth0/nextjs-auth0/edge";
+import {
+  AccessTokenError,
+  getAccessToken,
+  touchSession,
+  updateSession,
+  withMiddlewareAuthRequired,
+} from "@auth0/nextjs-auth0/edge";
 import { pathToRegexp } from "path-to-regexp";
 
 const publicPages = ["/", "/(fr|en|ja)", "/api/auth/:path*"];
@@ -23,7 +29,32 @@ const intlMiddleware = createIntlMiddleware({
   localePrefix,
 });
 
-const authMiddleware = withMiddlewareAuthRequired((req) => intlMiddleware(req));
+const authMiddleware = withMiddlewareAuthRequired({
+  middleware: async function middleware(req) {
+    try {
+      await getAccessToken();
+      const res = NextResponse.next();
+      await touchSession(req, res);
+      return intlMiddleware(req);
+    } catch (err) {
+      if (err instanceof AccessTokenError) {
+        const res = NextResponse.redirect(
+          `${req.nextUrl.basePath}/api/auth/logout`,
+        );
+
+        return updateSession(req, res, {
+          user: [],
+          accessToken: undefined,
+          idToken: undefined,
+          refreshToken: undefined,
+          accessTokenExpiresAt: 0,
+        });
+      }
+
+      throw err;
+    }
+  },
+});
 
 export default function middleware(req: NextRequest, event: NextFetchEvent) {
   const { pathname } = req.nextUrl;

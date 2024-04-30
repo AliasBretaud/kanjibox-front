@@ -22,6 +22,7 @@ export const GET = handleAuth({
   login: handleLogin((req) => ({
     authorizationParams: {
       ui_locales: getLocale(req.cookies),
+      scope: "openid profile email offline_access",
     },
   })),
   signup: handleLogin((req) => ({

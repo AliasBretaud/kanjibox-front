@@ -84,6 +84,7 @@ docker pull fbrtd/kanjibox-front@latest
 docker run -d \
   -e BACKEND_API_URL=http://localhost:8080/kanjibox \
   -e AUTH0_BASE_URL=http://localhost:3000 \
+  -e AUTH0_SESSION_AUTO_SAVE=false \
   -e AUTH0_SECRET=${AUTH0_SECRET} \
   -e AUTH0_ISSUER_BASE_URL=${AUTH0_ISSUER_BASE_URL} \
   -e AUTH0_CLIENT_ID=${AUTH0_CLIENT_ID} \
