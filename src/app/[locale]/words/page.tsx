@@ -9,10 +9,11 @@ import type { PageParams } from "@/types/utils";
 import AddWordButton from "@/components/word/AddWordButton";
 import SnackBarProvider from "@/components/ui/SnackBarProvider";
 import KanjiDetailsModal from "@/components/word/KanjiDetailsModal";
-import AddWordForm from "@/components/word/AddWord/AddWordForm";
+import AddWordModal from "@/components/word/modals/AddWord/AddWordModal";
 import { unstable_setRequestLocale } from "next-intl/server";
 import { useTranslations } from "next-intl";
 import EmptyState from "@/components/ui/EmptyState";
+import { EditWordModal } from "@/components/word/modals/EditWord";
 
 const WordsEmptyState = () => {
   const t = useTranslations("modals.addWord.emptyState");
@@ -34,7 +35,8 @@ const WordsContainer = async ({ page }: { page: number }) => {
         <Pagination pagesCount={words.totalPages} sx={{ paddingTop: "40px" }} />
       )}
       <AddWordButton />
-      <AddWordForm />
+      <AddWordModal />
+      <EditWordModal />
       {words.totalElements > 0 ? (
         <WordList data={words.content} />
       ) : (

@@ -101,6 +101,17 @@
         "translations": "Traduction(s) requise(s)"
       }
     },
+    "editWord": {
+      "header": "Edition du mot",
+      "delete": {
+        "description": "Supprimer ce mot de ma liste",
+        "button": "Supprimer"
+      },
+      "notifications": {
+        "success": "Le mot a été retiré",
+        "error": "Erreur"
+      }
+    },
     "buttons": {
       "add": "Ajouter",
       "back": "Précédent",

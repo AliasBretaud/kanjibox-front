@@ -6,11 +6,11 @@ type WordForm = Record<keyof WordFormType, Locator>;
 
 export class WordsPage {
   private readonly page: Page;
-  private readonly addWordForm: WordForm;
+  private readonly addWordModal: WordForm;
 
   constructor(page: Page) {
     this.page = page;
-    this.addWordForm = {
+    this.addWordModal = {
       value: this.page.getByLabel("Word Value"),
       autoDetect: this.page.getByLabel(
         "Automatic detection of reading/translations",
@@ -20,32 +20,32 @@ export class WordsPage {
     };
   }
 
-  public async openAddWordForm() {
+  public async openAddWordModal() {
     const addButton = this.page.getByRole("button", { name: "Add Word" });
     await addButton.click();
   }
 
-  public async fillAddWordForm({
+  public async fillAddWordModal({
     value,
     autoDetect,
     furiganaValue,
     translations,
   }: Partial<WordFormType>) {
     if (value) {
-      await this.addWordForm.value.fill(value);
+      await this.addWordModal.value.fill(value);
     }
     if (autoDetect === false) {
-      await this.addWordForm.autoDetect.uncheck();
+      await this.addWordModal.autoDetect.uncheck();
     }
     if (furiganaValue) {
-      await this.addWordForm.furiganaValue.fill(furiganaValue);
+      await this.addWordModal.furiganaValue.fill(furiganaValue);
     }
     if (translations) {
       await fillInputList(this.page, "translations", translations);
     }
   }
 
-  public async submitAddWordForm() {
+  public async submitAddWordModal() {
     const formAddButton = this.page.getByRole("button", {
       name: "Add",
       exact: true,

@@ -101,6 +101,17 @@
         "translations": "Translation(s) required"
       }
     },
+    "editWord": {
+      "header": "Edit Word",
+      "delete": {
+        "description": "Remove this word from my list",
+        "button": "Remove"
+      },
+      "notifications": {
+        "success": "Word has been removed",
+        "error": "Error"
+      }
+    },
     "buttons": {
       "add": "Add",
       "back": "Back",

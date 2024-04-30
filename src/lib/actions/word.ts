@@ -1,6 +1,6 @@
 "use server";
 
-import { get, post } from "./api";
+import { fetchDelete, get, post } from "./api";
 import { getFormDataField } from "@/lib/utils/getFormDataField";
 import { cookies } from "next/headers";
 import {
@@ -17,6 +17,7 @@ import { getFormDataFieldList } from "@/lib/utils/getFormDataFieldList";
 import { isKana } from "wanakana";
 import { handleApiCallError, handleApiResponse } from "@/lib/utils/apiUtils";
 import { stringToBoolean } from "@/lib/utils/stringToBoolean";
+import { revalidateTag } from "next/cache";
 
 const WORD_ENDPOINT = `${process.env.BACKEND_API_URL}/words`;
 
@@ -81,6 +82,18 @@ export const addWord = async (
     return await handleApiResponse(response, undefined, tags);
   } catch (error) {
     return handleApiCallError(error);
+  }
+};
+
+export const deleteWord = async (word: $Word) => {
+  try {
+    await fetchDelete(`${WORD_ENDPOINT}/${word.id}`);
+    revalidateTag("words");
+    if (word.kanjis?.length) {
+      revalidateTag("kanjis");
+    }
+  } catch (e) {
+    throw new Error("Couldn't delete word");
   }
 };
 

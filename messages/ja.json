@@ -101,6 +101,17 @@
         "translations": "翻訳が必要です"
       }
     },
+    "editWord": {
+      "header": "単語を編集する",
+      "delete": {
+        "description": "リストから削除する",
+        "button": "削除"
+      },
+      "notifications": {
+        "success": "単語が削除されました",
+        "error": "エラー"
+      }
+    },
     "buttons": {
       "add": "追加",
       "back": "戻る",

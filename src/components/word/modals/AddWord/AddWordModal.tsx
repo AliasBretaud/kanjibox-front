@@ -15,7 +15,7 @@ import { WordDetailsInput } from "./WordDetailsInput";
 import { WordPreviewSummary } from "./WordPreviewSummary";
 import { StepperButtons } from "@/components/form/StepperButtons";
 
-const AddWordForm = () => {
+const AddWordModal = () => {
   const t = useTranslations("modals.addWord");
   const tRef = useRef(t);
   const { apiResponse, errors, formAction, setErrors } =
@@ -141,4 +141,4 @@ const AddWordForm = () => {
   );
 };
 
-export default AddWordForm;
+export default AddWordModal;

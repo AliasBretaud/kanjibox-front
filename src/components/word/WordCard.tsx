@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { Stack } from "@mui/material";
 import Table, { Row } from "@/components/ui/Table";
@@ -7,6 +9,8 @@ import { Furi, Pair, Text, Wrapper, useFuriPairs } from "react-furi";
 import { Card } from "@/components/ui/Card";
 import type { PropsWithLocalization } from "@/types/utils";
 import type { $Word } from "@/types/models";
+import useModal from "@/hooks/useModal";
+import type { MWord } from "@/types/modals";
 
 type RubyProps = Pick<$Word, "kanjis" | "furiganaValue" | "value">;
 
@@ -73,8 +77,9 @@ const WordCard = ({
   ...p
 }: PropsWithLocalization<$Word>) => {
   const localizedTranslations = getLocalizedTranslations(translations, locale);
+  const { openModal } = useModal();
   return (
-    <Card>
+    <Card onEdit={() => openModal<MWord>("edit-word", { word: p })}>
       <Stack spacing={2} alignSelf="stretch">
         <WordValueDetail {...p} />
         {localizedTranslations && (

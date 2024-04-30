@@ -9,7 +9,7 @@ const useModalNotification = () => {
   const closeModal = useCallback(() => hideModal(), [hideModal]);
 
   const showNotification = useCallback(
-    (message: string, isError: boolean) => {
+    (message: string, isError = false) => {
       if (isError) {
         showErrorNotif(message);
       } else {

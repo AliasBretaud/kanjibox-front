@@ -15,14 +15,14 @@ test.describe("Add a new word", () => {
     const wordsPage = new WordsPage(page);
 
     // Add word
-    await wordsPage.openAddWordForm();
-    await wordsPage.fillAddWordForm({
+    await wordsPage.openAddWordModal();
+    await wordsPage.fillAddWordModal({
       value: "言葉",
       autoDetect: false,
       furiganaValue: "ことば",
       translations: ["Word"],
     });
-    await wordsPage.submitAddWordForm();
+    await wordsPage.submitAddWordModal();
 
     // Ok notification
     const notif = page.getByText("Word added !");
@@ -36,12 +36,12 @@ test.describe("Add a new word", () => {
     const wordsPage = new WordsPage(page);
 
     // Add word
-    await wordsPage.openAddWordForm();
-    await wordsPage.fillAddWordForm({
+    await wordsPage.openAddWordModal();
+    await wordsPage.fillAddWordModal({
       value: "高級",
     });
     await wordsPage.nextStep();
-    await wordsPage.submitAddWordForm();
+    await wordsPage.submitAddWordModal();
 
     // Ok notification
     const notif = page.getByText("Word added !");
@@ -55,15 +55,15 @@ test.describe("Add a new word", () => {
     const wordsPage = new WordsPage(page);
 
     // Add word
-    await wordsPage.openAddWordForm();
-    await wordsPage.fillAddWordForm({
+    await wordsPage.openAddWordModal();
+    await wordsPage.fillAddWordModal({
       value: "A",
       autoDetect: false,
       furiganaValue: "N",
       translations: ["こ"],
     });
     // Empty values
-    await wordsPage.submitAddWordForm();
+    await wordsPage.submitAddWordModal();
     // Get errors
     const errors = page.getByTestId("error-messages");
     const messages = [

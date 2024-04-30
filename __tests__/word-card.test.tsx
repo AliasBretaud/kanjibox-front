@@ -1,4 +1,5 @@
 import WordCard from "@/components/word/WordCard";
+import { ModalProvider } from "@/context/modalContext";
 import type { $Word } from "@/types/models";
 import { render, screen } from "@testing-library/react";
 
@@ -12,7 +13,11 @@ const wordMock: $Word = {
 
 describe("WordCard component tests", () => {
   it("renders the component", () => {
-    render(<WordCard {...wordMock} locale="en" />);
+    render(
+      <ModalProvider>
+        <WordCard {...wordMock} locale="en" />
+      </ModalProvider>,
+    );
 
     const furiganaValue = screen.getByText("ことば");
     const translation = screen.getByText("Word");
@@ -25,7 +30,11 @@ describe("WordCard component tests", () => {
   });
 
   it("renders WordCard unchanged", () => {
-    const { container } = render(<WordCard {...wordMock} locale="en" />);
+    const { container } = render(
+      <ModalProvider>
+        <WordCard {...wordMock} locale="en" />
+      </ModalProvider>,
+    );
     expect(container).toMatchSnapshot();
   });
 });

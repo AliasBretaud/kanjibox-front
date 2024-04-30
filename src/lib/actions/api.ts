@@ -3,7 +3,7 @@
 import { buildUrl } from "@/lib/utils/buildUrl";
 import { getAccessToken } from "@auth0/nextjs-auth0";
 
-const withAuth = async (url: string | URL, request: RequestInit) => {
+const withAuth = async (url: string | URL, request: RequestInit = {}) => {
   const { accessToken } = await getAccessToken();
   if (!accessToken) {
     throw new Error(`Requires authorization`);
@@ -38,4 +38,9 @@ export const post = async (
     },
     body: JSON.stringify(body),
   });
+};
+
+export const fetchDelete = async (url: string, params?: URLSearchParams) => {
+  const urlWithParams = buildUrl(url, params);
+  return await withAuth(urlWithParams, { method: "DELETE" });
 };
