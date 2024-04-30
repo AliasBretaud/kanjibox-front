@@ -3,7 +3,7 @@
 import { LoadingButton } from "@mui/lab";
 import type { Button } from "@mui/material";
 import type { ComponentProps, PropsWithChildren } from "react";
-import { useState } from "react";
+import { useTransition } from "react";
 
 export const ActionButton = ({
   action,
@@ -13,17 +13,16 @@ export const ActionButton = ({
     action: () => Promise<void>;
   }
 >) => {
-  const [loading, setLoading] = useState(false);
-  const handleClick = async () => {
-    setLoading(true);
-    await action();
-    setLoading(false);
-  };
+  const [isPending, startTransition] = useTransition();
+  const handleClick = () =>
+    startTransition(async () => {
+      await action();
+    });
   return (
     <LoadingButton
       {...p}
       type="button"
-      loading={loading}
+      loading={isPending}
       onClick={handleClick}
     />
   );

@@ -2,9 +2,10 @@
 
 import useModal from "@/hooks/useModal";
 import type { DialogProps, ModalProps } from "@mui/material";
-import { Dialog, IconButton, useMediaQuery, useTheme } from "@mui/material";
+import { Dialog, IconButton } from "@mui/material";
 import type { PropsWithChildren } from "react";
 import CloseIcon from "@mui/icons-material/Close";
+import { useResponsive } from "@/hooks/useResponsive";
 
 type BaseModalProps<T> = PropsWithChildren<
   { name: T; responsive?: boolean } & Omit<DialogProps, "open">
@@ -38,18 +39,17 @@ const BaseModal = <T extends string>({
       p.onClose(event, reason);
     }
   };
-  const theme = useTheme();
-  const responsiveFullScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const { isMobile } = useResponsive();
   return (
     <Dialog
       {...p}
-      fullScreen={responsive ? responsiveFullScreen : p.fullScreen}
+      fullScreen={responsive ? isMobile : p.fullScreen}
       open={shownModal === name}
       onClose={onClose}
       disableRestoreFocus
     >
       {children}
-      {responsiveFullScreen ? <CloseButton onClose={onClose} /> : null}
+      {isMobile ? <CloseButton onClose={onClose} /> : null}
     </Dialog>
   );
 };

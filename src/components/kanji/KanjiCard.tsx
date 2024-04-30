@@ -13,10 +13,7 @@ const KanjiCard = ({
   value,
   locale,
 }: PropsWithLocalization<$Kanji>) => {
-  const localizedTranslations = getLocalizedTranslations(
-    translations,
-    locale,
-  ).slice(0, 3);
+  const localizedTranslations = getLocalizedTranslations(translations, locale);
   return (
     <Card>
       <Typography
@@ -26,8 +23,8 @@ const KanjiCard = ({
         {value}
       </Typography>
       <Table>
-        <Row title="音読み" data={onYomi?.slice(0, 3)} />
-        <Row title="訓読み" data={kunYomi?.slice(0, 3)} />
+        <Row title="音読み" data={onYomi} />
+        <Row title="訓読み" data={kunYomi} />
         {localizedTranslations && (
           <Row title="意味" data={localizedTranslations} />
         )}

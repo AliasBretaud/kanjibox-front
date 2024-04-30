@@ -13,7 +13,7 @@ import AddWordModal from "@/components/word/modals/AddWord/AddWordModal";
 import { unstable_setRequestLocale } from "next-intl/server";
 import { useTranslations } from "next-intl";
 import EmptyState from "@/components/ui/EmptyState";
-import { EditWordModal } from "@/components/word/modals/EditWord";
+import { EditWordModal } from "@/components/word/modals/EditWord/EditWordModal";
 
 const WordsEmptyState = () => {
   const t = useTranslations("modals.addWord.emptyState");
