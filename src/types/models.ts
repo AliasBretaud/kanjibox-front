@@ -6,6 +6,7 @@ export type $Kanji = {
   kunYomi?: string[];
   onYomi?: string[];
   translations?: MappedValue<string, string[]>;
+  usages?: string[];
 };
 
 export type $Word = {

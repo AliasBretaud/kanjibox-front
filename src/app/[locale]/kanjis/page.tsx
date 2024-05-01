@@ -12,6 +12,7 @@ import { unstable_setRequestLocale } from "next-intl/server";
 import { useTranslations } from "next-intl";
 import type { PageParams } from "@/types/utils";
 import EmptyState from "@/components/ui/EmptyState";
+import { EditKanjiModal } from "@/components/kanji/EditKanji/EditKanjiModal";
 
 const KanjisEmptyState = () => {
   const t = useTranslations("modals.addKanji.emptyState");
@@ -37,6 +38,7 @@ const KanjiContainer = async ({ page }: { page: number }) => {
       )}
       <AddKanjiButton />
       <AddKanjiForm />
+      <EditKanjiModal />
       {kanjis.totalElements > 0 ? (
         <KanjiList data={kanjis.content} />
       ) : (

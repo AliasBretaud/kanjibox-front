@@ -1,4 +1,5 @@
 import KanjiCard from "@/components/kanji/KanjiCard";
+import { ModalProvider } from "@/context/modalContext";
 import type { $Kanji } from "@/types/models";
 import { render, screen } from "@testing-library/react";
 
@@ -13,7 +14,11 @@ const kanjiMock: $Kanji = {
 
 describe("KanjiCard component tests", () => {
   it("renders the component", () => {
-    render(<KanjiCard {...kanjiMock} locale="en" />);
+    render(
+      <ModalProvider>
+        <KanjiCard {...kanjiMock} locale="en" />
+      </ModalProvider>,
+    );
 
     const value = screen.getByText("人");
     const onYomi1 = screen.getByText("ニン");
@@ -30,7 +35,11 @@ describe("KanjiCard component tests", () => {
   });
 
   it("renders homepage unchanged", () => {
-    const { container } = render(<KanjiCard {...kanjiMock} locale="en" />);
+    const { container } = render(
+      <ModalProvider>
+        <KanjiCard {...kanjiMock} locale="en" />
+      </ModalProvider>,
+    );
     expect(container).toMatchSnapshot();
   });
 });

@@ -22,7 +22,10 @@ export const get = async (
   tags?: string[],
 ) => {
   const urlWithParams = buildUrl(url, params);
-  return await withAuth(urlWithParams, { next: { tags } });
+  return await withAuth(urlWithParams, {
+    cache: "force-cache",
+    next: { tags },
+  });
 };
 
 export const post = async (

@@ -1,25 +1,26 @@
 "use client";
 
 import BaseModal from "@/components/ui/BaseModal";
-import type { MWord } from "@/types/modals";
+import type { MKanji } from "@/types/modals";
 import { DialogContent, DialogTitle } from "@mui/material";
 import { useTranslations } from "next-intl";
 import useModalNotification from "@/hooks/useModalNotification";
 import { useTransition } from "react";
-import { deleteWord } from "@/lib/actions/word";
+import { deleteKanji } from "@/lib/actions/kanji";
 import useModal from "@/hooks/useModal";
-import type { $Word } from "@/types/models";
+import type { $Kanji } from "@/types/models";
 import { DeleteBlock } from "@/components/common/DeleteBlock";
 
-export const EditWordModal = () => {
-  const t = useTranslations("modals.editWord");
+export const EditKanjiModal = () => {
+  const t = useTranslations("modals.editKanji");
   const { hideModal, modalOptions } = useModal();
   const { showNotification } = useModalNotification();
   const [isPending, startTransition] = useTransition();
+  const kanji = modalOptions.kanji as $Kanji;
   const onDelete = () => {
     startTransition(async () => {
       try {
-        await deleteWord(modalOptions.word as $Word);
+        await deleteKanji(kanji);
         showNotification(t("notifications.success"));
       } catch (e) {
         showNotification(t("notifications.error"), true);
@@ -28,15 +29,17 @@ export const EditWordModal = () => {
     });
   };
   return (
-    <BaseModal<MWord> name="edit-word" responsive maxWidth="sm" fullWidth>
+    <BaseModal<MKanji> name="edit-kanji" responsive maxWidth="sm" fullWidth>
       <DialogTitle id="form-dialog-title">{t("header")}</DialogTitle>
       <DialogContent>
-        <DeleteBlock
-          description={t("delete.description")}
-          buttonText={t("delete.button")}
-          onDelete={onDelete}
-          isLoading={isPending}
-        />
+        {!kanji?.usages?.length && (
+          <DeleteBlock
+            description={t("delete.description")}
+            buttonText={t("delete.button")}
+            onDelete={onDelete}
+            isLoading={isPending}
+          />
+        )}
       </DialogContent>
     </BaseModal>
   );

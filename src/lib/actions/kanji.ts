@@ -1,7 +1,7 @@
 "use server";
 
 import { getFormDataField } from "@/lib/utils/getFormDataField";
-import { get, post } from "./api";
+import { fetchDelete, get, post } from "./api";
 import { cookies } from "next/headers";
 import type { KanjiFormType } from "@/lib/validation/schemas/kanji";
 import { kanjiFormSchema, kanjiSchema } from "@/lib/validation/schemas/kanji";
@@ -14,6 +14,7 @@ import type { RequiredProps } from "@/types/utils";
 import { getFormDataFieldList } from "@/lib/utils/getFormDataFieldList";
 import { handleApiCallError, handleApiResponse } from "@/lib/utils/apiUtils";
 import { stringToBoolean } from "@/lib/utils/stringToBoolean";
+import { revalidateTag } from "next/cache";
 
 const KANJI_ENDPOINT = `${process.env.BACKEND_API_URL}/kanjis`;
 
@@ -38,7 +39,7 @@ export const getKanjis = async (
 };
 
 export const getKanji = async (id: number) => {
-  const res = await get(`${KANJI_ENDPOINT}/${id}`);
+  const res = await get(`${KANJI_ENDPOINT}/${id}`, undefined, ["kanjis"]);
   return await res.json();
 };
 
@@ -89,6 +90,18 @@ export const addKanji = async (
     return await handleApiResponse(response, undefined, ["kanjis"]);
   } catch (error) {
     return handleApiCallError(error);
+  }
+};
+
+export const deleteKanji = async (kanji: $Kanji) => {
+  try {
+    const res = await fetchDelete(`${KANJI_ENDPOINT}/${kanji.id}`);
+    if (!res.ok) {
+      throw new Error();
+    }
+    revalidateTag("kanjis");
+  } catch (e) {
+    throw new Error("Couldn't delete kanji");
   }
 };
 

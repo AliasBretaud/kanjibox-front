@@ -79,7 +79,11 @@ const WordCard = ({
   const localizedTranslations = getLocalizedTranslations(translations, locale);
   const { openModal } = useModal();
   return (
-    <Card onEdit={() => openModal<MWord>("edit-word", { word: p })}>
+    <Card
+      onEdit={() =>
+        openModal<MWord>("edit-word", { word: { translations, ...p } })
+      }
+    >
       <Stack spacing={2} alignSelf="stretch">
         <WordValueDetail {...p} />
         {localizedTranslations && (

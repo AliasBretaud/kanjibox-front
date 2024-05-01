@@ -101,6 +101,17 @@
         "translations": "Traduction(s) requise(s)"
       }
     },
+    "editKanji": {
+      "header": "Edition du kanji",
+      "delete": {
+        "description": "Supprimer ce kanji de ma liste",
+        "button": "Supprimer"
+      },
+      "notifications": {
+        "success": "Le kanji a été retiré",
+        "error": "Erreur"
+      }
+    },
     "editWord": {
       "header": "Edition du mot",
       "delete": {
