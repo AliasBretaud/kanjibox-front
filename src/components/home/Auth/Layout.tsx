@@ -5,6 +5,7 @@ import SearchBar from "./SearchBar";
 import WelcomeMessage from "./WelcomeMessage";
 import { Suspense } from "react";
 import { LoadingState } from "@/components/ui/LoadingState";
+import { EditKanjiModal } from "@/components/kanji/EditKanji/EditKanjiModal";
 
 const KanjiContainer = async ({ search }: { search?: string }) => {
   const kanjis = await getKanjis(8, 0, search);
@@ -20,6 +21,7 @@ const AuthLayout = ({ query }: { query: string }) => {
       <Suspense key={query} fallback={<LoadingState text={t("kanjis")} />}>
         <KanjiContainer search={query} />
       </Suspense>
+      <EditKanjiModal />
     </>
   );
 };

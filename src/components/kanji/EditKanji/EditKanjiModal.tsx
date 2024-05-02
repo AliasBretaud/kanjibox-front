@@ -30,7 +30,7 @@ const convertKanjiToFormValue = (
   autoDetect: false,
   onYomi,
   kunYomi,
-  translations: translations?.[locale],
+  translations: getLocalizedTranslations(translations, locale),
   value,
 });
 
@@ -108,13 +108,7 @@ export const EditKanjiModal = () => {
           <Box sx={{ py: 2 }}>
             <KanjiDetailsInput
               errors={errors}
-              values={{
-                ...formData,
-                translations: getLocalizedTranslations(
-                  kanjiOption?.translations,
-                  locale,
-                ),
-              }}
+              values={formData}
               onChange={({ onYomi, kunYomi, translations }) =>
                 setFormData({ ...formData, onYomi, kunYomi, translations })
               }

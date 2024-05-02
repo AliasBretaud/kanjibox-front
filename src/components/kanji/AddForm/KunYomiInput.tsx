@@ -26,7 +26,7 @@ const KunYomiInput = ({
       errors={errors}
       disabled={disabled}
       values={values}
-      onChange={(values) => onChange(values.splice(0, 3))}
+      onChange={onChange}
       maxLength={11}
     />
   );

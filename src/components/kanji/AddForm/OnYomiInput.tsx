@@ -26,7 +26,7 @@ const OnYomiInput = ({
       errors={errors}
       disabled={disabled}
       maxLength={4}
-      onChange={(values) => onChange(values.splice(0, 3))}
+      onChange={onChange}
       values={values}
     />
   );

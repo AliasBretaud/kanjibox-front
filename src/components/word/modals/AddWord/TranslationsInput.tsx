@@ -25,7 +25,7 @@ const TranslationsInput = ({
       disabled={disabled}
       maxLength={50}
       values={values || [""]}
-      onChange={(values) => onChange(values.splice(0, 3))}
+      onChange={onChange}
       required
     />
   );
