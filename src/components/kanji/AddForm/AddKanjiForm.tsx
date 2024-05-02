@@ -34,6 +34,7 @@ const AddKanjiForm = () => {
         label: translate("stepper.enterInfo"),
         render: () => (
           <KanjiDetailsInput
+            description={tRef.current("description")}
             errors={errors}
             values={kanji}
             onChange={setKanji}

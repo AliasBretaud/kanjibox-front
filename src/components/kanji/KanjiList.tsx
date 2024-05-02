@@ -32,7 +32,7 @@ const KanjiList = ({ data: kanjis = [] }: { data: $Kanji[] }) => {
           display="flex"
           {...gridProps}
         >
-          <KanjiCard locale={locale} {...value} />
+          <KanjiCard locale={locale} {...value} editable />
         </Grid>
       ))}
     </Grid>

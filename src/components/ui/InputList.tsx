@@ -6,7 +6,7 @@ import type { InputProps } from "@mui/material";
 import { Box, IconButton, Stack, TextField } from "@mui/material";
 
 export type InputListProps<T> = Pick<InputProps, "disabled" | "required"> & {
-  label: string;
+  label?: string;
   maxLength?: number;
   name: keyof T;
   errors?: number[];

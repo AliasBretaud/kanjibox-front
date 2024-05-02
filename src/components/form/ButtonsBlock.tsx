@@ -8,12 +8,14 @@ import { SubmitButton } from "./SubmitButton";
 const ButtonsBlock = ({
   onCancel,
   onOkAction,
+  updateMode = false,
 }: {
   onCancel?: () => void;
   onOkAction?: () => Promise<void>;
+  updateMode?: boolean;
 }) => {
   const t = useTranslations("modals.buttons");
-  const addLabel = t("add");
+  const okLabel = t(updateMode ? "update" : "add");
   return (
     <>
       <Button onClick={onCancel} color="error">
@@ -21,10 +23,10 @@ const ButtonsBlock = ({
       </Button>
       {onOkAction ? (
         <ActionButton variant="contained" action={onOkAction}>
-          {addLabel}
+          {okLabel}
         </ActionButton>
       ) : (
-        <SubmitButton variant="contained">{addLabel}</SubmitButton>
+        <SubmitButton variant="contained">{okLabel}</SubmitButton>
       )}
     </>
   );

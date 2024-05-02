@@ -47,16 +47,18 @@ const checkReadings = (
     validateListValues({
       path: "onYomi",
       values: onYomi,
-      checkFct: isKatakana,
+      checkFct: (s) => isKatakana(clearInput(s)),
       ctx,
     });
     validateListValues({
       path: "kunYomi",
       values: kunYomi,
-      checkFct: isHiragana,
+      checkFct: (s) => isHiragana(clearInput(s)),
       ctx,
     });
   }
 };
+
+const clearInput = (input: string) => input.replaceAll(/[-（）." ]/g, "");
 
 export type KanjiFormType = z.infer<typeof kanjiFormSchema>;

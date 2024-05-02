@@ -80,7 +80,7 @@ export const WordDetailsInput = ({
       {errors && (
         <ValidationErrors<WordFormType>
           errors={errors}
-          tKey="modals.addWord.validations"
+          tKey="validations.word"
         />
       )}
     </>

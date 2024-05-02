@@ -63,13 +63,6 @@
       "notifications": {
         "success": "Kanji added !",
         "error": "Error"
-      },
-      "validations": {
-        "value": "Kanji value format required (Japanese)",
-        "onYomi": "ON reading(s) required (katakana)",
-        "kunYomi": "KUN reading(s) required (hiragana)",
-        "readingRequired": "Please enter at least one KUN or ON reading",
-        "translations": "Translation(s) required"
       }
     },
     "addWord": {
@@ -94,40 +87,64 @@
       "notifications": {
         "success": "Word added !",
         "error": "Error"
-      },
-      "validations": {
-        "value": "Word value required (Japanese)",
-        "furiganaValue": "Furigana transcription required (hiragana)",
-        "translations": "Translation(s) required"
       }
     },
     "editKanji": {
       "header": "Edit Kanji",
+      "edit": {
+        "description": "Edit kanji: <strong>{kanji}</strong>",
+        "notifications": {
+          "success": "Kanji updated",
+          "error": "Error"
+        }
+      },
       "delete": {
         "description": "Remove this kanji from my list",
-        "button": "Remove"
-      },
-      "notifications": {
-        "success": "Kanji has been removed",
-        "error": "Error"
+        "button": "Remove",
+        "notifications": {
+          "success": "Kanji has been removed",
+          "error": "Error"
+        }
       }
     },
     "editWord": {
       "header": "Edit Word",
+      "description": "Edit word: <strong>{word}</strong>",
+      "edit": {
+        "notifications": {
+          "success": "Word updated",
+          "error": "Error"
+        }
+      },
       "delete": {
         "description": "Remove this word from my list",
-        "button": "Remove"
-      },
-      "notifications": {
-        "success": "Word has been removed",
-        "error": "Error"
+        "button": "Remove",
+        "notifications": {
+          "success": "Word has been removed",
+          "error": "Error"
+        }
       }
     },
     "buttons": {
       "add": "Add",
       "back": "Back",
+      "update": "Update",
       "cancel": "Cancel",
       "next": "Next"
+    }
+  },
+  "validations": {
+    "kanji": {
+      "value": "Kanji value format required (Japanese)",
+      "onYomi": "ON reading(s) required (katakana)",
+      "kunYomi": "KUN reading(s) required (hiragana)",
+      "readingRequired": "Please enter at least one KUN or ON reading",
+      "translations": "Translation(s) required"
+    },
+    "word": {
+      "value": "Word value required (Japanese)",
+      "furiganaValue": "Furigana transcription required (hiragana)",
+      "translations": "Translation(s) required"
     }
   }
 }

@@ -1,7 +1,7 @@
 "use server";
 
 import { getFormDataField } from "@/lib/utils/getFormDataField";
-import { fetchDelete, get, post } from "./api";
+import { fetchDelete, get, patch, post } from "./api";
 import { cookies } from "next/headers";
 import type { KanjiFormType } from "@/lib/validation/schemas/kanji";
 import { kanjiFormSchema, kanjiSchema } from "@/lib/validation/schemas/kanji";
@@ -60,13 +60,16 @@ export const addKanjiForm = async (
   const kanji = buildKanji(parsedKanji, locale === "ja" ? "en" : locale);
   const autoDetect = parsedKanji.autoDetect.toString();
   const preview = stringToBoolean(data.get("preview")?.toString());
+  const kanjiId = data.get("id")?.toString();
 
   try {
     const params = new URLSearchParams({
       autoDetect,
       preview: preview.toString(),
     });
-    const response = await post(KANJI_ENDPOINT, kanji, params);
+    const response = kanjiId
+      ? await patch(`${KANJI_ENDPOINT}/${kanjiId}`, kanji, params)
+      : await post(KANJI_ENDPOINT, kanji, params);
     return await handleApiResponse(
       response,
       { preview },
@@ -93,9 +96,9 @@ export const addKanji = async (
   }
 };
 
-export const deleteKanji = async (kanji: $Kanji) => {
+export const deleteKanji = async (kanjiId: number) => {
   try {
-    const res = await fetchDelete(`${KANJI_ENDPOINT}/${kanji.id}`);
+    const res = await fetchDelete(`${KANJI_ENDPOINT}/${kanjiId}`);
     if (!res.ok) {
       throw new Error();
     }

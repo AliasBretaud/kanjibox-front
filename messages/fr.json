@@ -63,13 +63,6 @@
       "notifications": {
         "success": "Kanji ajouté !",
         "error": "Erreur"
-      },
-      "validations": {
-        "value": "Valeur du kanji au format Japonais requise",
-        "onYomi": "Lecture(s) ON requise(s) (katakana)",
-        "kunYomi": "Lecture(s) KUN requise(s) (hiragana)",
-        "readingRequired": "Veuillez entrer au moins une lecture ON ou KUN",
-        "translations": "Traduction(s) requise(s)"
       }
     },
     "addWord": {
@@ -94,40 +87,64 @@
       "notifications": {
         "success": "Mot ajouté !",
         "error": "Erreur"
-      },
-      "validations": {
-        "value": "Valeur du mot au format Japonais requise",
-        "furiganaValue": "Transcription furigana requise (hiragana)",
-        "translations": "Traduction(s) requise(s)"
       }
     },
     "editKanji": {
       "header": "Edition du kanji",
+      "description": "Modification du kanji: <strong>{kanji}</strong>",
+      "edit": {
+        "notifications": {
+          "success": "Kanji mis à jour",
+          "error": "Erreur"
+        }
+      },
       "delete": {
         "description": "Supprimer ce kanji de ma liste",
-        "button": "Supprimer"
-      },
-      "notifications": {
-        "success": "Le kanji a été retiré",
-        "error": "Erreur"
+        "button": "Supprimer",
+        "notifications": {
+          "success": "Le kanji a été retiré",
+          "error": "Erreur"
+        }
       }
     },
     "editWord": {
       "header": "Edition du mot",
+      "description": "Modification du mot: <strong>{word}</strong>",
+      "edit": {
+        "notifications": {
+          "success": "Mot mis à jour",
+          "error": "Erreur"
+        }
+      },
       "delete": {
         "description": "Supprimer ce mot de ma liste",
-        "button": "Supprimer"
-      },
-      "notifications": {
-        "success": "Le mot a été retiré",
-        "error": "Erreur"
+        "button": "Supprimer",
+        "notifications": {
+          "success": "Le mot a été retiré",
+          "error": "Erreur"
+        }
       }
     },
     "buttons": {
       "add": "Ajouter",
       "back": "Précédent",
+      "update": "Modifier",
       "cancel": "Annuler",
       "next": "Suivant"
+    }
+  },
+  "validations": {
+    "kanji": {
+      "value": "Valeur du kanji au format Japonais requise",
+      "onYomi": "Lecture(s) ON requise(s) (katakana)",
+      "kunYomi": "Lecture(s) KUN requise(s) (hiragana)",
+      "readingRequired": "Veuillez entrer au moins une lecture ON ou KUN",
+      "translations": "Traduction(s) requise(s)"
+    },
+    "word": {
+      "value": "Valeur du mot au format Japonais requise",
+      "furiganaValue": "Transcription furigana requise (hiragana)",
+      "translations": "Traduction(s) requise(s)"
     }
   }
 }

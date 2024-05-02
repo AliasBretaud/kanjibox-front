@@ -63,13 +63,6 @@
       "notifications": {
         "success": "漢字が追加されました！",
         "error": "エラー"
-      },
-      "validations": {
-        "value": "漢字の値の形式が必要です",
-        "onYomi": "音読みが必要です（カタカナ）",
-        "kunYomi": "訓読みが必要です（ひらがな）",
-        "readingRequired": "訓読みまたは音読みを少なくとも1つ入力してください",
-        "translations": "翻訳が必要です"
       }
     },
     "addWord": {
@@ -94,40 +87,64 @@
       "notifications": {
         "success": "単語が追加されました！",
         "error": "エラー"
-      },
-      "validations": {
-        "value": "単語の値の形式が必要です",
-        "furiganaValue": "フリガナの転写が必要です（ひらがな）",
-        "translations": "翻訳が必要です"
       }
     },
     "editKanji": {
       "header": "漢字を編集する",
+      "description": "漢字の編集: <strong>{kanji}</strong>",
+      "edit": {
+        "notifications": {
+          "success": "漢字が更新されました",
+          "error": "エラー"
+        }
+      },
       "delete": {
         "description": "リストから削除する",
-        "button": "削除"
-      },
-      "notifications": {
-        "success": "漢字が削除されました",
-        "error": "エラー"
+        "button": "削除",
+        "notifications": {
+          "success": "漢字が削除されました",
+          "error": "エラー"
+        }
       }
     },
     "editWord": {
       "header": "単語を編集する",
+      "description": "単語の編集: <strong>{word}</strong>",
+      "edit": {
+        "notifications": {
+          "success": "単語が更新されました",
+          "error": "エラー"
+        }
+      },
       "delete": {
         "description": "リストから削除する",
-        "button": "削除"
-      },
-      "notifications": {
-        "success": "単語が削除されました",
-        "error": "エラー"
+        "button": "削除",
+        "notifications": {
+          "success": "単語が削除されました",
+          "error": "エラー"
+        }
       }
     },
     "buttons": {
       "add": "追加",
       "back": "戻る",
+      "update": "修正",
       "cancel": "キャンセル",
       "next": "次へ"
+    }
+  },
+  "validations": {
+    "kanji": {
+      "value": "漢字の値の形式が必要です",
+      "onYomi": "音読みが必要です（カタカナ）",
+      "kunYomi": "訓読みが必要です（ひらがな）",
+      "readingRequired": "訓読みまたは音読みを少なくとも1つ入力してください",
+      "translations": "翻訳が必要です"
+    },
+    "word": {
+      "value": "単語の値の形式が必要です",
+      "furiganaValue": "フリガナの転写が必要です（ひらがな）",
+      "translations": "翻訳が必要です"
     }
   }
 }

@@ -10,12 +10,20 @@ import { Card } from "@/components/ui/Card";
 import useModal from "@/hooks/useModal";
 import type { MKanji } from "@/types/modals";
 
-const KanjiCard = ({ locale, ...kanji }: PropsWithLocalization<$Kanji>) => {
+const KanjiCard = ({
+  locale,
+  editable = false,
+  ...kanji
+}: PropsWithLocalization<$Kanji> & { editable?: boolean }) => {
   const { kunYomi, onYomi, translations, value } = kanji;
   const localizedTranslations = getLocalizedTranslations(translations, locale);
   const { openModal } = useModal();
   return (
-    <Card onEdit={() => openModal<MKanji>("edit-kanji", { kanji })}>
+    <Card
+      onEdit={
+        editable ? () => openModal<MKanji>("edit-kanji", { kanji }) : undefined
+      }
+    >
       <Typography
         className="font-kanji"
         sx={{ opacity: 0.75, color: "black", fontSize: 80 }}
