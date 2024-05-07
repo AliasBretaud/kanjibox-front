@@ -1,6 +1,6 @@
 "use server";
 
-import { fetchDelete, get, post } from "./api";
+import { fetchDelete, get, patch, post } from "./api";
 import { getFormDataField } from "@/lib/utils/getFormDataField";
 import { cookies } from "next/headers";
 import {
@@ -55,12 +55,15 @@ export const addWordForm = async (
   const locale = getCookiesLocaleOrDefault(cookies());
   const word = buildWord(parsedWord, locale === "ja" ? "en" : locale);
   const preview = stringToBoolean(data.get("preview")?.toString());
+  const wordId = data.get("id")?.toString();
 
   try {
     const params = new URLSearchParams({
       preview: preview.toString(),
     });
-    const response = await post(WORD_ENDPOINT, word, params);
+    const response = wordId
+      ? await patch(`${WORD_ENDPOINT}/${wordId}`, word, params)
+      : await post(WORD_ENDPOINT, word, params);
     const tags = preview ? undefined : await getRevalidationTags(response);
     return await handleApiResponse(response, { preview }, tags);
   } catch (error) {
