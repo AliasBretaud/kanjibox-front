@@ -18,7 +18,7 @@ import useModal from "@/hooks/useModal";
 import type { $Kanji } from "@/types/models";
 import { DeleteBlock } from "@/components/common/DeleteBlock";
 import { useFormStateValidation } from "@/hooks/useFormStateValidation";
-import { KanjiDetailsInput } from "@/components/kanji/AddForm/KanjiDetailsInput";
+import { KanjiDetailsInput } from "@/components/kanji/form/KanjiDetailsInput";
 import type { KanjiFormType } from "@/lib/validation/schemas/kanji";
 import ButtonsBlock from "@/components/form/ButtonsBlock";
 import { getLocalizedTranslations } from "@/lib/utils/getLocalizedTranslations";

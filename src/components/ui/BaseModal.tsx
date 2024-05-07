@@ -6,6 +6,7 @@ import { Dialog, IconButton } from "@mui/material";
 import type { PropsWithChildren } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { useResponsive } from "@/hooks/useResponsive";
+import { SnackbarProvider } from "notistack";
 
 type BaseModalProps<T> = PropsWithChildren<
   { name: T; responsive?: boolean } & Omit<DialogProps, "open">
@@ -41,16 +42,19 @@ const BaseModal = <T extends string>({
   };
   const { isMobile } = useResponsive();
   return (
-    <Dialog
-      {...p}
-      fullScreen={responsive ? isMobile : p.fullScreen}
-      open={shownModal === name}
-      onClose={onClose}
-      disableRestoreFocus
-    >
-      {children}
-      {isMobile ? <CloseButton onClose={onClose} /> : null}
-    </Dialog>
+    <>
+      <Dialog
+        {...p}
+        fullScreen={responsive ? isMobile : p.fullScreen}
+        open={shownModal === name}
+        onClose={onClose}
+        disableRestoreFocus
+      >
+        {children}
+        {isMobile ? <CloseButton onClose={onClose} /> : null}
+      </Dialog>
+      <SnackbarProvider />
+    </>
   );
 };
 

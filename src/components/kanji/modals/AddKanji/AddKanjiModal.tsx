@@ -5,8 +5,8 @@ import { DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import { addKanji, addKanjiForm } from "@/lib/actions/kanji";
 import BaseModal from "@/components/ui/BaseModal";
 import { useTranslations } from "next-intl";
-import { KanjiDetailsInput } from "./KanjiDetailsInput";
-import { KanjiPreviewSummary } from "./KanjiPreviewSummary";
+import { KanjiDetailsInput } from "@/components/kanji/form/KanjiDetailsInput";
+import { KanjiPreviewSummary } from "@/components/kanji/modals/AddKanji/KanjiPreviewSummary";
 import { Stepper } from "@/components/ui/Stepper";
 import type { KanjiFormType } from "@/lib/validation/schemas/kanji";
 import useModalNotification from "@/hooks/useModalNotification";
@@ -15,7 +15,7 @@ import { useFormStateValidation } from "@/hooks/useFormStateValidation";
 import { StepperButtons } from "@/components/form/StepperButtons";
 import type { MKanji } from "@/types/modals";
 
-const AddKanjiForm = () => {
+const AddKanjiModal = () => {
   const t = useTranslations("modals.addKanji");
   const tRef = useRef(t);
   const { apiResponse, errors, formAction, setErrors } =
@@ -148,4 +148,4 @@ const AddKanjiForm = () => {
   );
 };
 
-export default AddKanjiForm;
+export default AddKanjiModal;

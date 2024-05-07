@@ -18,7 +18,7 @@ export class KanjisPage {
     };
   }
 
-  public async openAddKanjiForm() {
+  public async openAddKanjiModal() {
     const addButton = this.page.getByRole("button", { name: "Add Kanji" });
     await addButton.click();
   }

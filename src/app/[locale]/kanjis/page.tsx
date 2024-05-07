@@ -1,18 +1,17 @@
 import { Suspense } from "react";
 
-import AddKanjiForm from "@/components/kanji/AddForm/AddKanjiForm";
+import AddKanjiModal from "@/components/kanji/modals/AddKanji/AddKanjiModal";
 import KanjiList from "@/components/kanji/KanjiList";
 import { LoadingState } from "@/components/ui/LoadingState";
 import Pagination from "@/components/ui/Pagination";
 
 import { getKanjis } from "@/lib/actions/kanji";
 import AddKanjiButton from "@/components/kanji/AddKanjiButton";
-import SnackBarProvider from "@/components/ui/SnackBarProvider";
 import { unstable_setRequestLocale } from "next-intl/server";
 import { useTranslations } from "next-intl";
 import type { PageParams } from "@/types/utils";
 import EmptyState from "@/components/ui/EmptyState";
-import { EditKanjiModal } from "@/components/kanji/EditKanji/EditKanjiModal";
+import { EditKanjiModal } from "@/components/kanji/modals/EditKanjiModal";
 
 const KanjisEmptyState = () => {
   const t = useTranslations("modals.addKanji.emptyState");
@@ -37,7 +36,7 @@ const KanjiContainer = async ({ page }: { page: number }) => {
         />
       )}
       <AddKanjiButton />
-      <AddKanjiForm />
+      <AddKanjiModal />
       <EditKanjiModal />
       {kanjis.totalElements > 0 ? (
         <KanjiList data={kanjis.content} />
@@ -58,11 +57,8 @@ export default function KanjisPage({
   const t = useTranslations("loading");
   const page = searchParams?.page || 1;
   return (
-    <>
-      <Suspense key={page} fallback={<LoadingState text={t("kanjis")} />}>
-        <KanjiContainer page={page} />
-      </Suspense>
-      <SnackBarProvider />
-    </>
+    <Suspense key={page} fallback={<LoadingState text={t("kanjis")} />}>
+      <KanjiContainer page={page} />
+    </Suspense>
   );
 }

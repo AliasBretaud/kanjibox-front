@@ -35,7 +35,7 @@ test.describe("Add a new kanji", () => {
     const kanjisPage = new KanjisPage(page);
 
     // Add kanji
-    await kanjisPage.openAddKanjiForm();
+    await kanjisPage.openAddKanjiModal();
     await kanjisPage.fillAddKanjiForm({
       value: "力",
       autoDetect: false,
@@ -57,7 +57,7 @@ test.describe("Add a new kanji", () => {
     const kanjisPage = new KanjisPage(page);
 
     // Add kanji
-    await kanjisPage.openAddKanjiForm();
+    await kanjisPage.openAddKanjiModal();
     await kanjisPage.fillAddKanjiForm({
       value: "猫",
     });
@@ -78,7 +78,7 @@ test.describe("Form validations", () => {
     const kanjisPage = new KanjisPage(page);
 
     // Add kanji
-    await kanjisPage.openAddKanjiForm();
+    await kanjisPage.openAddKanjiModal();
     await kanjisPage.fillAddKanjiForm({
       value: "A",
       autoDetect: false,
@@ -105,7 +105,7 @@ test.describe("Form validations", () => {
     const kanjisPage = new KanjisPage(page);
 
     // Add kanji
-    await kanjisPage.openAddKanjiForm();
+    await kanjisPage.openAddKanjiModal();
     await kanjisPage.fillAddKanjiForm({
       value: "犬",
       autoDetect: false,
@@ -126,7 +126,7 @@ test.describe("Form validations", () => {
     const kanjisPage = new KanjisPage(page);
 
     // Add kanji
-    await kanjisPage.openAddKanjiForm();
+    await kanjisPage.openAddKanjiModal();
     await kanjisPage.fillAddKanjiForm({
       value: "犬",
       autoDetect: false,

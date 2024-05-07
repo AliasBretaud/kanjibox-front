@@ -13,7 +13,6 @@ export const WordPreviewSummary = ({
 }: $Word) => {
   const t = useTranslations("modals.addWord");
   const locale = useLocale();
-
   const rows = [
     createRow("value", t("value"), value),
     createRow("furiganaValue", t("furigana"), furiganaValue),

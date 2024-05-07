@@ -5,7 +5,7 @@ import SearchBar from "./SearchBar";
 import WelcomeMessage from "./WelcomeMessage";
 import { Suspense } from "react";
 import { LoadingState } from "@/components/ui/LoadingState";
-import { EditKanjiModal } from "@/components/kanji/EditKanji/EditKanjiModal";
+import { EditKanjiModal } from "@/components/kanji/modals/EditKanjiModal";
 
 const KanjiContainer = async ({ search }: { search?: string }) => {
   const kanjis = await getKanjis(8, 0, search);

@@ -20,9 +20,9 @@ export const EditWordModal = () => {
     startTransition(async () => {
       try {
         await deleteWord(modalOptions.word as $Word);
-        showNotification(t("notifications.success"));
+        showNotification(t("delete.notifications.success"));
       } catch (e) {
-        showNotification(t("notifications.error"), true);
+        showNotification(t("delete.notifications.error"), true);
       }
       hideModal();
     });

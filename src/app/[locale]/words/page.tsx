@@ -7,13 +7,12 @@ import Pagination from "@/components/ui/Pagination";
 import { getWords } from "@/lib/actions/word";
 import type { PageParams } from "@/types/utils";
 import AddWordButton from "@/components/word/AddWordButton";
-import SnackBarProvider from "@/components/ui/SnackBarProvider";
 import KanjiDetailsModal from "@/components/word/KanjiDetailsModal";
 import AddWordModal from "@/components/word/modals/AddWord/AddWordModal";
 import { unstable_setRequestLocale } from "next-intl/server";
 import { useTranslations } from "next-intl";
 import EmptyState from "@/components/ui/EmptyState";
-import { EditWordModal } from "@/components/word/modals/EditWord/EditWordModal";
+import { EditWordModal } from "@/components/word/modals/EditWordModal";
 
 const WordsEmptyState = () => {
   const t = useTranslations("modals.addWord.emptyState");
@@ -43,7 +42,6 @@ const WordsContainer = async ({ page }: { page: number }) => {
         <WordsEmptyState />
       )}
       <KanjiDetailsModal />
-      <SnackBarProvider />
     </div>
   );
 };

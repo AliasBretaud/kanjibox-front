@@ -11,7 +11,7 @@ import { useFormStateValidation } from "@/hooks/useFormStateValidation";
 import type { ApiResponseStatus } from "@/types/api";
 import useModalNotification from "@/hooks/useModalNotification";
 import { Stepper } from "@/components/ui/Stepper";
-import { WordDetailsInput } from "./WordDetailsInput";
+import { WordDetailsInput } from "@/components/word/form/WordDetailsInput";
 import { WordPreviewSummary } from "./WordPreviewSummary";
 import { StepperButtons } from "@/components/form/StepperButtons";
 
