@@ -22,6 +22,13 @@ const intlPages = [
   "/((?!api|_next/static|_next/image|favicon.ico).*)",
 ];
 
+const authorized = (req: NextRequest, res?: NextResponse) => {
+  const withIntl = intlPages.some((p) =>
+    pathToRegexp(p).test(req.nextUrl.pathname),
+  );
+  return withIntl ? intlMiddleware(req) : res || NextResponse.next();
+};
+
 const intlMiddleware = createIntlMiddleware({
   defaultLocale: "en",
   locales,
@@ -35,7 +42,7 @@ const authMiddleware = withMiddlewareAuthRequired({
       await getAccessToken();
       const res = NextResponse.next();
       await touchSession(req, res);
-      return intlMiddleware(req);
+      return authorized(req, res);
     } catch (err) {
       if (err instanceof AccessTokenError) {
         const res = NextResponse.redirect(
@@ -57,14 +64,11 @@ const authMiddleware = withMiddlewareAuthRequired({
 });
 
 export default function middleware(req: NextRequest, event: NextFetchEvent) {
-  const { pathname } = req.nextUrl;
-
-  const isPublicPage = publicPages.some((p) => pathToRegexp(p).test(pathname));
-
-  if (isPublicPage && intlPages.some((p) => pathToRegexp(p).test(pathname))) {
-    return intlMiddleware(req);
-  } else if (!isPublicPage) {
-    return authMiddleware(req, event);
+  const isPublicPage = publicPages.some((p) =>
+    pathToRegexp(p).test(req.nextUrl.pathname),
+  );
+  if (isPublicPage) {
+    return authorized(req);
   }
-  return NextResponse.next();
+  return authMiddleware(req, event);
 }

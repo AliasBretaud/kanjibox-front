@@ -50,6 +50,7 @@ export const DrawerMenu = () => {
     ? [
         { label: t("kanjis"), href: "/kanjis" },
         { label: t("words"), href: "/words" },
+        { label: t("conversations"), href: "/conversations" },
         {
           label: logoutButton,
           href: "/api/auth/logout",

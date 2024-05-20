@@ -4,6 +4,7 @@
     "description": "日本語学習のためのシンプルなアプリ"
   },
   "navigation": {
+    "conversations": "kAI話",
     "kanjis": "漢字",
     "words": "単語",
     "buttons": {

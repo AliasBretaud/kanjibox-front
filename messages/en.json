@@ -4,6 +4,7 @@
     "description": "Une appli simple d'apprentissage du Japonais"
   },
   "navigation": {
+    "conversations": "kAI話",
     "kanjis": "Kanjis",
     "words": "Words",
     "buttons": {

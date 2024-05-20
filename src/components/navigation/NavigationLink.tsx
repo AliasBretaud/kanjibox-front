@@ -7,15 +7,19 @@ import { Link } from "@/navigation";
 import dynamic from "next/dynamic";
 import { useLocale } from "next-intl";
 
+const Badge = dynamic(() => import("@mui/material/Badge"));
 const Button = dynamic(() => import("@mui/material/Button"));
+const Typography = dynamic(() => import("@mui/material/Typography"));
 
 type NavLinkProps = {
+  badgeContent?: string;
   big?: boolean;
   button?: boolean;
   className?: string;
 };
 
 const NavigationLink = <Pathname extends AppPathnames>({
+  badgeContent,
   big = false,
   button = false,
   children,
@@ -36,10 +40,20 @@ const NavigationLink = <Pathname extends AppPathnames>({
       {children}
     </div>
   );
-  return (
+  const wrapper = (
     <Link href={href} {...rest}>
       {button ? <Button>{content}</Button> : content}
     </Link>
+  );
+  return badgeContent ? (
+    <Badge
+      badgeContent={<Typography fontSize="0.7rem">{badgeContent}</Typography>}
+      color="secondary"
+    >
+      {wrapper}
+    </Badge>
+  ) : (
+    wrapper
   );
 };
 

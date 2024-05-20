@@ -16,3 +16,19 @@ export type $Word = {
   kanjis?: $Kanji[];
   translations: MappedValue<string, string[]>;
 };
+
+export type $Message = {
+  id: number;
+  isAppMessage: boolean;
+  isGenerating: boolean;
+  createdAt: string;
+  message: string;
+  nextMessageId?: number;
+};
+
+export type $Conversation = {
+  id: string;
+  agent: string;
+  lastUpdate: string;
+  status: string;
+};

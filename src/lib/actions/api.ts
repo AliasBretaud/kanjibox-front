@@ -24,7 +24,7 @@ export const get = async (
 ) => {
   const urlWithParams = buildUrl(url, params);
   return await withAuth(urlWithParams, {
-    cache: "force-cache",
+    cache: tags?.length ? "force-cache" : "no-store",
     next: { tags },
   });
 };
@@ -32,7 +32,7 @@ export const get = async (
 const save = async (
   url: string,
   method: "POST" | "PATCH",
-  body: Record<string, unknown>,
+  body?: Record<string, unknown>,
   params?: URLSearchParams,
 ) => {
   const urlWithParams = buildUrl(url, params);
@@ -41,13 +41,13 @@ const save = async (
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(body),
+    body: body ? JSON.stringify(body) : null,
   });
 };
 
 export const post = async (
   url: string,
-  body: Record<string, unknown>,
+  body?: Record<string, unknown>,
   params?: URLSearchParams,
 ) => save(url, "POST", body, params);
 

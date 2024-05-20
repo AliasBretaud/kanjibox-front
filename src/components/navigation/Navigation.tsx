@@ -25,6 +25,9 @@ const ProtectedLinks = () => {
       <NavigationLink button href="/words">
         {t("words")}
       </NavigationLink>
+      <NavigationLink button href="/conversations" badgeContent="Beta">
+        {t("conversations")}
+      </NavigationLink>
     </Stack>
   );
 };
