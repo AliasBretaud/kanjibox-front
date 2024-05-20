@@ -22,7 +22,6 @@ export const getConversationMessages = async (sessionId: string) => {
 export const createConversation = async (agent: string) => {
   const response = await post(CONVERSATIONS_ENDPOINT, { agent });
   const { id } = (await response.json()) as $Conversation;
-  sendMessage(id, "START");
   revalidateTag("conversations");
   redirect(`/conversations/${id}`);
 };
