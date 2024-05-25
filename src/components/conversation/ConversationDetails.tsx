@@ -7,8 +7,8 @@ import { SnackbarProvider } from "notistack";
 import { useState } from "react";
 
 export const ConversationDetails = ({ sessionId }: { sessionId: string }) => {
-  const [messageInput, setMessageInput] = useState("");
   const { messages, isLoading, sendMessage } = useConversation(sessionId);
+  const [messageInput, setMessageInput] = useState("");
 
   const messageInputBox = (
     <>
@@ -30,7 +30,7 @@ export const ConversationDetails = ({ sessionId }: { sessionId: string }) => {
     <>
       <Container sx={{ pt: 40 }}>
         <Typography>{sessionId}</Typography>
-        {messages?.map((m) => <Typography key={m.id}>{m.message}</Typography>)}
+        {messages?.map((m, i) => <Typography key={i}>{m.message}</Typography>)}
         <Box sx={{ mt: 20 }}>
           {messages?.length && messageInputBox}
           {!messages && !isLoading && (

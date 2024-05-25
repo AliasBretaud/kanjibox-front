@@ -10,12 +10,10 @@ const push = async (
   controller: ReadableStreamDefaultController,
 ) => {
   const { done, value } = await reader.read();
-
   if (done) {
     controller.close();
     return;
   }
-
   controller.enqueue(new TextDecoder().decode(value));
   push(req, reader, controller);
 };
