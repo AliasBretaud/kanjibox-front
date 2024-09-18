@@ -9,7 +9,7 @@ services:
       POSTGRES_USER: kanji
       POSTGRES_PASSWORD: kanji
     ports:
-      - "5432:5432"
+      - "5433:5432"
     networks:
       - kanji_network
 
