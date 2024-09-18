@@ -14,7 +14,10 @@ export class LoginPage {
       await this.page.goto("http://localhost:3000/api/auth/login");
       const email = this.page.getByLabel("Email address");
       const pass = this.page.getByLabel("Password");
-      const button = this.page.getByRole("button", { name: "Continue" });
+      const button = this.page.getByRole("button", {
+        name: "Continue",
+        exact: true,
+      });
       await email.fill(username);
       await pass.fill(password);
       await button.click();

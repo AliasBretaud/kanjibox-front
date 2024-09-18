@@ -10,10 +10,10 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:update:snapshot": "jest --updateSnapshot",
-    "docker:playwright:up": "docker-compose --file e2e/docker-compose.yml up --force-recreate --detach",
-    "docker:playwright:down": "docker-compose --file e2e/docker-compose.yml down -v",
+    "docker:playwright:up": "docker compose --file e2e/docker-compose.yml up --force-recreate --detach",
+    "docker:playwright:down": "docker compose --file e2e/docker-compose.yml down -v",
     "docker:playwright:reset": "yarn docker:playwright:down & yarn docker:playwright:up",
-    "docker:playwright:status": "docker-compose --file e2e/docker-compose.yml ps"
+    "docker:playwright:status": "docker compose --file e2e/docker-compose.yml ps"
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^3.5.0",
@@ -57,6 +57,6 @@
     "prettier": "^3.2.5",
     "tailwindcss": "^3.3.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.4.4"
+    "typescript": "^5.6.2"
   }
 }

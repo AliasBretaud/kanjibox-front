@@ -51,7 +51,7 @@ jobs:
         run: yarn playwright install --with-deps chromium
 
       - name: Start backend processes
-        run: docker-compose -f e2e/docker-compose.yml up -d
+        run: docker compose -f e2e/docker-compose.yml up -d
 
       - name: Wait for API container to be up
         run: timeout 300s sh -c 'until docker ps | grep kanjibox-api | grep -q healthy; do echo "API starting..."; sleep 2; done'
@@ -65,4 +65,4 @@ jobs:
         run: yarn playwright test
 
       - name: Cleanup
-        run: docker-compose -f e2e/docker-compose.yml down -v
+        run: docker compose -f e2e/docker-compose.yml down -v
