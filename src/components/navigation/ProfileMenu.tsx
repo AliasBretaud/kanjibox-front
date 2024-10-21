@@ -108,7 +108,7 @@ const ProfileButton = ({ user }: { user?: UserProfile }) => {
           <Typography>{user?.name || undefined}</Typography>
         </Container>
         <Divider />
-        <Link href="/api/auth/logout">
+        <Link href="/api/auth/logout" prefetch={false}>
           <MenuItem onClick={handleClose}>
             <Stack direction="row" alignItems="center" justifyContent="center">
               <ListItemIcon>

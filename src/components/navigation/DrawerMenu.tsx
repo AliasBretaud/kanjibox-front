@@ -77,7 +77,11 @@ export const DrawerMenu = () => {
             <ListItemButton sx={{ textAlign: "center" }}>
               <ListItemText
                 primary={
-                  <Link style={{ display: "block", width: "100%" }} href={href}>
+                  <Link
+                    style={{ display: "block", width: "100%" }}
+                    href={href}
+                    prefetch={false}
+                  >
                     {label}
                   </Link>
                 }
