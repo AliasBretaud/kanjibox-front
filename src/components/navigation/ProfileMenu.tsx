@@ -19,7 +19,6 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import Link from "next/link";
 import { useTranslations } from "next-intl";
 import type { UserProfile } from "@auth0/nextjs-auth0/client";
 import { useUser } from "@auth0/nextjs-auth0/client";
@@ -108,7 +107,7 @@ const ProfileButton = ({ user }: { user?: UserProfile }) => {
           <Typography>{user?.name || undefined}</Typography>
         </Container>
         <Divider />
-        <Link href="/api/auth/logout" prefetch={false}>
+        <a href="/api/auth/logout">
           <MenuItem onClick={handleClose}>
             <Stack direction="row" alignItems="center" justifyContent="center">
               <ListItemIcon>
@@ -117,7 +116,7 @@ const ProfileButton = ({ user }: { user?: UserProfile }) => {
               {t("buttons.logout")}
             </Stack>
           </MenuItem>
-        </Link>
+        </a>
       </Menu>
     </>
   );
